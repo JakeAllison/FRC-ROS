@@ -1,0 +1,79 @@
+<?xml version="1.0"?>
+<root xmlns:xacro="http://ros.org/wiki/xacro">
+
+    <xacro:include filename="$(find frc_robot)/urdf/inertia.urdf.xacro" />
+  
+      <xacro:property name="front" value="1" />
+      <xacro:property name="middle" value="0" />
+      <xacro:property name="rear" value="-1" />
+      <xacro:property name="left" value="1" />
+      <xacro:property name="right" value="-1" />
+      <xacro:property name="no_drop" value="0" />
+      <xacro:property name="drop" value="-1" />
+      <xacro:property name="high_friction" value="200.0" />
+      <xacro:property name="low_friction" value="1.0" />
+    
+    <xacro:macro name="six_wheel_diff_drive" params="name parent z_offset drop_wheel_height wheel_separation wheel_base_length wheel_radius wheel_width wheel_mass">
+        
+            
+    <!--                          Wheels                           -->
+
+      <xacro:macro name="wheel" params="prefix side fntctrbck drop friction">
+        <link name="${prefix}_wheel">
+          <visual>
+            <geometry>
+              <cylinder length="${wheel_width}" radius="${wheel_radius}"/>
+            </geometry>
+            <origin xyz="0 0 0"/>
+            <material name="blue"/>
+          </visual>
+          <collision>
+            <geometry>
+              <cylinder length="${wheel_width}" radius="${wheel_radius}"/>
+            </geometry>
+            <origin xyz="0 0 0"/>
+          </collision>
+          <inertial>
+            <mass value="${wheel_mass}"/>
+            <xacro:cylinder_inertia
+            m="${wheel_mass}"
+            r="${wheel_radius}"
+            h="${wheel_width}" />
+            <origin xyz="0 0 0"/>
+          </inertial>
+        </link>
+        <joint name="${parent}_to_${prefix}_wheel" type="continuous">
+          <parent link="${parent}"/>
+          <child link="${prefix}_wheel"/>
+          <axis xyz="0 0 ${-1*side}"/>
+          <origin rpy="${side*pi/2} 0 0" xyz="${fntctrbck*(wheel_base_length/2)} ${side*(wheel_separation/2)} ${z_offset+drop*drop_wheel_height}"/>
+        </joint>
+        
+        <transmission name="${prefix}_wheel_trans">
+          <type>transmission_interface/SimpleTransmission</type>
+          <actuator name="${prefix}_wheel_motor">
+            <mechanicalReduction>1</mechanicalReduction>
+          </actuator>
+          <joint name="${parent}_to_${prefix}_wheel">
+            <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
+          </joint>
+        </transmission>
+        
+        <gazebo reference="${prefix}_wheel">
+          <mu1 value="${friction}"/>
+          <mu2 value="${friction}"/>
+          <kp value="10000000.0"/>
+          <kd value="1.0" />
+          <material>Gazebo/gray</material>
+        </gazebo>
+      </xacro:macro>
+      
+      <xacro:wheel prefix="fl" side="${left}" fntctrbck="${front}" drop="${no_drop}" friction="${low_friction}" />
+      <xacro:wheel prefix="ml" side="${left}" fntctrbck="${middle}" drop="${drop}" friction="${high_friction}" />
+      <xacro:wheel prefix="rl" side="${left}" fntctrbck="${rear}" drop="${no_drop}" friction="${low_friction}" />
+      <xacro:wheel prefix="fr" side="${right}" fntctrbck="${front}" drop="${no_drop}" friction="${low_friction}" />
+      <xacro:wheel prefix="mr" side="${right}" fntctrbck="${middle}" drop="${drop}" friction="${high_friction}" />
+      <xacro:wheel prefix="rr" side="${right}" fntctrbck="${rear}" drop="${no_drop}" friction="${low_friction}" />
+            
+  </xacro:macro>
+</root>

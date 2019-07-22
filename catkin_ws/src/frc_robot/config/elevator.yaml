@@ -1,0 +1,8 @@
+type: "position_controllers/JointGroupPositionController"
+joints:
+ - elevator_to_elevator_carriage
+ - elevator_carraige_to_intake_arm
+
+/gazebo_ros_control/pid_gains:
+    elevator_to_elevator_carriage:    {p: 1.0, i: 0.0, d: 0.0}
+    elevator_carraige_to_intake_arm:  {p: 1.0, i: 0.0, d: 0.0}

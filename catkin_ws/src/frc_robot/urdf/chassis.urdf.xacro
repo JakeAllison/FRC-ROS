@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<root xmlns:xacro="http://ros.org/wiki/xacro">
+
+    <xacro:include filename="$(find frc_robot)/urdf/inertia.urdf.xacro" />
+    
+  <xacro:macro name="robot_chassis" params="name parent z_offset chassis_length chassis_width chassis_height chassis_mass">
+  
+      <link name="chassis">
+        <visual>
+          <geometry>
+            <box size="${chassis_length} ${chassis_width} ${chassis_height}"/>
+          </geometry>
+          <origin xyz="0 0 ${chassis_height/2}"/>
+          <material name="blue"/>
+        </visual>
+        <collision>
+          <geometry>
+            <box size="${chassis_length} ${chassis_width} ${chassis_height}"/>
+          </geometry>
+          <origin xyz="0 0 ${chassis_height/2}"/>
+        </collision>
+        <inertial>
+          <mass value="${chassis_mass}"/>
+          <xacro:box_inertia
+          m="${chassis_mass}"
+          x="${chassis_length}"
+          y="${chassis_width}"
+          z="${chassis_height}" />
+          <origin xyz="0 0 ${chassis_height/2+z_offset}"/>
+        </inertial>
+      </link>
+        <joint name="${parent}_to_chassis" type="fixed">
+          <parent link="${parent}"/>
+          <child link="chassis"/>
+          <axis xyz="0 0 ${z_offset}"/>
+          <origin rpy="0 0 0"/>
+        </joint>
+  </xacro:macro>
+</root>
