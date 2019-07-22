@@ -5,9 +5,13 @@ The "catkin_ws" folder is here simply for viewing. This will probably be changed
 All code is automatically extracted placed in its appropriate location using "./SetupFRCRobot.sh".
 
 Step 1: Make sure you have Ubuntu 16.04 installed.
+
 Step 1a: Install NVidia Jetpack 3.3 (NVidia Developer membership required): https://developer.nvidia.com/embedded/dlc/jetpack-install-guide-3_3
+
 Step 2: Install ROS Kinetic using the following guide: http://wiki.ros.org/kinetic/Installation/Ubuntu
+
 Step 3: Run './SetupFRCRobot.sh'
+
 Step 4: Run 'roslaunch frc_robot sim.launch' to start your simulation.
 
 
