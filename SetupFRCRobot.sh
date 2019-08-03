@@ -24,15 +24,8 @@ fi
 
 # Copy necessary packages
 
-file=$cwd/frc_robot.tar.gz
-if [ ! -f "$file" ]; then
-    echo "$file is missing in current working directory"
-    exit 1
-else
-    echo "Found '$file'"
-    echo "Extracting to ~/catkin_ws/src"
-    tar -xf "$file" -C ~/catkin_ws/src
-fi
+rm -rf ~/catkin_ws/src/frc_robot/
+cp -R $cwd/catkin_ws/src/frc_robot ~/catkin_ws/src/
 
 file=$cwd/common-sensors.tar.gz
 if [ ! -f "$file" ]; then
