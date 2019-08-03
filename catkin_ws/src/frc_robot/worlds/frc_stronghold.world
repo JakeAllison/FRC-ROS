@@ -524,27 +524,6 @@
             <diffuse>0 0 1 1</diffuse>
           </material>
         </visual>
-        <collision name='blue_passage_border_long'>
-          <pose frame=''>2.72665 4.5882 0.0127 0 -0 0</pose>
-          <geometry>
-            <box>
-              <size>0.0762 7.3025 0.0254</size>
-            </box>
-          </geometry>
-          <max_contacts>10</max_contacts>
-          <surface>
-            <contact>
-              <ode/>
-            </contact>
-            <bounce/>
-            <friction>
-              <torsional>
-                <ode/>
-              </torsional>
-              <ode/>
-            </friction>
-          </surface>
-        </collision>
         <visual name='blue_passage_border_short'>
           <pose frame=''>3.37435 0.97352 0.0127 0 -0 0</pose>
           <geometry>
@@ -557,27 +536,6 @@
             <diffuse>0 0 1 1</diffuse>
           </material>
         </visual>
-        <collision name='blue_passage_border_short'>
-          <pose frame=''>3.37435 0.97352 0.0127 0 -0 0</pose>
-          <geometry>
-            <box>
-              <size>1.37165 0.0762 0.0254</size>
-            </box>
-          </geometry>
-          <max_contacts>10</max_contacts>
-          <surface>
-            <contact>
-              <ode/>
-            </contact>
-            <bounce/>
-            <friction>
-              <torsional>
-                <ode/>
-              </torsional>
-              <ode/>
-            </friction>
-          </surface>
-        </collision>
         <visual name='blue_divider_1'>
           <pose frame=''>2.63052 2.80648 0.31114 0 -0 0</pose>
           <geometry>
@@ -793,27 +751,6 @@
             <diffuse>1 0 0 1</diffuse>
           </material>
         </visual>
-        <collision name='red_passage_border_long'>
-          <pose frame=''>-2.7273 -4.58839 0.0127 0 -0 0</pose>
-          <geometry>
-            <box>
-              <size>0.0762 7.3025 0.0254</size>
-            </box>
-          </geometry>
-          <max_contacts>10</max_contacts>
-          <surface>
-            <contact>
-              <ode/>
-            </contact>
-            <bounce/>
-            <friction>
-              <torsional>
-                <ode/>
-              </torsional>
-              <ode/>
-            </friction>
-          </surface>
-        </collision>
         <visual name='red_passage_border_short'>
           <pose frame=''>-3.375 -0.97372 0.0127 0 -0 0</pose>
           <geometry>
@@ -825,28 +762,7 @@
             <ambient>1 0 0 1</ambient>
             <diffuse>1 0 0 1</diffuse>
           </material>
-        </visual>
-        <collision name='red_passage_border_short'>
-          <pose frame=''>-3.375 -0.97372 0.0127 0 -0 0</pose>
-          <geometry>
-            <box>
-              <size>1.37165 0.0762 0.0254</size>
-            </box>
-          </geometry>
-          <max_contacts>10</max_contacts>
-          <surface>
-            <contact>
-              <ode/>
-            </contact>
-            <bounce/>
-            <friction>
-              <torsional>
-                <ode/>
-              </torsional>
-              <ode/>
-            </friction>
-          </surface>
-        </collision>
+        </visual>/home/jake/catkin_ws/src/frc_robot/launch/sim.launch
         <visual name='red_divider_1'>
           <pose frame=''>-2.63117 -2.76442 0.31114 0 -0 0</pose>
           <geometry>
