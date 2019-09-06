@@ -28,39 +28,3 @@ ukf_odom:
                 false, false, false,
                 true, true, true,
                 true, true, true]
-
-ukf_map:
-  frequency: 100
-  sensor_timeout: 0.2
-  print_diagnostics: true
-  smooth_lagged_data: true
-  history_length: 1.0
-#  debug: true
-#  debug_out_file: /home/jake/Documents/robot_debug/ukf_map.txt
-  
-  map_frame: map
-  odom_frame: odom
-  base_link_frame: base_link
-  world_frame: map
-  
-  initial_state: [0.0, 0.0, 0.0,
-                  0.0, 0.0, 0.0,
-                  0.0, 0.0, 0.0,
-                  0.0, 0.0, 0.0,
-                  0.0, 0.0, 0.0]
-  
-  odom0: /odometry/filtered_odom
-  odomo_differential: true
-  odom0_config: [false, false, false,
-                 false, false, true,
-                 true, true, true,
-                 true, true, true,
-                 false, false, false]
-  
-  odom1: /scanmatcher_odom
-  odom1_config: [true, true, true
-                 true, true, true,
-                 false, false, false,
-                 false, false, false,
-                 false, false, false]
-                 

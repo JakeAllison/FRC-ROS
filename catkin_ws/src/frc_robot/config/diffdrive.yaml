@@ -10,8 +10,8 @@ right_wheel: ['base_link_to_fr_wheel', 'base_link_to_mr_wheel', 'base_link_to_rr
 # Odometry covariances for the encoder output of the robot. These values should
 # be tuned to your robot's sample odometry data, but these values are a good place
 # to start
-pose_covariance_diagonal: [1.0, 1.0, 1000000.0, 1000000.0, 1000000.0, 1000.0]
-twist_covariance_diagonal: [0.01, 0.01, 1000000.0, 1000000.0, 1000000.0, 1000.0]
+pose_covariance_diagonal: [0.01, 0.01, 0.01, 0.01, 0.01, 0.01]
+twist_covariance_diagonal: [0.01, 0.01, 0.01, 0.01, 0.01, 0.01]
 
 enable_odom_tf: false
 odom_frame_id: odom

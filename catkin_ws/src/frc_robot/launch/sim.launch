@@ -1,7 +1,5 @@
 <launch>
   <arg name="model" default="$(find frc_robot)/urdf/00-default.urdf.xacro"/>
-  <arg name="rvizconfig" default="$(find frc_robot)/rviz/urdf_2.rviz" />
-  <arg name="rviz" default="true" />
   <arg name="auton" default="true" />
   <arg name="teleop" default="true" />
   
@@ -10,18 +8,7 @@
     <arg name="model" value="$(arg model)" />
   </include>
   
-  
-  <include file="$(find frc_robot)/launch/slam.launch"/>
-  <include file="$(find frc_robot)/launch/localization.launch"/>
-  <include if="$(arg auton)" file="$(find frc_robot)/launch/move.launch"/>
-
-  <node if="$(arg rviz)" name="rviz" pkg="rviz" type="rviz" args="-d $(arg rvizconfig)" />
-  
-<!--
-  <rosparam command="load"
-            file="$(find frc_robot)/config/elevator.yaml"
-            ns="frc_elevator_controller" />
-  -->
+  <include file="$(find frc_robot)/launch/visualize.launch"/>
   
   <rosparam command="load"
             file="$(find frc_robot)/config/diffdrive.yaml"

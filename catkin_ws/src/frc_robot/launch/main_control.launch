@@ -1,0 +1,8 @@
+<launch>
+  <arg name="auton" default="true" />
+  
+  <include file="$(find frc_robot)/launch/slam.launch"/>
+  <!-- <include file="$(find frc_robot)/launch/localization.launch"/> -->
+  <include if="$(arg auton)" file="$(find frc_robot)/launch/move.launch"/>
+  
+</launch>

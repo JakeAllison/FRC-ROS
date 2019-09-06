@@ -23,13 +23,18 @@ rtabmap:
       subscribe_rgbd: true
       subscribe_scan: true
       
-      Reg/Strategy: 1
+      Reg/Strategy: 2
       Reg/Force3DoF: true
       RGBD/ProximityBySpace: false
       
-      odom_frame_id: odom
+      odom_frame_id: hector_map
       odom_tf_linear_variance: 0.0005
       odom_tf_angular_variance: 0.0005
+
+    rtabmapviz:
+      subscribe_rgbd: true
+      subscribe_laserScan: true
+      frame_id: base_link
 
 points_xyzrgb:
   voxel_size: 0.01

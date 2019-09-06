@@ -6,9 +6,7 @@
   <arg name="rtabmapviz" default="false" />
 
   <param name="use_sim_time" type="bool" value="True"/>
-  
-  <node pkg="tf" type="static_transform_publisher" name="scanmatcher_to_base_footprint" 
-    args="0.0 0.0 0.0 0.0 0.0 0.0 /scanmatcher_frame /base_link 100" />
+-->
   <!-- Odometry from laser scans -->
   <!-- If argument "hector" is true, we use Hector mapping to generate odometry for us -->
   <node pkg="hector_mapping" type="hector_mapping" name="hector_mapping" output="screen"/>
@@ -24,11 +22,19 @@
     <!-- SLAM -->
     <!-- args: "delete_db_on_start" and "udebug" -->
     <node name="rtabmap" pkg="rtabmap_ros" type="rtabmap" output="screen" args="--delete_db_on_start">
-     
+	
       <remap from="scan" to="/hokuyo_laser/laser_scan"/>
+    </node>
+    
+    <!-- Visualisation RTAB-Map -->
+    <node if="$(arg rtabmapviz)" pkg="rtabmap_ros" type="rtabmapviz" name="rtabmapviz" args="-d $(find rtabmap_ros)/launch/config/rgbd_gui.ini" output="screen">
+      <remap from="scan"            to="/hokuyo_laser/laser_scan"/>
     </node>
   
   </group>
+  
+  <!-- Visualisation RVIZ -->
+  <node if="$(arg rviz)" pkg="rviz" type="rviz" name="rviz_rtabmap" args="-d $(find rtabmap_ros)/launch/config/demo_robot_mapping.rviz" output="screen"/>
   
   <node pkg="nodelet" type="nodelet" name="points_xyzrgb" args="standalone rtabmap_ros/point_cloud_xyzrgb">
     <remap from="rgbd_image"      to="/rtabmap/rgbd_image"/>

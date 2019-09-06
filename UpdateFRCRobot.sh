@@ -13,5 +13,3 @@ cd ~/catkin_ws
 catkin_make
 source ~/.bashrc
 rospack list
-cd ~/catkin_ws/src/frc_robot
-roswtf
