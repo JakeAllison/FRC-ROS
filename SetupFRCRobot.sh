@@ -11,6 +11,17 @@ else
     exit 1
 fi
 
+pip_install=python-pip
+if dpkg-query -W -f'${Status}' "${pip_install}" 2>/dev/null | grep -q "ok installed"; then
+    echo "python pip installed"
+else
+    echo "python pip NOT installed. Please install '${ros_install}'"
+    exit 1
+fi
+
+#install network tables for ntbridge
+python -m pip install pynetworktables
+
 # Check ~/.bashrc for sourcing
 
 mkdir -p ~/catkin_ws/src
