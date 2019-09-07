@@ -20,7 +20,7 @@ else
 fi
 
 #install network tables for ntbridge
-python -m pip install pynetworktables
+python -m pip install --user pynetworktables==2018.2.0
 
 # Check ~/.bashrc for sourcing
 
