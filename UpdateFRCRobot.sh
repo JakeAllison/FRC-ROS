@@ -7,6 +7,9 @@ echo "Currernt working directory:" $cwd
 rm -rf ~/catkin_ws/src/frc_robot/
 cp -R $cwd/catkin_ws/src/frc_robot ~/catkin_ws/src/
 
+rm -rf ~/catkin_ws/src/networktable_bridge/
+cp -R $cwd/catkin_ws/src/networktable_bridge ~/catkin_ws/src
+
 # Build everything
 
 cd ~/catkin_ws
