@@ -43,6 +43,8 @@ if __name__ == '__main__':
 
         rospy.init_node('network_table_bridge', anonymous=False)
 
+        #Loop here and check if special NT entry is different than last, if so, subscribe to that topic?
+
         my_topic = 'chatter'
         rospy.Subscriber(my_topic, Pose, add_to_nt, callback_args=my_topic)
 
