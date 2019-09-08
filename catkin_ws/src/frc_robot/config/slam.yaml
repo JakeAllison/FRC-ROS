@@ -20,16 +20,21 @@ rtabmap:
       frame_id: base_link
 
       subscribe_depth: false
+      subscribe_rgb: false
       subscribe_rgbd: true
       subscribe_scan: true
       
-      Reg/Strategy: 1
+      Reg/Strategy: 2
       Reg/Force3DoF: true
       RGBD/ProximityBySpace: false
+      RGBD/ProximityPathMaxNeighbors: 10
+      
+      Grid/FromDepth: true
       
       odom_frame_id: odom
       odom_tf_linear_variance: 0.0005
       odom_tf_angular_variance: 0.0005
+      
 
 points_xyzrgb:
   voxel_size: 0.01
