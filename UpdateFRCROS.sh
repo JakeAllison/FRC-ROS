@@ -14,5 +14,6 @@ cp -R $cwd/catkin_ws/src/networktable_bridge ~/catkin_ws/src
 
 cd ~/catkin_ws
 catkin_make
+
 source ~/.bashrc
 rospack list
