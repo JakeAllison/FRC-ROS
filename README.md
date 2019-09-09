@@ -16,6 +16,7 @@ Step 3: Run './SetupFRCRobot.sh'
 
 Step 4: Run 'roslaunch frc_robot main_control.launch sim:=true visualize:=true slam:=true teleop:=true' and that will bring up a simulation.
 Note: You need to hold down the "A" button on the Xbox controller to enable driving control.
+You can hold down "B" for turbo speed.
 
 
 The options include the following and can be typed in similar to above:

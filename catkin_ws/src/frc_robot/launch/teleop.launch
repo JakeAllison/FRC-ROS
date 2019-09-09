@@ -19,6 +19,11 @@
   
   <node if="$(arg xbox)" name="teleop_twist_joy" pkg="teleop_twist_joy" type="teleop_node">
     <remap from="cmd_vel" to="/frc_diff_drive_controller/cmd_vel"/>
+    <param name="enable_button" value="0"/>
+    <param name="enable_turbo_button" value="1"/>
+    <param name="scale_linear" value="2.0"/>
+    <param name="scale_linear_turbo" value="5.0"/>
+    <param name="scale_angular" value="2.5"/>
   </node>
   
 </launch>
