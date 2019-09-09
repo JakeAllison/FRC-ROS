@@ -15,6 +15,7 @@ Step 2: Install ROS Kinetic using the following guide: http://wiki.ros.org/kinet
 Step 3: Run './SetupFRCRobot.sh'
 
 Step 4: Run 'roslaunch frc_robot main_control.launch sim:=true visualize:=true slam:=true teleop:=true' and that will bring up a simulation.
+Note: You need to hold down the "A" button on the Xbox controller to enable driving control.
 
 
 The options include the following and can be typed in similar to above:
