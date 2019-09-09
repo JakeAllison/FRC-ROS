@@ -8,7 +8,7 @@ map_type: voxel
 
 obstacle_layer:
   enabled:              true
-  max_obstacle_height:  0.6
+  max_obstacle_height:  2.0
   origin_z:             0.0
   z_resolution:         0.2
   z_voxels:             2
@@ -22,20 +22,28 @@ obstacle_layer:
   z_resolution: 0.2
   z_voxels: 2
   publish_voxel_map: false
-  observation_sources:  scan
+  observation_sources:  scan points
   scan:
     data_type: LaserScan
-    topic: /hokuyo_laser/laser_scan
+    topic: /scan
     marking: true
     clearing: true
-    min_obstacle_height: 0.25
-    max_obstacle_height: 0.35
+    min_obstacle_height: 0.1
+    max_obstacle_height: 2.0
+  points:
+    data_type: PointCloud2
+    topic: /voxel_cloud
+    marking: true
+    clearing: true
+    min_obstacle_height: 0.1
+    max_obstacle_height: 2.0
+    
 
 #cost_scaling_factor and inflation_radius were now moved to the inflation_layer ns
 inflation_layer:
   enabled:              true
-  cost_scaling_factor:  5.0  # exponential rate at which the obstacle cost drops off (default: 10)
-  inflation_radius:     0.75  # max. distance from an obstacle at which costs are incurred for planning paths.
+  cost_scaling_factor:  5.0 # exponential rate at which the obstacle cost drops off (default: 10)
+  inflation_radius:     0.5  # max. distance from an obstacle at which costs are incurred for planning paths.
 
 static_layer:
   enabled:              true

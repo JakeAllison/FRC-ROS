@@ -1,17 +1,31 @@
 <launch>
+  <include file="$(find frc_robot)/launch/localization.launch"/>
   <rosparam command="load" file="$(find frc_robot)/config/slam.yaml"/>
-  
-  <!-- Choose visualization -->
-  <arg name="rviz" default="false" />
-  <arg name="rtabmapviz" default="false" />
 
   <param name="use_sim_time" type="bool" value="True"/>
+    
+  <!-- Choose hector_slam or icp_odometry for odometry -->
+  <arg name="hector" default="true" />
   
-  <node pkg="tf" type="static_transform_publisher" name="scanmatcher_to_base_footprint" 
-    args="0.0 0.0 0.0 0.0 0.0 0.0 /scanmatcher_frame /base_link 100" />
+  <node if="$(arg hector)" pkg="tf" type="static_transform_publisher" name="map_to_hector_map" 
+    args="0.0 0.0 0.0 0.0 0.0 0.0 /map /hector_map 100" />
+    
+    
+    
   <!-- Odometry from laser scans -->
   <!-- If argument "hector" is true, we use Hector mapping to generate odometry for us -->
-  <node pkg="hector_mapping" type="hector_mapping" name="hector_mapping" output="screen"/>
+  <node if="$(arg hector)" pkg="hector_mapping" type="hector_mapping" name="hector_mapping" output="screen"/>
+  
+  
+  
+    <!-- If argument "hector" is false, we use rtabmap's icp odometry to generate odometry for us -->
+  <node unless="$(arg hector)" pkg="rtabmap_ros" type="icp_odometry" name="icp_odometry" output="screen" >
+     <remap from="scan"      to="/scan"/>
+     <remap from="odom"      to="/scanmatch_odom"/>
+     <remap from="odom_info"      to="/rtabmap/odom_info"/>
+  </node>
+
+
 
   <group ns="rtabmap">
     <node pkg="nodelet" type="nodelet" name="rgbd_sync" args="standalone rtabmap_ros/rgbd_sync" output="screen">
@@ -24,15 +38,18 @@
     <!-- SLAM -->
     <!-- args: "delete_db_on_start" and "udebug" -->
     <node name="rtabmap" pkg="rtabmap_ros" type="rtabmap" output="screen" args="--delete_db_on_start">
-     
-      <remap from="scan" to="/hokuyo_laser/laser_scan"/>
+    
+      <remap from="scan" to="/scan"/>
+
+      <!-- As hector doesn't provide compatible covariance in the odometry topic, don't use the topic and fix the covariance -->
+      <param if="$(arg hector)" name="odom_frame_id"            type="string" value="map"/>
+      <param if="$(arg hector)" name="odom_tf_linear_variance"  type="double" value="0.0005"/>
+      <param if="$(arg hector)" name="odom_tf_angular_variance" type="double" value="0.0005"/>
+
+      <remap unless="$(arg hector)" from="odom" to="/scanmatch_odom"/>
+      <param unless="$(arg hector)" name="subscribe_odom_info" type="bool" value="true"/>
     </node>
   
   </group>
-  
-  <node pkg="nodelet" type="nodelet" name="points_xyzrgb" args="standalone rtabmap_ros/point_cloud_xyzrgb">
-    <remap from="rgbd_image"      to="/rtabmap/rgbd_image"/>
-    <remap from="cloud"           to="voxel_cloud" />
-  </node>
 
 </launch>

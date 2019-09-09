@@ -1,0 +1,26 @@
+<launch>
+  <arg name="model" default="$(find frc_robot)/urdf/00-default.urdf.xacro"/>
+  <arg name="teleop" default="false" />
+  <arg name="lidar" default="true" />
+  <arg name="kinect" default="true" />
+  <arg name="networktable" default="true" />
+  
+  
+  <!-- Sensor readings -->
+  
+  <include if="$(arg lidar)" file="$(find rplidar_ros)/launch/rplidar.launch"/>
+  <include if="$(arg kinect)" file="$(find openni_launch)/launch/openni.launch"/>
+  
+  <!-- Roborio communication -->
+  
+  <include if="$(arg networktable)" file="$(find networktable_bridge)/launch/networktable_bridge.launch"/>
+  
+  
+  <!-- Manual control from ROS -->
+  
+  
+  <node if="$(arg teleop)" name="rqt_robot_steering" pkg="rqt_robot_steering" type="rqt_robot_steering">
+    <param name="default_topic" value="/frc_diff_drive_controller/cmd_vel"/>
+  </node>
+  
+</launch>

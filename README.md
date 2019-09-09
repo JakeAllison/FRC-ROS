@@ -14,15 +14,20 @@ Step 2: Install ROS Kinetic using the following guide: http://wiki.ros.org/kinet
 
 Step 3: Run './SetupFRCRobot.sh'
 
-Step 4a: Run 'roslaunch frc_robot sim.launch' to start your simulation if you are running a simulation.
-This can be done on any machine with this package installed and does not necessarily have to be your robot. It just has to be connected to your network and able to connect to the robot.
+Step 4: Run 'roslaunch frc_robot main_control.launch sim:=true visualize:=true slam:=true teleop:=true' and that will bring up a simulation.
 
-Step 4b: Run 'roslaunch frc_robot real_robot.launch' to start your robot's real functions. This must be on the robot itself. (this needs to be implemented)
 
-Step 5a: Run 'roslaunch frc_robot main_control.launch' and can be on any machine you choose as long as it's on the same network as your robot.
+The options include the following and can be typed in similar to above:
+- auton: Enables autonomous nagivation and driving.
+- robot: FOR THE REAL ROBOT. This brings up all sensors and the bridge to the roboRIO.
+- sim: Brings up a simulation.
+- slam: Enables SLAM (Simeltaneous Localization and Mapping)
+- teleop: Enables teleop control through either GUI or any joystick such as an XBox controller.
 
-Step 6: Run 'roslaunch frc_robot visualize.launch' to run just Rviz and view your robot's data. This can be any machine as long as it's on the same network as your robot.
-This is already running if a simulation is being run unless you want to view on another machine.
+
+
+------------------------------------------------------------------------------------------------------------------------
+
 
 
 

@@ -1,0 +1,24 @@
+<launch>
+  <arg name="slider" default="true" />
+  <arg name="keyboard" default="false" />
+  <arg name="xbox" default="true" />
+  
+  
+  
+  <node if="$(arg slider)" name="rqt_robot_steering" pkg="rqt_robot_steering" type="rqt_robot_steering">
+    <param name="default_topic" value="/frc_diff_drive_controller/cmd_vel"/>
+  </node>
+  
+  <node if="$(arg keyboard)" name="teleop_twist_keyboard" pkg="teleop_twist_keyboard" type="teleop_twist_keyboard">
+    <remap from="cmd_vel" to="/frc_diff_drive_controller/cmd_vel"/>
+  </node>
+  
+  <node if="$(arg xbox)" name="joy_driver" pkg="joy" type="joy_node">
+  
+  </node>
+  
+  <node if="$(arg xbox)" name="teleop_twist_joy" pkg="teleop_twist_joy" type="teleop_node">
+    <remap from="cmd_vel" to="/frc_diff_drive_controller/cmd_vel"/>
+  </node>
+  
+</launch>

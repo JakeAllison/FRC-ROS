@@ -61,6 +61,7 @@
   <exec_depend>hector_mapping</exec_depend>
   <exec_depend>hector_slam_launch</exec_depend>
   <exec_depend>joint_state_controller</exec_depend>
+  <exec_depend>joy</exec_depend>
   <exec_depend>laser_filters</exec_depend>
   <exec_depend>move_base</exec_depend>
   <exec_depend>openni_launch</exec_depend>
@@ -72,6 +73,8 @@
   <exec_depend>rtabmap</exec_depend>
   <exec_depend>rtabmap_ros</exec_depend>
   <exec_depend>rviz</exec_depend>
+  <exec_depend>teleop_twist_joy</exec_depend>
+  <exec_depend>teleop_twist_keyboard</exec_depend>
   <exec_depend>xacro</exec_depend>
 
 

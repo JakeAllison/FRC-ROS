@@ -76,6 +76,17 @@ else
     tar -xf "$file" -C ~/.gazebo/models
 fi
 
+# Modification to the lidar to extend the range to that of the RPLidar (12 meters).
+file=$cwd//hokuyo_04lx_laser.gazebo.xacro
+if [ ! -f "$file" ]; then
+    echo -e "\e[31m$file is missing in current working directory\e[39m"
+    exit 1
+else
+    echo "Found '$file'"
+    echo "Extracting to ~/catkin_ws/src/common-sensors/common_sensors/urdf/sensors/"
+    cp "$file" ~/catkin_ws/src/common-sensors/common_sensors/urdf/sensors/
+fi
+
 # Build everything
 
 cd ~/catkin_ws

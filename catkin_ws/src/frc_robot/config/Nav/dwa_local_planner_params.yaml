@@ -29,10 +29,10 @@ DWAPlannerROS:
 # latch_xy_goal_tolerance: false
 
 # Forward Simulation Parameters
-  sim_time: 1.0       # 1.7
-  vx_samples: 6       # 3
+  sim_time: 5.0       # 1.7
+  vx_samples: 12       # 3
   vy_samples: 1       # diff drive robot, there is only one sample
-  vtheta_samples: 20  # 20
+  vtheta_samples: 50  # 20
 
 # Trajectory Scoring Parameters
   path_distance_bias: 32.0      # 32.0   - weighting for how much it should stick to the global path plan

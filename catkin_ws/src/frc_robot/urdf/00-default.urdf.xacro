@@ -49,7 +49,7 @@
   </joint>
   
   <xacro:sensor_kinect parent="kinect_mount"/>
-  <xacro:hokuyo_04lx_laser name="2D_Laser" parent="lidar_mount" ros_topic="/hokuyo_laser/laser_scan" update_rate="50" min_angle="-2.0" max_angle="2.0">
+  <xacro:hokuyo_04lx_laser name="2D_Laser" parent="lidar_mount" ros_topic="/scan" update_rate="50" min_angle="-2.0" max_angle="2.0">
     <origin/>
   </xacro:hokuyo_04lx_laser>
   
