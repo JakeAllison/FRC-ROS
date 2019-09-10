@@ -1,14 +1,15 @@
 <launch>
-  <include file="$(find frc_robot)/launch/localization.launch"/>
   <rosparam command="load" file="$(find frc_robot)/config/slam.yaml"/>
 
-  <param name="use_sim_time" type="bool" value="True"/>
+  <param name="use_sim_time" type="bool" value="true"/>
     
   <!-- Choose hector_slam or icp_odometry for odometry -->
   <arg name="hector" default="true" />
   
-  <node if="$(arg hector)" pkg="tf" type="static_transform_publisher" name="map_to_hector_map" 
-    args="0.0 0.0 0.0 0.0 0.0 0.0 /map /hector_map 100" />
+  <include if="$(arg hector)" file="$(find frc_robot)/launch/localization.launch"/>
+  
+  <!-- <node if="$(arg hector)" pkg="tf" type="static_transform_publisher" name="map_to_hector_map" 
+    args="0.0 0.0 0.0 0.0 0.0 0.0 /map /hector_map 100" /> -->
     
     
     
@@ -21,7 +22,7 @@
     <!-- If argument "hector" is false, we use rtabmap's icp odometry to generate odometry for us -->
   <node unless="$(arg hector)" pkg="rtabmap_ros" type="icp_odometry" name="icp_odometry" output="screen" >
      <remap from="scan"      to="/scan"/>
-     <remap from="odom"      to="/scanmatch_odom"/>
+     <remap from="odom"      to="/odom"/>
      <remap from="odom_info"      to="/rtabmap/odom_info"/>
   </node>
 
@@ -38,15 +39,18 @@
     <!-- SLAM -->
     <!-- args: "delete_db_on_start" and "udebug" -->
     <node name="rtabmap" pkg="rtabmap_ros" type="rtabmap" output="screen" args="--delete_db_on_start">
+    <!-- <node name="rtabmap" pkg="rtabmap_ros" type="rtabmap" output="screen"> -->
     
       <remap from="scan" to="/scan"/>
 
       <!-- As hector doesn't provide compatible covariance in the odometry topic, don't use the topic and fix the covariance -->
+      <param if="$(arg hector)" name="publish_tf"               type="bool" value="false"/>
       <param if="$(arg hector)" name="odom_frame_id"            type="string" value="map"/>
       <param if="$(arg hector)" name="odom_tf_linear_variance"  type="double" value="0.0005"/>
       <param if="$(arg hector)" name="odom_tf_angular_variance" type="double" value="0.0005"/>
 
-      <remap unless="$(arg hector)" from="odom" to="/scanmatch_odom"/>
+      <param unless="$(arg hector)" name="publish_tf"          type="bool" value="true"/>
+      <remap unless="$(arg hector)" from="odom" to="/odom"/>
       <param unless="$(arg hector)" name="subscribe_odom_info" type="bool" value="true"/>
     </node>
   

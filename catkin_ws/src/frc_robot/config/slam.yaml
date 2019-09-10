@@ -1,10 +1,10 @@
 hector_mapping:
-  base_frame: base_link
   map_frame: map
+  base_frame: base_link
   odom_frame: odom
   
   pub_map_odom_transform: true
-  pub_map_scanmatch_transform: true
+  pub_map_scanmatch_transform: false
   pub_odometry: true
   
   map_resolution: 0.050
@@ -17,8 +17,9 @@ hector_mapping:
 icp_odometry:
   frame_id: base_link
   odom_frame_id: odom
-  publish_tf: false
-  Icp/PointToPlane: true
+  publish_tf: true
+  
+  Icp/PointToPlane: false
   Icp/VoxelSize: 0.05
   Icp/Epsilon: 0.001
   Icp/PointToPlaneK: 5
