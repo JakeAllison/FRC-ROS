@@ -2,7 +2,7 @@
 <root xmlns:xacro="http://ros.org/wiki/xacro">
 
     <xacro:include filename="$(find frc_robot)/urdf/inertia.urdf.xacro" />
-  
+    
       <xacro:property name="front" value="1" />
       <xacro:property name="middle" value="0" />
       <xacro:property name="rear" value="-1" />
@@ -11,15 +11,16 @@
       <xacro:property name="no_drop" value="0" />
       <xacro:property name="drop" value="-1" />
       <xacro:property name="high_friction" value="200.0" />
+      <xacro:property name="medium_friction" value="100.0" />
       <xacro:property name="low_friction" value="1.0" />
     
-    <xacro:macro name="six_wheel_diff_drive" params="name parent z_offset drop_wheel_height wheel_separation wheel_base_length wheel_radius wheel_width wheel_mass">
+    <xacro:macro name="six_wheel_diff_drive" params="name parent z_offset drop_wheel_height wheel_separation wheelbase_length wheel_radius wheel_width wheel_mass">
         
             
-    <!--                          Wheels                           -->
+    <!--                          Diff Wheels                           -->
 
-      <xacro:macro name="wheel" params="prefix side fntctrbck drop friction">
-        <link name="${prefix}_wheel">
+      <xacro:macro name="diff_wheel" params=" parent2 prefix side fntctrbck drop friction">
+        <link name="${prefix}_diff_wheel">
           <visual>
             <geometry>
               <cylinder length="${wheel_width}" radius="${wheel_radius}"/>
@@ -42,24 +43,24 @@
             <origin xyz="0 0 0"/>
           </inertial>
         </link>
-        <joint name="${parent}_to_${prefix}_wheel" type="continuous">
-          <parent link="${parent}"/>
-          <child link="${prefix}_wheel"/>
+        <joint name="${parent2}_to_${prefix}_diff_wheel" type="continuous">
+          <parent link="${parent2}"/>
+          <child link="${prefix}_diff_wheel"/>
           <axis xyz="0 0 ${-1*side}"/>
-          <origin rpy="${side*pi/2} 0 0" xyz="${fntctrbck*(wheel_base_length/2)} ${side*(wheel_separation/2)} ${z_offset+drop*drop_wheel_height}"/>
+          <origin rpy="${side*pi/2} 0 0" xyz="${fntctrbck*(wheelbase_length/2)} ${side*(wheel_separation/2)} ${z_offset+drop*drop_wheel_height}"/>
         </joint>
         
-        <transmission name="${prefix}_wheel_trans">
+        <transmission name="${prefix}_diff_wheel_trans">
           <type>transmission_interface/SimpleTransmission</type>
-          <actuator name="${prefix}_wheel_motor">
+          <actuator name="${prefix}_diff_wheel_motor">
             <mechanicalReduction>1</mechanicalReduction>
           </actuator>
-          <joint name="${parent}_to_${prefix}_wheel">
+          <joint name="${parent2}_to_${prefix}_diff_wheel">
             <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
           </joint>
         </transmission>
         
-        <gazebo reference="${prefix}_wheel">
+        <gazebo reference="${prefix}_diff_wheel">
           <mu1 value="${friction}"/>
           <mu2 value="${friction}"/>
           <kp value="10000000.0"/>
@@ -68,12 +69,107 @@
         </gazebo>
       </xacro:macro>
       
-      <xacro:wheel prefix="fl" side="${left}" fntctrbck="${front}" drop="${no_drop}" friction="${low_friction}" />
-      <xacro:wheel prefix="ml" side="${left}" fntctrbck="${middle}" drop="${drop}" friction="${high_friction}" />
-      <xacro:wheel prefix="rl" side="${left}" fntctrbck="${rear}" drop="${no_drop}" friction="${low_friction}" />
-      <xacro:wheel prefix="fr" side="${right}" fntctrbck="${front}" drop="${no_drop}" friction="${low_friction}" />
-      <xacro:wheel prefix="mr" side="${right}" fntctrbck="${middle}" drop="${drop}" friction="${high_friction}" />
-      <xacro:wheel prefix="rr" side="${right}" fntctrbck="${rear}" drop="${no_drop}" friction="${low_friction}" />
+      <xacro:diff_wheel parent2="${parent}" prefix="fl" side="${left}" fntctrbck="${front}" drop="${no_drop}" friction="${low_friction}" />
+      <xacro:diff_wheel parent2="${parent}" prefix="ml" side="${left}" fntctrbck="${middle}" drop="${drop}" friction="${high_friction}" />
+      <xacro:diff_wheel parent2="${parent}" prefix="rl" side="${left}" fntctrbck="${rear}" drop="${no_drop}" friction="${low_friction}" />
+      <xacro:diff_wheel parent2="${parent}" prefix="fr" side="${right}" fntctrbck="${front}" drop="${no_drop}" friction="${low_friction}" />
+      <xacro:diff_wheel parent2="${parent}" prefix="mr" side="${right}" fntctrbck="${middle}" drop="${drop}" friction="${high_friction}" />
+      <xacro:diff_wheel parent2="${parent}" prefix="rr" side="${right}" fntctrbck="${rear}" drop="${no_drop}" friction="${low_friction}" />
+            
+    </xacro:macro>
+  
+  
+    
+    <xacro:macro name="swerve_drive" params="name parent z_offset wheelbase_width wheelbase_length wheel_radius wheel_width wheel_mass">
+      
+    <!--                          Swerve Pivot                           -->
+      <xacro:macro name="swerve_pivot" params="parent2 prefix side fntbck friction">
+      
+        <!--                          Swerve Wheel                           -->
+          <xacro:macro name="swerve_wheel" params="parent3 prefix2 friction">
+            <link name="${prefix2}_swerve_wheel">
+              <visual>
+                <geometry>
+                  <cylinder length="${wheel_width}" radius="${wheel_radius}"/>
+                </geometry>
+                <origin xyz="0 0 0"/>
+                <material name="blue"/>
+              </visual>
+              <collision>
+                <geometry>
+                  <cylinder length="${wheel_width}" radius="${wheel_radius}"/>
+                </geometry>
+                <origin xyz="0 0 0"/>
+              </collision>
+              <inertial>
+                <mass value="${wheel_mass}"/>
+                <xacro:cylinder_inertia
+                m="${wheel_mass}"
+                r="${wheel_radius}"
+                h="${wheel_width}" />
+                <origin xyz="0 0 0"/>
+              </inertial>
+            </link>
+            <joint name="${parent3}_to_${prefix2}_swerve_wheel" type="continuous">
+              <parent link="${parent3}"/>
+              <child link="${prefix2}_swerve_wheel"/>
+              <axis xyz="0 0 1"/>
+              <origin rpy="${-pi/2} 0 0" xyz="0 0 0"/>
+            </joint>
+            
+            <transmission name="${prefix2}_swerve_wheel_trans">
+              <type>transmission_interface/SimpleTransmission</type>
+              <actuator name="${prefix2}_swerve_wheel_motor">
+                <mechanicalReduction>1</mechanicalReduction>
+              </actuator>
+              <joint name="${parent3}_to_${prefix2}_swerve_wheel">
+                <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
+              </joint>
+            </transmission>
+            
+            <gazebo reference="${prefix2}_swerve_wheel">
+              <mu1 value="${friction}"/>
+              <mu2 value="${friction}"/>
+              <kp value="10000000.0"/>
+              <kd value="1.0" />
+              <material>Gazebo/gray</material>
+            </gazebo>
+          </xacro:macro>
+      
+      
+        <link name="${prefix}_swerve_pivot"/>
+        <joint name="${parent2}_to_${prefix}_swerve_pivot" type="continuous">
+          <parent link="${parent2}"/>
+          <child link="${prefix}_swerve_pivot"/>
+          <axis xyz="0 0 1"/>
+          <origin rpy="0 0 0" xyz="${fntbck*(wheelbase_length/2)} ${side*(wheelbase_width/2)} ${z_offset}"/>
+        </joint>
+      
+        <xacro:swerve_wheel parent3="${prefix}_swerve_pivot" prefix2="${prefix}" friction="${friction}" />
+        
+        <transmission name="${prefix}_swerve_pivot_trans">
+          <type>transmission_interface/SimpleTransmission</type>
+          <actuator name="${prefix}_swerve_pivot_motor">
+            <mechanicalReduction>1</mechanicalReduction>
+          </actuator>
+          <joint name="${parent2}_to_${prefix}_swerve_pivot">
+            <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+          </joint>
+        </transmission>
+        
+        <gazebo reference="${prefix}_swerve_pivot">
+          <mu1 value="${friction}"/>
+          <mu2 value="${friction}"/>
+          <kp value="10000000.0"/>
+          <kd value="1.0" />
+          <material>Gazebo/gray</material>
+        </gazebo>
+      </xacro:macro>
+      
+      <xacro:swerve_pivot parent2="${parent}" prefix="fl" side="${left}" fntbck="${front}" friction="${medium_friction}" />
+      <xacro:swerve_pivot parent2="${parent}" prefix="rl" side="${left}" fntbck="${rear}" friction="${medium_friction}" />
+      <xacro:swerve_pivot parent2="${parent}" prefix="fr" side="${right}" fntbck="${front}" friction="${medium_friction}" />
+      <xacro:swerve_pivot parent2="${parent}" prefix="rr" side="${right}" fntbck="${rear}" friction="${medium_friction}" />
             
   </xacro:macro>
 </root>
