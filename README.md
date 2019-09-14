@@ -1,25 +1,22 @@
-Simulation Demo: https://www.youtube.com/watch?v=qSjgmY7hYsY
+# FRC-ROS
 
+Simulation Demo: https://www.youtube.com/watch?v=qSjgmY7hYsY
 Teleop Demo w/ SLAM: https://www.youtube.com/watch?v=1Qe-s1liH5k
 
 This is the source code for using ROS with an FRC Robot.
+The steps for installing and running ROS applications are identical for desktop PC's, laptops, Raspberry PI, NVidia Jetson.
 
-These steps are identical for desktop PC's, laptops, Raspberry PI, NVidia Jetson.
-The "catkin_ws" folder is here simply for viewing. This will probably be changed later.
-All code is automatically extracted placed in its appropriate location using "./SetupFRCRobot.sh".
+Step 1: Make sure you have Ubuntu 16.04 installed on your computer.
 
-Step 1: Make sure you have Ubuntu 16.04 installed.
+Step 2: Install NVidia Jetpack 3.3 with the included file in a terminal on your computer: JetPack-L4T-3.3-linux-x64_b39.run
+- At a minimum, you will want to install: Target - Jetson TX2/TX2i
 
-Step 1a: Install NVidia Jetpack 3.3 (NVidia Developer membership required): https://developer.nvidia.com/embedded/dlc/jetpack-install-guide-3_3
+Step 3: Install ROS Kinetic on both your computer and Jetson using the following guide: http://wiki.ros.org/kinetic/Installation/Ubuntu
 
-Step 2: Install ROS Kinetic using the following guide: http://wiki.ros.org/kinetic/Installation/Ubuntu
+Step 4: Run './SetupFRCRobot.sh'
+Step 4a: If you only want to make changes to the code in the '~/catkin_ws/src' folder, make your updates in the folder where you downloaded the code, then run './UpdateFRCRobot.sh' in a terminal and that will update the files in the '~/catkin_ws/src/' folder and will be faster than running the entire SetupFRCRobot.sh script.
 
-Step 3: Run './SetupFRCRobot.sh'
-
-Step 4: Run 'roslaunch frc_robot main_control.launch sim:=true visualize:=true slam:=true teleop:=true' and that will bring up a simulation.
-Note: You need to hold down the "A" button on the Xbox controller to enable driving control.
-You can hold down "B" for turbo speed.
-
+Step 5: In a terminal, run 'roslaunch frc_robot main_control.launch sim:=true visualize:=true slam:=true teleop:=true' and that will bring up a simulation.
 
 The options include the following and can be typed in similar to above:
 - auton: Enables autonomous nagivation and driving.
@@ -27,6 +24,11 @@ The options include the following and can be typed in similar to above:
 - sim: Brings up a simulation.
 - slam: Enables SLAM (Simeltaneous Localization and Mapping)
 - teleop: Enables teleop control through either GUI or any joystick such as an XBox controller.
+
+Note: You need to hold down the "A" button on the Xbox controller to enable driving control.
+You can hold down "B" for turbo speed.
+
+
 
 
 
@@ -114,30 +116,39 @@ Such parameters include:
 
 
 
+------------------------------------------------------------------------------------------------------------------------
 
-Recommended tutorials for current content (this is the only stuff that's immediately important):
+
+
+Recommended tutorials to get started:
+- http://wiki.ros.org/
 - http://wiki.ros.org/ROS/Tutorials
 - http://wiki.ros.org/urdf/Tutorials
-
-
-Tutorials for future development:
-- http://gazebosim.org/tutorials?tut=ros_depth_camera&cat=connect_ros
-- http://wiki.ros.org/rtabmap_ros/Tutorials
+- http://gazebosim.org/tutorials?tut=ros_overview
+- http://wiki.ros.org/rviz/Tutorials
 - http://wiki.ros.org/navigation/Tutorials
-- https://roscon.ros.org/2015/presentations/robot_localization.pdf
 
 
-More relevant content:
+Sensors:
 
-- http://docs.ros.org/kinetic/api/robot_localization/html/index.html
-- http://wiki.ros.org/taraxl-ros-package
+A 2d lidar and a 3d depth camera is required. Here's a list of sensors commonly used: http://wiki.ros.org/Sensors
+You can use your own sensors and packages as long as they publish the correct topics.
+Some sensor packages are included here:
 - http://wiki.ros.org/rplidar
+- http://wiki.ros.org/openni_launch
+- http://gazebosim.org/tutorials?tut=ros_depth_camera&cat=connect_ros
+
+
+SLAM (Simeltaneous Localization and Mapping):
+
+- http://wiki.ros.org/hector_mapping
 - http://wiki.ros.org/rtabmap_ros
-- http://wiki.ros.org/freenect_launch
+- https://roscon.ros.org/2015/presentations/robot_localization.pdf
+- http://docs.ros.org/kinetic/api/robot_localization/html/index.html
+
 
 
 This stuff is more advanced:
 - https://github.com/dusty-nv/ros_deep_learning
 - https://developer.nvidia.com/embedded/twodaystoademo
 
-# FRC-ROS
