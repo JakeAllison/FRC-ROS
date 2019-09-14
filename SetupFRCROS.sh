@@ -1,24 +1,21 @@
+#!/bin/bash
+
 cwd=$PWD
 
 echo "Currernt working directory:" $cwd
 
-# Check that correct packages are installed.
+
+# Auto Install ROS
 
 ros_install=ros-kinetic-desktop-full
-if dpkg-query -W -f'${Status}' "${ros_install}" 2>/dev/null | grep -q "ok installed"; then
-    echo "${ros_install} installed"
-else
-    echo -e "\e[31mROS Kinetic NOT installed. Please install '${ros_install}'\e[39m"
-    exit 1
-fi
-
 pip_install=python-pip
-if dpkg-query -W -f'${Status}' "${pip_install}" 2>/dev/null | grep -q "ok installed"; then
-    echo "${pip_install} installed"
-else
-    echo -e "\e[31mpython pip NOT installed. Please install '${pip_install}'\e[39m"
-    exit 1
-fi
+
+sudo sh -c 'echo "deb http://packages.ros.org/ros/ubuntu $(lsb_release -sc) main" > /etc/apt/sources.list.d/ros-latest.list'
+sudo apt-key adv --keyserver 'hkp://keyserver.ubuntu.com:80' --recv-key C1CF6E31E6BADE8868B172B4F42ED6FBAB17C654
+sudo apt update
+sudo apt-get install ${ros_install} ${pip_install}
+sudo rosdep init
+rosdep update
 
 #install network tables for ntbridge
 python -m pip install --user pynetworktables==2018.2.0
@@ -27,12 +24,21 @@ python -m pip install --user pynetworktables==2018.2.0
 
 mkdir -p ~/catkin_ws/src
 
+if grep -q 'source /opt/ros/kinetic/setup.bash' ~/.bashrc; then
+    echo "~/.bashrc line 1 found"
+else
+    echo -e "\e[93m~/.bashrc line NOT found. Adding line to EOF.\e[39m"
+    echo 'source /opt/ros/kinetic/setup.bash' >> ~/.bashrc
+fi
+
 if grep -q 'source ~/catkin_ws/devel/setup.bash' ~/.bashrc; then
-    echo "~/.bashrc line found"
+    echo "~/.bashrc line 2 found"
 else
     echo -e "\e[93m~/.bashrc line NOT found. Adding line to EOF.\e[39m"
     echo 'source ~/catkin_ws/devel/setup.bash' >> ~/.bashrc
 fi
+
+sudo apt install python-rosinstall python-rosinstall-generator python-wstool build-essential
 
 # Copy packages
 
@@ -77,7 +83,7 @@ else
 fi
 
 # Modification to the lidar to extend the range to that of the RPLidar (12 meters).
-file=$cwd//hokuyo_04lx_laser.gazebo.xacro
+file=$cwd/hokuyo_04lx_laser.gazebo.xacro
 if [ ! -f "$file" ]; then
     echo -e "\e[31m$file is missing in current working directory\e[39m"
     exit 1
@@ -87,20 +93,24 @@ else
     cp "$file" ~/catkin_ws/src/common-sensors/common_sensors/urdf/sensors/
 fi
 
+# Auto Install Dependencies
+
+rosdep install --from-paths ~/catkin_ws/src --ignore-src --rosdistro=kinetic -y
+
+
 # Build everything
 
 cd ~/catkin_ws
+source ~/.bashrc
 catkin_make
 source ~/.bashrc
-rospack list
+
+
 
 # Check dependencies
 
 cd ~/catkin_ws/src/frc_robot
 roswtf
-
 cd ~/catkin_ws/src/networktable_bridge
 roswtf
 
-echo "You may need to run 'source ~/.bashrc' or start a new terminal if roswtf cannot find 'frc_robot' package."
-echo "You can run 'roswtf' in a terminal while you are running your ROS program to check if anything is faulty."

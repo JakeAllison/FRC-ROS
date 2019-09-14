@@ -9,12 +9,11 @@ The steps for installing and running ROS applications are identical for desktop 
 Step 1: Make sure you have Ubuntu 16.04 installed on your computer.
 
 Step 2: Install NVidia Jetpack 3.3 with the included file in a terminal on your computer: JetPack-L4T-3.3-linux-x64_b39.run
-- At a minimum, you will want to install: Target - Jetson TX2/TX2i
+- At a minimum, you will want follow directions to install: Target - Jetson TX2/TX2i
 
-Step 3: Install ROS Kinetic on both your computer and Jetson using the following guide: http://wiki.ros.org/kinetic/Installation/Ubuntu
+Step 3: Run './SetupFRCRobot.sh' in a terminal which will automatically install everything including ROS and any additional packages.
 
-Step 4: Run './SetupFRCRobot.sh'
-Step 4a: If you only want to make changes to the code in the '~/catkin_ws/src' folder, make your updates in the folder where you downloaded the code, then run './UpdateFRCRobot.sh' in a terminal and that will update the files in the '~/catkin_ws/src/' folder and will be faster than running the entire SetupFRCRobot.sh script.
+Step 4: If you want to make any changes, make them in your '../FRC-ROS' folder where you downloaded this, then run './UpdateFRCROS.sh' in a terminal.
 
 Step 5: In a terminal, run 'roslaunch frc_robot main_control.launch sim:=true visualize:=true slam:=true teleop:=true' and that will bring up a simulation.
 
