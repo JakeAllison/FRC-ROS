@@ -100,10 +100,10 @@ rosdep install --from-paths ~/catkin_ws/src --ignore-src --rosdistro=kinetic -y
 
 # Build everything
 
+source /opt/ros/kinetic/setup.bash
 cd ~/catkin_ws
-source ~/.bashrc
 catkin_make
-source ~/.bashrc
+source ~/catkin_ws/devel/setup.bash
 
 
 
