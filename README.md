@@ -6,16 +6,17 @@ Teleop Demo w/ SLAM: https://www.youtube.com/watch?v=1Qe-s1liH5k
 This is the source code for using ROS with an FRC Robot.
 The steps for installing and running ROS applications are identical for desktop PC's, laptops, Raspberry PI, NVidia Jetson.
 
-Step 1: Make sure you have Ubuntu 16.04 installed on your computer.
+Step 1: Make sure you have Ubuntu 16.04 installed on your computer: https://tutorials.ubuntu.com/tutorial/tutorial-install-ubuntu-desktop-1604#0
 
 Step 2: Install NVidia Jetpack 3.3 with the included file in a terminal on your computer: JetPack-L4T-3.3-linux-x64_b39.run
-- At a minimum, you will want follow directions to install: Target - Jetson TX2/TX2i
+- You can follow the guide here (NVidia Developer membership required): https://developer.nvidia.com/embedded/dlc/jetpack-install-guide-3_3
+- At a minimum, you will want follow directions to install: Target - Jetson TX2/TX2i (or whatever hardware you have).
 
 Step 3: Run './SetupFRCRobot.sh' in a terminal which will automatically install everything including ROS and any additional packages.
 
 Step 4: If you want to make any changes, make them in your '../FRC-ROS' folder where you downloaded this, then run './UpdateFRCROS.sh' in a terminal.
 
-Step 5: In a terminal, run 'roslaunch frc_robot main_control.launch sim:=true visualize:=true slam:=true teleop:=true' and that will bring up a simulation.
+Step 5: In a terminal, run 'roslaunch frc_robot main_control.launch sim:=true visualize:=true slam:=true teleop:=true' and that will bring up the simulation.
 
 The options include the following and can be typed in similar to above:
 - auton: Enables autonomous nagivation and driving.
