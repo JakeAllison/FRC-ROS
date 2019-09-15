@@ -12,8 +12,7 @@ cp -R $cwd/catkin_ws/src/networktable_bridge ~/catkin_ws/src
 
 # Build everything
 
+source /opt/ros/kinetic/setup.bash
 cd ~/catkin_ws
 catkin_make
-
-source ~/.bashrc
-rospack list
+source ~/catkin_ws/devel/setup.bash
