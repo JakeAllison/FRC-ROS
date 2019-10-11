@@ -1,5 +1,6 @@
 <launch>
   <arg name="auton" default="false" />
+  <arg name="kinectlidar" default="false" />
   <arg name="robot" default="false" />
   <arg name="sim" default="false" />
   <arg name="slam" default="false" />
@@ -7,6 +8,7 @@
   <arg name="visualize" default="false" />
   
   <include if="$(arg auton)" file="$(find frc_robot)/launch/auton.launch"/>
+  <include if="$(arg kinectlidar)" file="$(find frc_robot)/launch/kinectlidar.launch"/>
   <include if="$(arg robot)" file="$(find frc_robot)/launch/robot.launch"/>
   <include if="$(arg sim)" file="$(find frc_robot)/launch/sim.launch"/>
   <include if="$(arg slam)" file="$(find frc_robot)/launch/slam.launch"/>
