@@ -1,6 +1,6 @@
 <launch>
   <arg name="model" default="$(find frc_robot)/urdf/00-default.urdf.xacro"/>
-  <arg name="rvizconfig" default="$(find frc_robot)/rviz/urdf_2.rviz" />
+  <arg name="rvizconfig" default="$(find frc_robot)/rviz/urdf.rviz" />
   
 
   <node name="rviz" pkg="rviz" type="rviz" args="-d $(arg rvizconfig)" />
