@@ -4,6 +4,7 @@
   <arg name="robot" default="false" />
   <arg name="sim" default="false" />
   <arg name="slam" default="false" />
+  <arg name="state_publishers" default="true" />
   <arg name="teleop" default="false" />
   <arg name="visualize" default="false" />
   
@@ -12,6 +13,7 @@
   <include if="$(arg robot)" file="$(find frc_robot)/launch/robot.launch"/>
   <include if="$(arg sim)" file="$(find frc_robot)/launch/sim.launch"/>
   <include if="$(arg slam)" file="$(find frc_robot)/launch/slam.launch"/>
+  <include if="$(arg state_publishers)" file="$(find frc_robot)/launch/state_publishers.launch"/>
   <include if="$(arg teleop)" file="$(find frc_robot)/launch/teleop.launch"/>
   <include if="$(arg visualize)" file="$(find frc_robot)/launch/visualize.launch"/>
   

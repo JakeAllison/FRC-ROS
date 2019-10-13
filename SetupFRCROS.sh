@@ -93,6 +93,28 @@ else
     cp "$file" ~/catkin_ws/src/common-sensors/common_sensors/urdf/sensors/
 fi
 
+# Kinect IR Calibration
+file=$cwd/depth_B00364725109104B.yaml
+if [ ! -f "$file" ]; then
+    echo -e "\e[31m$file is missing in current working directory\e[39m"
+    exit 1
+else
+    echo "Found '$file'"
+    echo "Extracting to ~/.ros/camera_info/"
+    cp "$file" ~/.ros/camera_info/
+fi
+
+# Kinect Camera Calibration
+file=$cwd/rgb_B00364725109104B.yaml
+if [ ! -f "$file" ]; then
+    echo -e "\e[31m$file is missing in current working directory\e[39m"
+    exit 1
+else
+    echo "Found '$file'"
+    echo "Extracting to ~/.ros/camera_info/"
+    cp "$file" ~/.ros/camera_info/
+fi
+
 # Auto Install Dependencies
 
 rosdep install --from-paths ~/catkin_ws/src --ignore-src --rosdistro=kinetic -y
