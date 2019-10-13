@@ -1,17 +1,12 @@
 <launch>
   <rosparam command="load" file="$(find frc_robot)/config/slam.yaml"/>
-
-  <param name="use_sim_time" type="bool" value="true"/>
     
   <!-- Choose hector_slam or icp_odometry for odometry -->
   <arg name="hector" default="true" />
   
   <!-- <include if="$(arg hector)" file="$(find frc_robot)/launch/localization.launch"/> -->
-  
-  <node if="$(arg hector)" pkg="tf" type="static_transform_publisher" name="map_to_hector_map" 
-    args="0.0 0.0 0.0 0.0 0.0 0.0 /map /hector_map 100" />
     
-    <node if="$(arg hector)" pkg="tf" type="static_transform_publisher" name="scanmatcher_to_base_link" 
+  <node if="$(arg hector)" pkg="tf" type="static_transform_publisher" name="scanmatcher_to_base_link" 
     args="0.0 0.0 0.0 0.0 0.0 0.0 /scanmatcher_frame /base_link 100" />
     
   <!-- Odometry from laser scans -->
