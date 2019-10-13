@@ -42,13 +42,12 @@
   </joint>
   
   <link name="lidar_mount"/>
-  <joint name="base_link_to_lidar_mount" type="fixed">
-    <parent link="base_link"/>
+  <joint name="kinect_mount_to_lidar_mount" type="fixed">
+    <parent link="kinect_mount"/>
     <child link="lidar_mount"/>
-    <origin rpy="0 0 0" xyz="0.25 0 0.3"/>
+    <origin rpy="0 0 0" xyz="0 0 0.1"/>
   </joint>
 
-  <!-- <link name="camera_link"/> -->
   <joint name="kinect_mount_to_camera_link" type="fixed">
     <parent link="kinect_mount"/>
     <child link="camera_link"/>

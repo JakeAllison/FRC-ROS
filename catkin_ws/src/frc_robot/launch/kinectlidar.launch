@@ -2,12 +2,13 @@
   <arg name="lidar" default="true" />
   <arg name="kinect" default="true" />
 
-  
   <!-- Sensor readings -->
-  
+
   <include if="$(arg lidar)" file="$(find rplidar_ros)/launch/rplidar.launch"/>
   <include if="$(arg kinect)" file="$(find openni_launch)/launch/openni.launch">
-    <param name="depth_registration" type="bool" value="true"/>
+    <arg name="camera" value="camera"/>
+    <arg name="depth_registration" value="false"/>
+    <arg name="publish_tf" value="false"/>
   </include>
-  
+
 </launch>

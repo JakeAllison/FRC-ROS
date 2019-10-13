@@ -3,8 +3,8 @@ hector_mapping:
   base_frame: base_link
   odom_frame: odom
   
-  pub_map_odom_transform: true
-  pub_map_scanmatch_transform: false
+  pub_map_odom_transform: false
+  pub_map_scanmatch_transform: true
   pub_odometry: true
   
   map_resolution: 0.050

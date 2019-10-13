@@ -6,12 +6,13 @@
   <!-- Choose hector_slam or icp_odometry for odometry -->
   <arg name="hector" default="true" />
   
-  <include if="$(arg hector)" file="$(find frc_robot)/launch/localization.launch"/>
+  <!-- <include if="$(arg hector)" file="$(find frc_robot)/launch/localization.launch"/> -->
   
-  <!-- <node if="$(arg hector)" pkg="tf" type="static_transform_publisher" name="map_to_hector_map" 
-    args="0.0 0.0 0.0 0.0 0.0 0.0 /map /hector_map 100" /> -->
+  <node if="$(arg hector)" pkg="tf" type="static_transform_publisher" name="map_to_hector_map" 
+    args="0.0 0.0 0.0 0.0 0.0 0.0 /map /hector_map 100" />
     
-    
+    <node if="$(arg hector)" pkg="tf" type="static_transform_publisher" name="scanmatcher_to_base_link" 
+    args="0.0 0.0 0.0 0.0 0.0 0.0 /scanmatcher_frame /base_link 100" />
     
   <!-- Odometry from laser scans -->
   <!-- If argument "hector" is true, we use Hector mapping to generate odometry for us -->
@@ -44,7 +45,6 @@
       <remap from="scan" to="/scan"/>
 
       <!-- As hector doesn't provide compatible covariance in the odometry topic, don't use the topic and fix the covariance -->
-      <param if="$(arg hector)" name="publish_tf"               type="bool" value="false"/>
       <param if="$(arg hector)" name="odom_frame_id"            type="string" value="map"/>
       <param if="$(arg hector)" name="odom_tf_linear_variance"  type="double" value="0.0005"/>
       <param if="$(arg hector)" name="odom_tf_angular_variance" type="double" value="0.0005"/>
