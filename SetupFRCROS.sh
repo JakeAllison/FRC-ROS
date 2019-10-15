@@ -48,6 +48,9 @@ cp -R $cwd/catkin_ws/src/frc_robot ~/catkin_ws/src/
 rm -rf ~/catkin_ws/src/networktable_bridge/
 cp -R $cwd/catkin_ws/src/networktable_bridge ~/catkin_ws/src/
 
+rm -rf ~/catkin_ws/src/swerve_controller/
+cp -R $cwd/catkin_ws/src/swerve_controller ~/catkin_ws/src/
+
 # Extract supporting packages
 
 file=$cwd/common-sensors.tar.gz
@@ -91,6 +94,28 @@ else
     echo "Found '$file'"
     echo "Extracting to ~/catkin_ws/src/common-sensors/common_sensors/urdf/sensors/"
     cp "$file" ~/catkin_ws/src/common-sensors/common_sensors/urdf/sensors/
+fi
+
+# Kinect IR Calibration
+file=$cwd/depth_B00364725109104B.yaml
+if [ ! -f "$file" ]; then
+    echo -e "\e[31m$file is missing in current working directory\e[39m"
+    exit 1
+else
+    echo "Found '$file'"
+    echo "Extracting to ~/.ros/camera_info/"
+    cp "$file" ~/.ros/camera_info/
+fi
+
+# Kinect Camera Calibration
+file=$cwd/rgb_B00364725109104B.yaml
+if [ ! -f "$file" ]; then
+    echo -e "\e[31m$file is missing in current working directory\e[39m"
+    exit 1
+else
+    echo "Found '$file'"
+    echo "Extracting to ~/.ros/camera_info/"
+    cp "$file" ~/.ros/camera_info/
 fi
 
 # Auto Install Dependencies
