@@ -1,6 +1,6 @@
 <launch>
-  <arg name="model" default="$(find frc_robot)/urdf/00-default.urdf.xacro"/>
-  <arg name="gui" default="true" />
+  <arg name="model"	default="$(find frc_robot)/urdf/00-default.urdf.xacro"/>
+  <arg name="gui"	default="true" />
 
   <param name="robot_description" command="xacro --inorder $(arg model)" />
   <param name="use_gui" value="$(arg gui)"/>
@@ -8,7 +8,7 @@
 
   <!-- Publish TF's from robot_description using a URDF -->
 
-  <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" />
-  <node name="robot_state_publisher" pkg="robot_state_publisher" type="state_publisher" />
+  <node name="joint_state_publisher"	pkg="joint_state_publisher"	type="joint_state_publisher" />
+  <node name="robot_state_publisher"	pkg="robot_state_publisher"	type="state_publisher" />
   
 </launch>

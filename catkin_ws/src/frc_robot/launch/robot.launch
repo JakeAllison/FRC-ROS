@@ -1,26 +1,11 @@
 <launch>
-  <arg name="model" default="$(find frc_robot)/urdf/00-default.urdf.xacro"/>
-  <arg name="lidar" default="true" />
-  <arg name="kinect" default="true" />
-  <arg name="networktable" default="true" />
+  <arg name="model" 		default="$(find frc_robot)/urdf/00-default.urdf.xacro"/>
+  <arg name="networktable"	default="true" />
 
-  <param name="robot_description" command="xacro --inorder $(arg model)" />
-  
-  <!-- Sensor readings -->
-  
-  <include if="$(arg lidar)" file="$(find rplidar_ros)/launch/rplidar.launch"/>
-  <include if="$(arg kinect)" file="$(find openni_launch)/launch/openni.launch">
-    <param name="depth_registration" type="bool" value="true"/>
-  </include>
+  <param name="robot_description"	command="xacro --inorder $(arg model)" />
   
   <!-- Roborio communication -->
   
-  <include if="$(arg networktable)" file="$(find networktable_bridge)/launch/networktable_bridge.launch"/>
-
-
-  <!-- Publish TF's from robot_description using a URDF -->
-
-  <!-- <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" /> -->
-  <node name="robot_state_publisher" pkg="robot_state_publisher" type="state_publisher" />
+  <include if="$(arg networktable)"	file="$(find networktable_bridge)/launch/networktable_bridge.launch"/>
   
 </launch>
