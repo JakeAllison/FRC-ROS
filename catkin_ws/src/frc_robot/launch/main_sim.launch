@@ -10,7 +10,9 @@
   
   <include if="$(arg auton)" 		file="$(find frc_robot)/launch/auton.launch"/>
   <include if="$(arg sim)"		file="$(find frc_robot)/launch/sim.launch"/>
-  <include if="$(arg slam)" 		file="$(find frc_robot)/launch/slam_sim.launch"/>
+  <include if="$(arg slam)" 		file="$(find frc_robot)/launch/slam.launch">
+    <arg name="camera_frame"    value="camera1"/>
+  </include>
   <include if="$(arg teleop)"		file="$(find frc_robot)/launch/teleop.launch"/>
   <include if="$(arg visualize)"	file="$(find frc_robot)/launch/visualize_sim.launch"/>
   
