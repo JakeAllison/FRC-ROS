@@ -2,7 +2,7 @@
 
   <arg name="model" default="$(find frc_robot)/urdf/00-default.urdf.xacro"/>
   <arg name="gui" default="true" />
-  <arg name="rvizconfig" default="$(find frc_robot)/rviz/urdf.rviz" />
+  <arg name="rvizconfig" default="$(find frc_robot)/rviz/urdf_display.rviz" />
 
   <param name="robot_description" command="xacro --inorder $(arg model)" />
   <param name="use_gui" value="$(arg gui)"/>

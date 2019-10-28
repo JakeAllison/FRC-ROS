@@ -1,0 +1,6 @@
+<launch>
+  <arg name="rvizconfig"    default="$(find frc_robot)/rviz/urdf_sim.rviz" />
+  
+  <node name="rviz" pkg="rviz" type="rviz" args="-d $(arg rvizconfig)" />
+  
+</launch>

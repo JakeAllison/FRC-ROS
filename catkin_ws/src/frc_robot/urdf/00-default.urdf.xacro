@@ -42,14 +42,27 @@
   <joint name="base_link_to_kinect_mount" type="fixed">
     <parent link="base_link"/>
     <child link="kinect_mount"/>
-    <origin rpy="0 0 0" xyz="0.25 0 0.5"/>
+    <origin rpy="0 0 0" xyz="0.25 0 0.2"/>
   </joint>
   
   <link name="lidar_mount"/>
-  <joint name="base_link_to_lidar_mount" type="fixed">
-    <parent link="base_link"/>
+  <joint name="kinect_mount_to_lidar_mount" type="fixed">
+    <parent link="kinect_mount"/>
     <child link="lidar_mount"/>
-    <origin rpy="0 0 0" xyz="0.25 0 0.3"/>
+    <origin rpy="0 0 0" xyz="0 0 0.1"/>
+  </joint>
+
+  <joint name="kinect_mount_to_camera_link" type="fixed">
+    <parent link="kinect_mount"/>
+    <child link="camera_link"/>
+    <origin rpy="0 0 0" xyz="0 0 0"/>
+  </joint>
+  
+  <link name="laser"/>
+  <joint name="lidar_mount_to_laser" type="fixed">
+    <parent link="lidar_mount"/>
+    <child link="laser"/>
+    <origin rpy="0 0 ${pi}" xyz="0 0 0"/>
   </joint>
   
   <xacro:sensor_kinect parent="kinect_mount"/>
@@ -72,7 +85,7 @@
   
   <gazebo>
     <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
-      <robotNamespace>/</robotNamespace>
+      <robotNamespace>/drivetrain</robotNamespace>
       <legacyModeNS>true</legacyModeNS>
     </plugin>
   </gazebo>
