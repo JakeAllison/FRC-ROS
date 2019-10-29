@@ -207,5 +207,8 @@ include_directories(
 
 add_executable(swerve_controller
 src/swerve_controller.cpp
+src/ros_dummies/CANEncoder.cpp
+src/ros_dummies/CANPIDController.cpp
+src/ros_dummies/CANSparkMax.cpp
 )
 target_link_libraries(swerve_controller ${catkin_LIBRARIES})
