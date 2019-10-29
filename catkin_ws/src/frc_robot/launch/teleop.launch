@@ -1,12 +1,7 @@
 <launch>
   <arg name="keyboard" default="false" />
-  <arg name="rqt" default="true" />
-  <arg name="perspective" default="$(find frc_robot)/rqt_gui/frc-robot.perspective" />
   <arg name="slider" default="false" />
   <arg name="xbox" default="true" />
-  
-  
-  <node if="$(arg rqt)" name="rqt_gui_node" pkg="rqt_gui" type="rqt_gui" args="--perspective-file $(arg perspective)"/>
   
   <node if="$(arg slider)" name="rqt_robot_steering" pkg="rqt_robot_steering" type="rqt_robot_steering">
     <param name="default_topic" value="/frc_diff_drive_controller/cmd_vel"/>

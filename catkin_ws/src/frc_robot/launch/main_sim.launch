@@ -1,9 +1,9 @@
 <launch>
-
   <arg name="auton"             default="false" />
-  <arg name="sim" 		default="true" />
+  <arg name="sim" 		        default="true" />
   <arg name="slam"              default="false" />
   <arg name="teleop"            default="true" />
+  <arg name="user_interface"    default="true" />
   <arg name="visualize"         default="true" />
 
   <param name="use_sim_time" type="bool" value="true"/>
@@ -14,6 +14,9 @@
     <arg name="camera_frame"    value="camera1"/>
   </include>
   <include if="$(arg teleop)"		file="$(find frc_robot)/launch/teleop.launch"/>
-  <include if="$(arg visualize)"	file="$(find frc_robot)/launch/visualize_sim.launch"/>
+  <include if="$(arg user_interface)"   file="$(find frc_robot)/launch/user_interface.launch"/>
+  <include if="$(arg visualize)"	file="$(find frc_robot)/launch/visualize.launch">
+    <arg name="rvizconfig"    value="$(find frc_robot)/rviz/urdf_sim.rviz" />
+  </include>
   
 </launch>

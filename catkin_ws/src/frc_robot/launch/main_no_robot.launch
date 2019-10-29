@@ -4,6 +4,7 @@
   <arg name="slam"              default="false" />
   <arg name="state_publishers"  default="true" />
   <arg name="teleop"            default="true" />
+  <arg name="user_interface"    default="false" />
   <arg name="visualize"         default="true" />
 
   <param name="use_sim_time" type="bool" value="false"/>
@@ -15,6 +16,7 @@
   </include>
   <include if="$(arg state_publishers)" file="$(find frc_robot)/launch/state_publishers.launch"/>
   <include if="$(arg teleop)" 		    file="$(find frc_robot)/launch/teleop.launch"/>
+  <include if="$(arg user_interface)"   file="$(find frc_robot)/launch/user_interface.launch"/>
   <include if="$(arg visualize)" 	    file="$(find frc_robot)/launch/visualize.launch"/>
   
 </launch>
