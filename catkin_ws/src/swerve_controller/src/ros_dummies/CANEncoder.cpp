@@ -4,7 +4,7 @@ using namespace rev;
 
 CANEncoder::CANEncoder(CANSparkMax& device, EncoderType sensorType, int cpr) 
     : m_sensorType(sensorType)
-    , m_device(device) {
+    , _device(&device) {
     
 }
 
@@ -16,7 +16,7 @@ CANEncoder::CANEncoder(CANEncoder&& rhs)
 CANEncoder& CANEncoder::operator=(CANEncoder&& rhs) {
   CANSensor::operator=(std::move(rhs));
 
-  m_device = std::move(rhs.m_device);
+  _device = std::move(rhs._device);
   m_sensorType = std::move(rhs.m_sensorType);
   m_cpr = std::move(rhs.m_cpr);
   encInitialized = rhs.encInitialized.load();
@@ -25,17 +25,17 @@ CANEncoder& CANEncoder::operator=(CANEncoder&& rhs) {
 }
 
 CANError CANEncoder::SetInverted(bool inverted)  {
-    m_device->SetEncoderInverted(inverted);
+    _device->SetEncoderInverted(inverted);
     return CANError::kOk;
 }
 
 CANError CANEncoder::SetPosition(double position) {
-    m_device->SetEncoderPosition(position);
+    _device->SetEncoderPosition(position);
     return CANError::kOk;
 }
 
 bool CANEncoder::GetInverted() const {
-    return m_device->GetEncoderInverted();
+    return _device->GetEncoderInverted();
 }
 
 int CANEncoder::GetCPR() const {
@@ -43,9 +43,9 @@ int CANEncoder::GetCPR() const {
 }
 
 double CANEncoder::GetPosition() {
-    return static_cast<double>(m_device->GetEncoderPosition());
+    return static_cast<double>(_device->GetEncoderPosition());
 }
 
 double CANEncoder::GetVelocity() {
-    return return static_cast<double>(m_device->GetEncoderVelocity());
+    return return static_cast<double>(_device->GetEncoderVelocity());
 }

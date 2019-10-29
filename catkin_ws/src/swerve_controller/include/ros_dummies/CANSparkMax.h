@@ -1,4 +1,5 @@
-#pragma once
+#ifndef CANSPARKMAX_H
+#define CANSPARKMAX_H
 
 #include "ros_dummies/CANEncoder.h"
 #include "ros_dummies/CANPIDController.h"
@@ -15,11 +16,10 @@ namespace rev {
         enum class MotorType { kBrushed = 0, kBrushless = 1 };
     }
     
-class CANSparkMax : public CANSparkMaxLowLevel {
+class CANSparkMax {
 public:
-    using namespace CANSparkMaxLowLevel;
     
-    explicit CANSparkMax(int deviceID, MotorType type = kBrushless);
+    explicit CANSparkMax(int deviceID, CANSparkMaxLowLevel::MotorType type = CANSparkMaxLowLevel::MotorType::kBrushless);
     ~CANSparkMax();
 
     CANPIDController GetPIDController();
@@ -46,8 +46,6 @@ public:
     void SetI(double gain);
     void SetD(double gain);
     void SetOutputRange(double min, double max);
-    
-    void PublishROSData(ros::NodeHandle* nh);
 
 private:
     
@@ -71,3 +69,5 @@ private:
 };
 
 }  // namespace rev
+
+#endif

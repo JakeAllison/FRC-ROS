@@ -1,4 +1,5 @@
 #include "ros_dummies/CANPIDController.h"
+#include "ros_dummies/CANSparkMax.h"
 
 using namespace rev;
 

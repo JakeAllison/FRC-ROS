@@ -1,10 +1,12 @@
-#pragma once
+#ifndef CANENCODER_H_
+#define CANENCODER_H_
 
 #include "ros_dummies/CANError.h"
+#include "ros_dummies/CANSparkMax.h"
 
 #include <stdint.h>
-
 #include <atomic>
+#include <utility>
 
 namespace rev {
 
@@ -40,7 +42,9 @@ private:
 
 
 protected:
-    CANSparkMax* m_device;
+    CANSparkMax* _device;
 };
 
 }  // namespace rev
+
+#endif

@@ -25,7 +25,7 @@ std::unordered_map<int, std::string> PARAMETER_PREFIXES = {
     {tigertronics::ports::swerveBLDrive, "rl_drive"},
     {tigertronics::ports::swerveBRTurn, "rr_pivot"},
     {tigertronics::ports::swerveBRDrive, "rr_drive"}
-}
+};
 
 CANSparkMax::CANSparkMax(int deviceID, MotorType type)
     : _deviceID(deviceID)
