@@ -10,9 +10,6 @@ class CANSparkMax;
 class CANPIDController {
 
 public:
-    enum class AccelStrategy { kTrapezoidal = 0, kSCurve = 1 };
-
-    enum class ArbFFUnits { kVoltage = 0, kPercentOut = 1 };
 
     explicit CANPIDController(CANSparkMax& device);
 

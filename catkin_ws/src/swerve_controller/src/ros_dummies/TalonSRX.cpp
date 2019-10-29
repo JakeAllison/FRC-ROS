@@ -10,10 +10,6 @@ TalonSRX::TalonSRX(int deviceNumber)
     
 }
 
-void TalonSRX::SetInverted(bool invert) {
-    SetInverted(invert);
-}
-
 ctre::phoenix::ErrorCode TalonSRX::ConfigFactoryDefault(int timeoutMs) {
     RestoreRestoreFactoryDefaults()
     return ctre::phoenix::ErrorCode::kOk;

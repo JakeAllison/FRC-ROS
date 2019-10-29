@@ -1,9 +1,3 @@
-/*
- * AHRS.h
- *
- *  Created on: Jul 30, 2015
- *      Author: Scott
- */
 
 #ifndef SRC_AHRS_H_
 #define SRC_AHRS_H_
@@ -36,7 +30,7 @@ public:
     void   Reset();
 
 private:
-    void imuCallback(const sensor_msgs::Imu::ConstPtr& msg);
+    void    imuCallback(const sensor_msgs::Imu::ConstPtr& msg);
     float   _yawOffset;
     float   _pitch;
     float   _roll;

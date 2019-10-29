@@ -41,7 +41,6 @@ private:
 
 protected:
     CANSparkMax* m_device;
-    int GetID() const;
 };
 
 }  // namespace rev
