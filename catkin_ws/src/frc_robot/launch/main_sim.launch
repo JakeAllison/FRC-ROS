@@ -1,7 +1,7 @@
 <launch>
   <arg name="auton"             default="false" />
   <arg name="sim" 		        default="true" />
-  <arg name="slam"              default="false" />
+  <arg name="slam"              default="true" />
   <arg name="swerve_controller" default="true" />
   <arg name="teleop"            default="true" />
   <arg name="user_interface"    default="true" />
