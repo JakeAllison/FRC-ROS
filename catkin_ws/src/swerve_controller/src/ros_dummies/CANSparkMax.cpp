@@ -59,6 +59,7 @@ CANSparkMax::CANSparkMax(int deviceID, MotorType type)
 }
 
 
+
 CANPIDController CANSparkMax::GetPIDController() {
     return CANPIDController{*this};
 }
@@ -68,13 +69,13 @@ CANEncoder CANSparkMax::GetEncoder(CANEncoder::EncoderType sensorType, int cpr) 
     return CANEncoder{*this, sensorType, cpr};
 }
 
-void CANSparkMax::RestoreRestoreFactoryDefaults() {
+void CANSparkMax::RestoreFactoryDefaults() {
     
 };
 
 void CANSparkMax::Set(double setpoint) {
-    _setpoint = (_inverted ? -setpoint : setpoint) + _raw_offset;
-    _command_value = _setpoint * _drive_conversion;
+    _setpoint = (_inverted ? -setpoint : setpoint) + _encoder_raw_offset;
+    _command_value.data = _setpoint * _drive_conversion;
     _command_publisher.publish(_command_value);
 }
 
@@ -97,7 +98,7 @@ double CANSparkMax::Get() const {
     return _setpoint;
 }
 
-bool CANEncoder::GetInverted() const {
+bool CANSparkMax::GetInverted() const {
     return _inverted;
 }
 
@@ -109,12 +110,12 @@ double CANSparkMax::GetEncoderOffset() const {
     return _encoder_inverted ? -_encoder_raw_offset : _encoder_raw_offset;
 }
 
-double CANSparkMax::GetEncoderPosition() {
+double CANSparkMax::GetEncoderPosition() const {
     double temp = GetEncoderRawPosition() + _encoder_raw_offset;
     return _encoder_inverted ? -temp : temp;
 };
 
-double CANSparkMax::GetEncoderVelocity() {
+double CANSparkMax::GetEncoderVelocity() const {
     return _encoder_inverted ? -GetEncoderRawVelocity() : GetEncoderRawVelocity();
 };
 
@@ -122,30 +123,31 @@ double CANSparkMax::GetEncoderRawOffset() const {
     return _encoder_raw_offset;
 }
 
-double CANSparkMax::GetEncoderRawPosition() {
+double CANSparkMax::GetEncoderRawPosition() const {
     return _encoder_raw_position;
 };
-double CANSparkMax::GetEncoderRawVelocity() {
+
+double CANSparkMax::GetEncoderRawVelocity() const {
     return _encoder_raw_velocity;
 };
 
 void CANSparkMax::SetF(double gain) {
-    _kf = gain
+    _kf = gain;
 };
 
 void CANSparkMax::SetP(double gain) {
-    _kp = gain
+    _kp = gain;
 };
 
 void CANSparkMax::SetI(double gain) {
-    _ki = gain
+    _ki = gain;
 };
 
 void CANSparkMax::SetD(double gain) {
-    _kd = gain
+    _kd = gain;
 };
 
 void CANSparkMax::SetOutputRange(double min, double max) {
     _min = min;
-    _max = max
+    _max = max;
 };

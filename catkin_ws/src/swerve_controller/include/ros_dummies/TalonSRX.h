@@ -2,16 +2,15 @@
 
 namespace ctre {
 namespace phoenix {
-enum ErrorCode {
-    kOk = 0;
-}
+enum class ErrorCode {
+    kOk = 0
+};
 
 namespace motorcontrol {
 namespace can {
 class TalonSRX : public rev::CANSparkMax {
 public:
 	TalonSRX(int deviceNumber);
-    ~TalonSRX();
     ctre::phoenix::ErrorCode ConfigFactoryDefault(int timeoutMs = 50);
 	ctre::phoenix::ErrorCode Config_kF(int slotIdx, double value, int timeoutMs = 0);
 	ctre::phoenix::ErrorCode Config_kP(int slotIdx, double value, int timeoutMs = 0);
@@ -20,7 +19,7 @@ public:
 	
 private:
 
-}
+};
 
 } // can
 } // motorcontrol

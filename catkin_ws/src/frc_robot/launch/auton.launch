@@ -25,7 +25,7 @@
     <param name="DWAPlannerROS/global_frame_id"		value="$(arg odom_frame_id)"/>
 
     <remap from="map"		to="/map"/>
-    <remap from="cmd_vel"	to="/frc_diff_drive_controller/cmd_vel"/>
+    <remap from="cmd_vel"	to="/cmd_vel"/>
     <remap from="odom"		to="$(arg odom_topic)"/>
     <remap from="scan"		to="$(arg laser_topic)"/>
 </node>

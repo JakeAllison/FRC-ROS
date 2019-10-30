@@ -1,4 +1,5 @@
 #include "ros_dummies/CANEncoder.h"
+#include "ros_dummies/CANSparkMax.h"
 
 using namespace rev;
 
@@ -14,8 +15,6 @@ CANEncoder::CANEncoder(CANEncoder&& rhs)
     encInitialized(rhs.encInitialized.load()) {}
 
 CANEncoder& CANEncoder::operator=(CANEncoder&& rhs) {
-  CANSensor::operator=(std::move(rhs));
-
   _device = std::move(rhs._device);
   m_sensorType = std::move(rhs.m_sensorType);
   m_cpr = std::move(rhs.m_cpr);
@@ -42,10 +41,10 @@ int CANEncoder::GetCPR() const {
     return m_cpr;
 }
 
-double CANEncoder::GetPosition() {
+double CANEncoder::GetPosition() const {
     return static_cast<double>(_device->GetEncoderPosition());
 }
 
-double CANEncoder::GetVelocity() {
-    return return static_cast<double>(_device->GetEncoderVelocity());
+double CANEncoder::GetVelocity() const {
+    return static_cast<double>(_device->GetEncoderVelocity());
 }

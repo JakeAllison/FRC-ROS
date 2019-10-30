@@ -6,42 +6,42 @@
 #include <sensor_msgs/Imu.h>
 
 namespace frc {
-namespace spi {
+namespace SPI {
     enum Port {
         kMXP
-    }
+    };
 } // spi
 
 class AHRS {
 public:
-    AHRS(frc::spi::Port port);
+    AHRS(frc::SPI::Port port);
     
-    float  GetPitch();
-    float  GetRoll();
-    float  GetYaw();
-    float  GetPitchRate();
-    float  GetRollRate();
-    float  GetYawRate();
-    void   ZeroYaw();
-    float  GetQuaternionW();
-    float  GetQuaternionX();
-    float  GetQuaternionY();
-    float  GetQuaternionZ();
+    void    imuCallback(const sensor_msgs::Imu::ConstPtr& msg);
     void   Reset();
+    void   ZeroYaw();
+    double  GetPitch();
+    double  GetRoll();
+    double  GetYaw();
+    double  GetPitchRate();
+    double  GetRollRate();
+    double  GetYawRate();
+    double  GetQuaternionW();
+    double  GetQuaternionX();
+    double  GetQuaternionY();
+    double  GetQuaternionZ();
 
 private:
-    void    imuCallback(const sensor_msgs::Imu::ConstPtr& msg);
-    float   _yawOffset;
-    float   _pitch;
-    float   _roll;
-    float   _yaw;
-    float   _yawRate;
-    float   _pitchRate;
-    float   _rollRate;
-    float   _quaternionW;
-    float   _quaternionX;
-    float   _quaternionY;
-    float   _quaternionZ;
+    double   _yawOffset;
+    double   _pitch;
+    double   _roll;
+    double   _yaw;
+    double   _yawRate;
+    double   _pitchRate;
+    double   _rollRate;
+    double   _quaternionW;
+    double   _quaternionX;
+    double   _quaternionY;
+    double   _quaternionZ;
     
     ros::NodeHandle _nh;
     ros::Subscriber _sub;

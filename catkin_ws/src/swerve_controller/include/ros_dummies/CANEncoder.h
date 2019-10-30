@@ -2,7 +2,6 @@
 #define CANENCODER_H_
 
 #include "ros_dummies/CANError.h"
-#include "ros_dummies/CANSparkMax.h"
 
 #include <stdint.h>
 #include <atomic>
@@ -30,9 +29,9 @@ public:
     CANError SetInverted(bool inverted);
     
     bool GetInverted() const;
-    int GetCPR();
-    double GetPosition();
-    double GetVelocity();
+    int GetCPR() const;
+    double GetPosition() const;
+    double GetVelocity() const;
 
 private:
     EncoderType m_sensorType = EncoderType::kHallSensor;

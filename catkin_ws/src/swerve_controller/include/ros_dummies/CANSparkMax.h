@@ -20,26 +20,26 @@ class CANSparkMax {
 public:
     
     explicit CANSparkMax(int deviceID, CANSparkMaxLowLevel::MotorType type = CANSparkMaxLowLevel::MotorType::kBrushless);
-    ~CANSparkMax();
 
     CANPIDController GetPIDController();
     CANEncoder GetEncoder(CANEncoder::EncoderType sensorType = CANEncoder::EncoderType::kHallSensor, int cpr = 0);
     
-    void RestoreRestoreFactoryDefaults() {};
+    void RestoreFactoryDefaults();
     
     void Set(double setpoint);
     void SetInverted(bool inverted);
     double Get() const;
-    bool GetInverted();
+    bool GetInverted() const;
     
     void SetEncoderInverted(bool inverted);
     void SetEncoderPosition(double position);
-    bool GetEncoderInverted();
-    double GetEncoderOffset();
-    double GetEncoderPosition();
-    double GetEncoderVelocity();
-    double GetEncoderRawPosition();
-    double GetEncoderRawVelocity();
+    bool GetEncoderInverted() const;
+    double GetEncoderOffset() const;
+    double GetEncoderPosition() const;
+    double GetEncoderVelocity() const;
+    double GetEncoderRawOffset() const;
+    double GetEncoderRawPosition() const;
+    double GetEncoderRawVelocity() const;
     
     void SetF(double gain);
     void SetP(double gain);

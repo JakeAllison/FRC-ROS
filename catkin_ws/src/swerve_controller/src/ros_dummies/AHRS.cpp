@@ -1,9 +1,9 @@
-#include "AHRS.h"
+#include "ros_dummies/AHRS.h"
 #include <tf/tf.h>
 
 namespace frc{
 
-AHRS::AHRS(frc::spi::Port port)
+AHRS::AHRS(frc::SPI::Port port)
    : _yawOffset(0.0)
    , _yaw(0.0)
    , _pitch(0.0)
@@ -19,7 +19,7 @@ AHRS::AHRS(frc::spi::Port port)
     std::string temp1 = "imu_topic";
     std::string temp2 = "/imu";
     _nh.param<std::string>(temp1, _imuTopic, temp2);
-    _sub = _nh.subscribe(_imu_topic, 1000, imuCallback);
+    _sub = _nh.subscribe(_imuTopic, 1, &AHRS::imuCallback, this);
 }
 
 void AHRS::imuCallback(const sensor_msgs::Imu::ConstPtr& msg)
@@ -29,33 +29,19 @@ void AHRS::imuCallback(const sensor_msgs::Imu::ConstPtr& msg)
     _quaternionY = msg->orientation.y;
     _quaternionZ = msg->orientation.z;
     
-    tf::Quaternion q(_quaternionW, _quaternionX, _quaternionY, _quaternionZ);
-    tf::Matrix3x3 m(q);
-    m.getRPY(_roll, _pitch, _yaw);
+    tf::Quaternion q;
+    tf::quaternionMsgToTF(msg->orientation, q);
+    tf::Matrix3x3(q).getRPY(_roll, _pitch, _yaw);
     
     _rollRate   = msg->angular_velocity.x;
     _pitchRate  = msg->angular_velocity.y;
     _yawRate    = msg->angular_velocity.z;
+    
+    ROS_INFO("IMU Received: [%f]", _yaw);
 }
 
-float AHRS::GetPitch() {
-    return _pitch;
-}
-float AHRS::GetRoll() {
-    return _roll;
-}
-float AHRS::GetYaw() {
-    return _yaw + _yawOffset;
-}
-
-float AHRS::GetPitchRate() {
-    return _pitchRate;
-}
-float AHRS::GetRollRate() {
-    return _rollRate;
-}
-float AHRS::GetYawRate() {
-    return _yawRate;
+void AHRS::Reset() {
+    ZeroYaw();
 }
 
 void AHRS::ZeroYaw() {
@@ -63,21 +49,37 @@ void AHRS::ZeroYaw() {
     _yaw = 0.0;
 }
 
-float AHRS::GetQuaternionW() {
-    return _quaternionW;
+double AHRS::GetPitch() {
+    return _pitch;
 }
-float AHRS::GetQuaternionX() {
-    return _quaternionX;
+double AHRS::GetRoll() {
+    return _roll;
 }
-float AHRS::GetQuaternionY() {
-    return _quaternionY;
-}
-float AHRS::GetQuaternionZ() {
-    return _quaternionY;
+double AHRS::GetYaw() {
+    return _yaw + _yawOffset;
 }
 
-void AHRS::Reset() {
-    ZeroYaw();
+double AHRS::GetPitchRate() {
+    return _pitchRate;
+}
+double AHRS::GetRollRate() {
+    return _rollRate;
+}
+double AHRS::GetYawRate() {
+    return _yawRate;
+}
+
+double AHRS::GetQuaternionW() {
+    return _quaternionW;
+}
+double AHRS::GetQuaternionX() {
+    return _quaternionX;
+}
+double AHRS::GetQuaternionY() {
+    return _quaternionY;
+}
+double AHRS::GetQuaternionZ() {
+    return _quaternionY;
 }
 
 }

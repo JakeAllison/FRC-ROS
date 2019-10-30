@@ -1,8 +1,8 @@
 #ifndef CANPIDCONTROLLER_H
 #define CANPIDCONTROLLER_H
 
-#include "ros_dummies/CANEncoder.h"
 #include "ros_dummies/ControlType.h"
+#include "ros_dummies/CANError.h"
 
 namespace rev {
 

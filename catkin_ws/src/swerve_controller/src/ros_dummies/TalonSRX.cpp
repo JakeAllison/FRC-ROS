@@ -11,7 +11,7 @@ TalonSRX::TalonSRX(int deviceNumber)
 }
 
 ctre::phoenix::ErrorCode TalonSRX::ConfigFactoryDefault(int timeoutMs) {
-    RestoreRestoreFactoryDefaults()
+    RestoreFactoryDefaults();
     return ctre::phoenix::ErrorCode::kOk;
 }
 
