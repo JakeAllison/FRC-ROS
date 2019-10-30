@@ -26,6 +26,27 @@ void SwerveController::CmdVelCallback(const geometry_msgs::Twist& msg) {
     //x + is forward
     //y + is left
     //rot + is CCW
+    double strafeAxis = _liny;
+    double fowAxis = _linx;
+    double rotAxis = _angz;
+    
+    // Using magnitude of the strafe and forward rather than individuals.
+    if((strafeAxis * strafeAxis + fowAxis * fowAxis) < 0.2 * 0.2) {
+        strafeAxis = 0;
+        fowAxis = 0;
+    }
+    else {
+        strafeAxis = strafeAxis * fabs(strafeAxis);
+        fowAxis = fowAxis * fabs(fowAxis);
+    }
+    
+    if(rotAxis > -.2 && rotAxis < .2) {
+        rotAxis = 0;
+    }
+    else {
+        rotAxis = rotAxis * fabs(rotAxis);
+    }
+    
     const auto xSpeed = _linx * m_swerve.kMaxSpeed;
     const auto ySpeed = _liny * m_swerve.kMaxSpeed;
     const auto rotSpeed = _angz * m_swerve.kMaxAngularSpeed;

@@ -1,7 +1,8 @@
 <launch>
   <arg name="keyboard" default="false" />
   <arg name="slider" default="false" />
-  <arg name="xbox" default="true" />
+  <arg name="xbox" default="false" />
+  <arg name="xbox2" default="true" />
   
   <node if="$(arg slider)" name="rqt_robot_steering" pkg="rqt_robot_steering" type="rqt_robot_steering">
     <param name="default_topic" value="/cmd_vel"/>
@@ -22,6 +23,25 @@
     <param name="scale_linear"		value="1.0"/>
     <param name="scale_linear_turbo"	value="4.0"/>
     <param name="scale_angular"		value="3.0"/>
+  </node>
+  
+  <node if="$(arg xbox2)" name="teleop_twist_joy" pkg="teleop_twist_joy" type="teleop_node">
+    <remap from="cmd_vel" to="/cmd_vel"/>
+    <rosparam>
+      axis_linear:
+        x: 1
+        y: 0
+      scale_linear:
+        x: 1.0
+        y: 1.0
+      scale_linear_turbo:
+        x: 4.0
+        y: 4.0
+      axis_angular: 2
+      scale_angular: 3.0
+      enable_button: 5
+      enable_button_turbo: 4
+    </rosparam>
   </node>
   
 </launch>
