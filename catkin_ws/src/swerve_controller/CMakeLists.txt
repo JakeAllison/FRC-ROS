@@ -208,12 +208,7 @@ include_directories(
 ## Add folders to be run by python nosetests
 # catkin_add_nosetests(test)
 
-add_executable(swerve_controller
-src/swerve_controller.cpp
-src/ros_dummies/CANEncoder.cpp
-src/ros_dummies/CANPIDController.cpp
-src/ros_dummies/CANSparkMax.cpp
-src/ros_dummies/TalonSRX.cpp
-src/ros_dummies/AHRS.cpp
+file(GLOB_RECURSE ENDF6_SRC_NESTED ${PROJECT_SOURCE_DIR}/src/*.cpp)
+add_executable(swerve_controller ${ENDF6_SRC_NESTED}
 )
 target_link_libraries(swerve_controller ${catkin_LIBRARIES})

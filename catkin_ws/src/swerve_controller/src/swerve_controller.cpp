@@ -2,22 +2,13 @@
 
 int main(int argc, char **argv) {
     ros::init(argc, argv, "swerve_controller");
-    SwerveController swervecontroller1{ tigertronics::ports::swerveFLDrive, tigertronics::ports::swerveFLTurn };
-    SwerveController swervecontroller2{ tigertronics::ports::swerveFRDrive, tigertronics::ports::swerveFRTurn };
-    SwerveController swervecontroller3{ tigertronics::ports::swerveBLDrive, tigertronics::ports::swerveBLTurn };
-    SwerveController swervecontroller4{ tigertronics::ports::swerveBRDrive, tigertronics::ports::swerveBRTurn };
-    
-    frc::AHRS m_imu{frc::SPI::Port::kMXP};
+    SwerveController swerve;
     ros::spin();
     return 0;
 }
 
 
-SwerveController::SwerveController(int driveMotorPort, int turnMotorPort)
-    : m_driveMotor(driveMotorPort, rev::CANSparkMaxLowLevel::MotorType::kBrushless)
-    , m_drivePIDController(m_driveMotor.GetPIDController())
-    , m_driveEncoder(m_driveMotor.GetEncoder())
-    , m_turnMotor(turnMotorPort) {
+SwerveController::SwerveController() {
     std::string temp1 = "cmd_vel_param";
     std::string temp2 = "/cmd_vel";
     _nh.param<std::string>(temp1, _cmd_vel_topic, temp2);
@@ -32,8 +23,13 @@ void SwerveController::CmdVelCallback(const geometry_msgs::Twist& msg) {
     _angy = msg.angular.y;
     _angz = msg.angular.z;
     
-    m_driveMotor.Set(_linx);
-    m_turnMotor.Set(_angz);
+    //x + is forward
+    //y + is left
+    //rot + is CCW
+    const auto xSpeed = _linx * m_swerve.kMaxSpeed;
+    const auto ySpeed = _liny * m_swerve.kMaxSpeed;
+    const auto rotSpeed = _angz * m_swerve.kMaxAngularSpeed;
+    m_swerve.Drive(xSpeed, ySpeed, rotSpeed, false);
     
     ROS_INFO("Vel Received: [%f], [%f], [%f]", _linx, _liny, _angz);
 }

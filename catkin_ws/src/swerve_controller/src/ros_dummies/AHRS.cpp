@@ -1,8 +1,6 @@
 #include "ros_dummies/AHRS.h"
 #include <tf/tf.h>
 
-namespace frc{
-
 AHRS::AHRS(frc::SPI::Port port)
    : _yawOffset(0.0)
    , _yaw(0.0)
@@ -37,7 +35,7 @@ void AHRS::imuCallback(const sensor_msgs::Imu::ConstPtr& msg)
     _pitchRate  = msg->angular_velocity.y;
     _yawRate    = msg->angular_velocity.z;
     
-    ROS_INFO("IMU Received: [%f]", _yaw);
+    // ROS_INFO("IMU Received: [%f]", _yaw);
 }
 
 void AHRS::Reset() {
@@ -80,7 +78,5 @@ double AHRS::GetQuaternionY() {
 }
 double AHRS::GetQuaternionZ() {
     return _quaternionY;
-}
-
 }
 

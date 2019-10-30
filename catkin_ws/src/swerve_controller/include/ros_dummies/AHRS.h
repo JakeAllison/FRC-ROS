@@ -11,6 +11,10 @@ namespace SPI {
         kMXP
     };
 } // spi
+} // frc
+
+
+using namespace frc;
 
 class AHRS {
 public:
@@ -47,7 +51,5 @@ private:
     ros::Subscriber _sub;
     std::string _imuTopic;
 };
-
-} // frc
 
 #endif /* SRC_AHRS_H_ */

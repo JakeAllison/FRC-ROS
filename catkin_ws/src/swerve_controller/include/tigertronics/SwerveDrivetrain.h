@@ -19,7 +19,7 @@
 #ifndef ROS
 #include <AHRS.h>
 #else
-#include <ros_dummies/AHRS.h>
+#include "ros_dummies/AHRS.h"
 #endif
 
 

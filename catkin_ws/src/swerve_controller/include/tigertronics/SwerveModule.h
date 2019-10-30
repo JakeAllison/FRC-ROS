@@ -27,7 +27,11 @@
 
 #endif
 
+#ifndef ROS
 class SwerveModule : public frc::SendableBase {
+#else
+class SwerveModule {
+#endif
 public:
     SwerveModule(int driveMotorChannel, int turningMotorChannel, int calibrationValue, std::string name);
     frc_new::SwerveModuleState GetState();

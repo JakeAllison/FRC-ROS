@@ -74,9 +74,13 @@ void CANSparkMax::RestoreFactoryDefaults() {
 };
 
 void CANSparkMax::Set(double setpoint) {
-    _setpoint = (_inverted ? -setpoint : setpoint) + _encoder_raw_offset;
+    _setpoint = setpoint;
+    _rawSetpoint = (_inverted ? -setpoint : setpoint) + _encoder_raw_offset;
     _command_value.data = _setpoint * _drive_conversion;
     _command_publisher.publish(_command_value);
+    
+    _encoder_raw_position = _rawSetpoint;
+    _encoder_raw_velocity = _rawSetpoint;
 }
 
 void CANSparkMax::SetInverted(bool inverted) { 

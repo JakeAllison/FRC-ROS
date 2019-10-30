@@ -19,8 +19,11 @@ SwerveModule::SwerveModule(const int driveMotorPort, const int turingMotorPort, 
     , m_turningMotor(turingMotorPort), m_drivePIDController(m_driveMotor.GetPIDController())
     , m_driveEncoder(m_driveMotor.GetEncoder())
     , kCalibrationValue(calibrationValue) {
+    
+#ifndef ROS
     SetName(name + " SwerveModule");
     SetSubsystem("SwerveSubsystem");
+#endif
     SetupDriveMotor();
     SetupTurningMotor();
 }
@@ -49,21 +52,33 @@ void SwerveModule::SetDesiredState(const frc_new::SwerveModuleState& state) {
     units::revolutions_per_minute_t setrpm = ConvertLinearToAngularVelocity(state.speed, kWheelRadius);
     //m_drivePIDController.Set(setrpm.value(), rev::ControlType::kVelocity);
     m_driveMotor.Set(map(setSpeed.value(), -3, 3, -1, 1));
+    
+#ifndef ROS
     m_turningMotor.Set(ctre::phoenix::motorcontrol::ControlMode::Position, ConvertRadiansToEncoderTicks(setAngle.Radians()));
+#else
+    m_turningMotor.Set(setAngle.Radians().value());
+#endif
 }
 
 frc_new::SwerveModuleState SwerveModule::GetState() {
+#ifndef ROS
     units::radians_per_second_t wheelSpeed = units::revolutions_per_minute_t(m_driveEncoder.GetVelocity());
     frc_new::SwerveModuleState state;
     state.angle = frc_new::Rotation2d(ConvertEncoderUnitsToRadians(m_turningMotor.GetSelectedSensorPosition()));
+#else
+    units::radians_per_second_t wheelSpeed = units::radians_per_second_t(m_driveEncoder.GetVelocity());
+    frc_new::SwerveModuleState state;
+    state.angle = frc_new::Rotation2d(units::radian_t(m_turningMotor.GetEncoderPosition()));
+#endif
+
     state.speed = ConvertAngularToLinearVelocity(wheelSpeed, kWheelRadius);
     return state;
 }
 
 void SwerveModule::SetupDriveMotor() {
     m_driveMotor.RestoreFactoryDefaults();
-    m_driveMotor.SetInverted(false);
 #ifndef ROS
+    m_driveMotor.SetInverted(false);
     m_drivePIDController.SetFF(kDriveF);
     m_drivePIDController.SetP(kDriveP);
     m_drivePIDController.SetI(kDriveI);
@@ -79,8 +94,8 @@ void SwerveModule::SetupTurningMotor() {
     m_turningMotor.Config_kP(0, kTurnP, 10);
     m_turningMotor.Config_kI(0, kTurnI, 10);
     m_turningMotor.Config_kD(0, kTurnD, 10);
-    m_turningMotor.SetInverted(true);
 #ifndef ROS
+    m_turningMotor.SetInverted(true);
     m_turningMotor.ConfigSelectedFeedbackSensor(ctre::phoenix::motorcontrol::FeedbackDevice::CTRE_MagEncoder_Relative, 0, 10);
     m_turningMotor.SetSensorPhase(false);
     m_turningMotor.SetStatusFramePeriod(ctre::phoenix::motorcontrol::StatusFrameEnhanced::Status_13_Base_PIDF0, 10, 10);

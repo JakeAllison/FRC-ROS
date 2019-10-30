@@ -52,7 +52,7 @@ private:
     // To do: Need callback functions for incoming topics.
     
     int _deviceID;
-    double _setpoint;
+    double _setpoint, _rawSetpoint;
     bool _inverted;
     
     bool _encoder_inverted;

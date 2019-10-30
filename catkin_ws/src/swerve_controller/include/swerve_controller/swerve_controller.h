@@ -1,14 +1,12 @@
 #include "ros/ros.h"
 #include <geometry_msgs/Twist.h>
-#include "ros_dummies/CANSparkMax.h"
-#include "ros_dummies/TalonSRX.h"
-#include "ros_dummies/AHRS.h"
+#include "tigertronics/SwerveDrivetrain.h"
 #include "Constants.h"
 
 
 class SwerveController {
 public:
-    SwerveController(int driveMotorPort, int turnMotorPort);
+    SwerveController();
     void CmdVelCallback(const geometry_msgs::Twist& msg);
 
 private:
@@ -18,9 +16,6 @@ private:
     float _linx, _liny, _linz;
     float _angx, _angy, _angz;
     
-    rev::CANSparkMax m_driveMotor;
-    rev::CANPIDController m_drivePIDController;
-    rev::CANEncoder m_driveEncoder;
-    ctre::phoenix::motorcontrol::can::TalonSRX m_turnMotor;
+    SwerveDrivetrain m_swerve;
     
 };
