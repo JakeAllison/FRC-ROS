@@ -13,8 +13,9 @@
   <rosparam if="$(arg swerve)" command="load"
             file="$(find frc_robot)/config/swervedrive.yaml">
   </rosparam>
-            
-            
+  
+  <node name="robot_drivetrain_publisher"	pkg="robot_state_publisher"	type="state_publisher" ns="drivetrain"/>
+  
   <node unless="$(arg swerve)" name="diff_drive_controller" pkg="controller_manager" type="controller_manager" ns="drivetrain" output="screen" respawn="false"
     args="spawn
     frc_joint_state_controller
