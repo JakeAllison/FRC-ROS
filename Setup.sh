@@ -9,11 +9,12 @@ echo "Currernt working directory:" $cwd
 
 ros_install=ros-kinetic-desktop-full
 pip_install=python-pip
+rsync_install=rsync
 
 sudo sh -c 'echo "deb http://packages.ros.org/ros/ubuntu $(lsb_release -sc) main" > /etc/apt/sources.list.d/ros-latest.list'
 sudo apt-key adv --keyserver 'hkp://keyserver.ubuntu.com:80' --recv-key C1CF6E31E6BADE8868B172B4F42ED6FBAB17C654
 sudo apt update
-sudo apt-get install ${ros_install} ${pip_install}
+sudo apt-get install ${ros_install} ${pip_install} ${rsync_install} 
 sudo rosdep init
 rosdep update
 
@@ -42,14 +43,14 @@ sudo apt install python-rosinstall python-rosinstall-generator python-wstool bui
 
 # Copy packages
 
-rm -rf ~/catkin_ws/src/frc_robot/
-cp -R $cwd/catkin_ws/src/frc_robot ~/catkin_ws/src/
+# Copy necessary packages
 
-rm -rf ~/catkin_ws/src/networktable_bridge/
-cp -R $cwd/catkin_ws/src/networktable_bridge ~/catkin_ws/src/
-
-rm -rf ~/catkin_ws/src/swerve_controller/
-cp -R $cwd/catkin_ws/src/swerve_controller ~/catkin_ws/src/
+for D in *; do
+    if [ -d "${D}" ]; then
+        echo "${D}"   # your processing here
+        rsync -r -t -v --progress --delete -u -c -s $cwd/catkin_ws/src/${D}/ ~/catkin_ws/src/${D}
+    fi
+done
 
 # Extract supporting packages
 
@@ -134,8 +135,11 @@ source ~/catkin_ws/devel/setup.bash
 
 # Check dependencies
 
-cd ~/catkin_ws/src/frc_robot
-roswtf
-cd ~/catkin_ws/src/networktable_bridge
-roswtf
+cd ~/catkin_ws/src/
 
+for D in *; do
+    if [ -d "${D}" ]; then
+        cd ~/catkin_ws/src/${D}
+        roswtf
+    fi
+done
