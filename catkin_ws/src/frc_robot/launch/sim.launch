@@ -1,16 +1,38 @@
 <launch>
+  <arg name="swerve" default="true"/>
   <arg name="model" default="$(find frc_robot)/urdf/00-default.urdf.xacro"/>
 
   <include file="$(find frc_robot)/launch/gazebo.launch">
     <arg name="model" value="$(arg model)" />
   </include>
   
-  <rosparam command="load"
-            file="$(find frc_robot)/config/diffdrive.yaml"/>
-
-  <node name="diff_drive_controller_spawner" pkg="controller_manager" type="spawner"
-    args="frc_joint_state_controller
+  <rosparam unless="$(arg swerve)" command="load"
+            file="$(find frc_robot)/config/diffdrive.yaml">
+  </rosparam>
+  
+  <rosparam if="$(arg swerve)" command="load"
+            file="$(find frc_robot)/config/swervedrive.yaml">
+  </rosparam>
+  
+  <node name="robot_drivetrain_publisher"	pkg="robot_state_publisher"	type="state_publisher" ns="drivetrain"/>
+  
+  <node unless="$(arg swerve)" name="diff_drive_controller" pkg="controller_manager" type="controller_manager" ns="drivetrain" output="screen" respawn="false"
+    args="spawn
+    frc_joint_state_controller
     frc_diff_drive_controller">
+  </node>
+  
+  <node if="$(arg swerve)" name="swerve_drive_controller" pkg="controller_manager" type="controller_manager" ns="drivetrain" output="screen" respawn="false"
+    args="spawn
+    frc_joint_state_controller
+    fl_pivot_controller
+    fl_drive_controller
+    fr_pivot_controller
+    fr_drive_controller
+    rl_pivot_controller
+    rl_drive_controller
+    rr_pivot_controller
+    rr_drive_controller">
   </node>
   
   

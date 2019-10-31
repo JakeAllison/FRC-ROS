@@ -78,255 +78,350 @@
     <axis xyz="0 0 0.0"/>
     <origin rpy="0 0 0"/>
   </joint>
-  <!--                          Wheels                           -->
-  <link name="fl_wheel">
+  <!-- <xacro:six_wheel_diff_drive name="tank_drive" parent="base_link"
+    z_offset="0.0" drop_wheel_height="0.003175"
+    wheel_separation="0.6096" wheelbase_length="0.6096"
+    wheel_radius="0.1016" wheel_width="0.0381" wheel_mass="1" /> -->
+  <link name="fl_swerve_pivot">
     <visual>
       <geometry>
-        <cylinder length="0.0381" radius="0.0508"/>
+        <cylinder length="0.1" radius="0.05"/>
       </geometry>
       <origin xyz="0 0 0"/>
       <material name="blue"/>
     </visual>
     <collision>
       <geometry>
-        <cylinder length="0.0381" radius="0.0508"/>
+        <cylinder length="0.1" radius="0.05"/>
       </geometry>
       <origin xyz="0 0 0"/>
     </collision>
     <inertial>
-      <mass value="1"/>
-      <inertia ixx="0.0007661275" ixy="0" ixz="0" iyy="0.0007661275" iyz="0" izz="0.00129032"/>
+      <mass value="1.0"/>
+      <inertia ixx="0.00145833333333" ixy="0" ixz="0" iyy="0.00145833333333" iyz="0" izz="0.00125"/>
       <origin xyz="0 0 0"/>
     </inertial>
   </link>
-  <joint name="base_link_to_fl_wheel" type="continuous">
+  <joint name="base_link_to_fl_swerve_pivot" type="continuous">
     <parent link="base_link"/>
-    <child link="fl_wheel"/>
-    <axis xyz="0 0 -1"/>
-    <origin rpy="1.57079632679 0 0" xyz="0.3048 0.3048 0.0"/>
-  </joint>
-  <transmission name="fl_wheel_trans">
-    <type>transmission_interface/SimpleTransmission</type>
-    <actuator name="fl_wheel_motor">
-      <mechanicalReduction>1</mechanicalReduction>
-    </actuator>
-    <joint name="base_link_to_fl_wheel">
-      <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
-    </joint>
-  </transmission>
-  <gazebo reference="fl_wheel">
-    <mu1 value="1.0"/>
-    <mu2 value="1.0"/>
-    <kp value="10000000.0"/>
-    <kd value="1.0"/>
-    <material>Gazebo/gray</material>
-  </gazebo>
-  <link name="ml_wheel">
-    <visual>
-      <geometry>
-        <cylinder length="0.0381" radius="0.0508"/>
-      </geometry>
-      <origin xyz="0 0 0"/>
-      <material name="blue"/>
-    </visual>
-    <collision>
-      <geometry>
-        <cylinder length="0.0381" radius="0.0508"/>
-      </geometry>
-      <origin xyz="0 0 0"/>
-    </collision>
-    <inertial>
-      <mass value="1"/>
-      <inertia ixx="0.0007661275" ixy="0" ixz="0" iyy="0.0007661275" iyz="0" izz="0.00129032"/>
-      <origin xyz="0 0 0"/>
-    </inertial>
-  </link>
-  <joint name="base_link_to_ml_wheel" type="continuous">
-    <parent link="base_link"/>
-    <child link="ml_wheel"/>
-    <axis xyz="0 0 -1"/>
-    <origin rpy="1.57079632679 0 0" xyz="0.0 0.3048 -0.003175"/>
-  </joint>
-  <transmission name="ml_wheel_trans">
-    <type>transmission_interface/SimpleTransmission</type>
-    <actuator name="ml_wheel_motor">
-      <mechanicalReduction>1</mechanicalReduction>
-    </actuator>
-    <joint name="base_link_to_ml_wheel">
-      <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
-    </joint>
-  </transmission>
-  <gazebo reference="ml_wheel">
-    <mu1 value="200.0"/>
-    <mu2 value="200.0"/>
-    <kp value="10000000.0"/>
-    <kd value="1.0"/>
-    <material>Gazebo/gray</material>
-  </gazebo>
-  <link name="rl_wheel">
-    <visual>
-      <geometry>
-        <cylinder length="0.0381" radius="0.0508"/>
-      </geometry>
-      <origin xyz="0 0 0"/>
-      <material name="blue"/>
-    </visual>
-    <collision>
-      <geometry>
-        <cylinder length="0.0381" radius="0.0508"/>
-      </geometry>
-      <origin xyz="0 0 0"/>
-    </collision>
-    <inertial>
-      <mass value="1"/>
-      <inertia ixx="0.0007661275" ixy="0" ixz="0" iyy="0.0007661275" iyz="0" izz="0.00129032"/>
-      <origin xyz="0 0 0"/>
-    </inertial>
-  </link>
-  <joint name="base_link_to_rl_wheel" type="continuous">
-    <parent link="base_link"/>
-    <child link="rl_wheel"/>
-    <axis xyz="0 0 -1"/>
-    <origin rpy="1.57079632679 0 0" xyz="-0.3048 0.3048 0.0"/>
-  </joint>
-  <transmission name="rl_wheel_trans">
-    <type>transmission_interface/SimpleTransmission</type>
-    <actuator name="rl_wheel_motor">
-      <mechanicalReduction>1</mechanicalReduction>
-    </actuator>
-    <joint name="base_link_to_rl_wheel">
-      <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
-    </joint>
-  </transmission>
-  <gazebo reference="rl_wheel">
-    <mu1 value="1.0"/>
-    <mu2 value="1.0"/>
-    <kp value="10000000.0"/>
-    <kd value="1.0"/>
-    <material>Gazebo/gray</material>
-  </gazebo>
-  <link name="fr_wheel">
-    <visual>
-      <geometry>
-        <cylinder length="0.0381" radius="0.0508"/>
-      </geometry>
-      <origin xyz="0 0 0"/>
-      <material name="blue"/>
-    </visual>
-    <collision>
-      <geometry>
-        <cylinder length="0.0381" radius="0.0508"/>
-      </geometry>
-      <origin xyz="0 0 0"/>
-    </collision>
-    <inertial>
-      <mass value="1"/>
-      <inertia ixx="0.0007661275" ixy="0" ixz="0" iyy="0.0007661275" iyz="0" izz="0.00129032"/>
-      <origin xyz="0 0 0"/>
-    </inertial>
-  </link>
-  <joint name="base_link_to_fr_wheel" type="continuous">
-    <parent link="base_link"/>
-    <child link="fr_wheel"/>
+    <child link="fl_swerve_pivot"/>
     <axis xyz="0 0 1"/>
-    <origin rpy="-1.57079632679 0 0" xyz="0.3048 -0.3048 0.0"/>
+    <origin rpy="0 0 0" xyz="0.3048 0.3048 0.0"/>
   </joint>
-  <transmission name="fr_wheel_trans">
+  <transmission name="fl_swerve_pivot_trans">
     <type>transmission_interface/SimpleTransmission</type>
-    <actuator name="fr_wheel_motor">
+    <actuator name="fl_swerve_pivot_motor">
+      <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
       <mechanicalReduction>1</mechanicalReduction>
     </actuator>
-    <joint name="base_link_to_fr_wheel">
-      <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
+    <joint name="base_link_to_fl_swerve_pivot">
+      <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
     </joint>
   </transmission>
-  <gazebo reference="fr_wheel">
-    <mu1 value="1.0"/>
-    <mu2 value="1.0"/>
+  <gazebo reference="fl_swerve_pivot">
+    <mu1 value="100.0"/>
+    <mu2 value="100.0"/>
     <kp value="10000000.0"/>
     <kd value="1.0"/>
     <material>Gazebo/gray</material>
   </gazebo>
-  <link name="mr_wheel">
+  <link name="fl_swerve_wheel">
     <visual>
       <geometry>
-        <cylinder length="0.0381" radius="0.0508"/>
+        <cylinder length="0.0381" radius="0.1016"/>
       </geometry>
       <origin xyz="0 0 0"/>
       <material name="blue"/>
     </visual>
     <collision>
       <geometry>
-        <cylinder length="0.0381" radius="0.0508"/>
+        <cylinder length="0.0381" radius="0.1016"/>
       </geometry>
       <origin xyz="0 0 0"/>
     </collision>
     <inertial>
       <mass value="1"/>
-      <inertia ixx="0.0007661275" ixy="0" ixz="0" iyy="0.0007661275" iyz="0" izz="0.00129032"/>
+      <inertia ixx="0.0027016075" ixy="0" ixz="0" iyy="0.0027016075" iyz="0" izz="0.00516128"/>
       <origin xyz="0 0 0"/>
     </inertial>
   </link>
-  <joint name="base_link_to_mr_wheel" type="continuous">
-    <parent link="base_link"/>
-    <child link="mr_wheel"/>
+  <joint name="fl_swerve_pivot_to_fl_swerve_wheel" type="continuous">
+    <parent link="fl_swerve_pivot"/>
+    <child link="fl_swerve_wheel"/>
     <axis xyz="0 0 1"/>
-    <origin rpy="-1.57079632679 0 0" xyz="0.0 -0.3048 -0.003175"/>
+    <origin rpy="-1.57079632679 0 0" xyz="0 0 0"/>
   </joint>
-  <transmission name="mr_wheel_trans">
+  <transmission name="fl_swerve_wheel_trans">
     <type>transmission_interface/SimpleTransmission</type>
-    <actuator name="mr_wheel_motor">
+    <actuator name="fl_swerve_wheel_motor">
+      <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
       <mechanicalReduction>1</mechanicalReduction>
     </actuator>
-    <joint name="base_link_to_mr_wheel">
+    <joint name="fl_swerve_pivot_to_fl_swerve_wheel">
       <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
     </joint>
   </transmission>
-  <gazebo reference="mr_wheel">
-    <mu1 value="200.0"/>
-    <mu2 value="200.0"/>
+  <gazebo reference="fl_swerve_wheel">
+    <mu1 value="100.0"/>
+    <mu2 value="100.0"/>
     <kp value="10000000.0"/>
     <kd value="1.0"/>
     <material>Gazebo/gray</material>
   </gazebo>
-  <link name="rr_wheel">
+  <link name="rl_swerve_pivot">
     <visual>
       <geometry>
-        <cylinder length="0.0381" radius="0.0508"/>
+        <cylinder length="0.1" radius="0.05"/>
       </geometry>
       <origin xyz="0 0 0"/>
       <material name="blue"/>
     </visual>
     <collision>
       <geometry>
-        <cylinder length="0.0381" radius="0.0508"/>
+        <cylinder length="0.1" radius="0.05"/>
+      </geometry>
+      <origin xyz="0 0 0"/>
+    </collision>
+    <inertial>
+      <mass value="1.0"/>
+      <inertia ixx="0.00145833333333" ixy="0" ixz="0" iyy="0.00145833333333" iyz="0" izz="0.00125"/>
+      <origin xyz="0 0 0"/>
+    </inertial>
+  </link>
+  <joint name="base_link_to_rl_swerve_pivot" type="continuous">
+    <parent link="base_link"/>
+    <child link="rl_swerve_pivot"/>
+    <axis xyz="0 0 1"/>
+    <origin rpy="0 0 0" xyz="-0.3048 0.3048 0.0"/>
+  </joint>
+  <transmission name="rl_swerve_pivot_trans">
+    <type>transmission_interface/SimpleTransmission</type>
+    <actuator name="rl_swerve_pivot_motor">
+      <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+    <joint name="base_link_to_rl_swerve_pivot">
+      <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+    </joint>
+  </transmission>
+  <gazebo reference="rl_swerve_pivot">
+    <mu1 value="100.0"/>
+    <mu2 value="100.0"/>
+    <kp value="10000000.0"/>
+    <kd value="1.0"/>
+    <material>Gazebo/gray</material>
+  </gazebo>
+  <link name="rl_swerve_wheel">
+    <visual>
+      <geometry>
+        <cylinder length="0.0381" radius="0.1016"/>
+      </geometry>
+      <origin xyz="0 0 0"/>
+      <material name="blue"/>
+    </visual>
+    <collision>
+      <geometry>
+        <cylinder length="0.0381" radius="0.1016"/>
       </geometry>
       <origin xyz="0 0 0"/>
     </collision>
     <inertial>
       <mass value="1"/>
-      <inertia ixx="0.0007661275" ixy="0" ixz="0" iyy="0.0007661275" iyz="0" izz="0.00129032"/>
+      <inertia ixx="0.0027016075" ixy="0" ixz="0" iyy="0.0027016075" iyz="0" izz="0.00516128"/>
       <origin xyz="0 0 0"/>
     </inertial>
   </link>
-  <joint name="base_link_to_rr_wheel" type="continuous">
-    <parent link="base_link"/>
-    <child link="rr_wheel"/>
+  <joint name="rl_swerve_pivot_to_rl_swerve_wheel" type="continuous">
+    <parent link="rl_swerve_pivot"/>
+    <child link="rl_swerve_wheel"/>
     <axis xyz="0 0 1"/>
-    <origin rpy="-1.57079632679 0 0" xyz="-0.3048 -0.3048 0.0"/>
+    <origin rpy="-1.57079632679 0 0" xyz="0 0 0"/>
   </joint>
-  <transmission name="rr_wheel_trans">
+  <transmission name="rl_swerve_wheel_trans">
     <type>transmission_interface/SimpleTransmission</type>
-    <actuator name="rr_wheel_motor">
+    <actuator name="rl_swerve_wheel_motor">
+      <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
       <mechanicalReduction>1</mechanicalReduction>
     </actuator>
-    <joint name="base_link_to_rr_wheel">
+    <joint name="rl_swerve_pivot_to_rl_swerve_wheel">
       <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
     </joint>
   </transmission>
-  <gazebo reference="rr_wheel">
-    <mu1 value="1.0"/>
-    <mu2 value="1.0"/>
+  <gazebo reference="rl_swerve_wheel">
+    <mu1 value="100.0"/>
+    <mu2 value="100.0"/>
+    <kp value="10000000.0"/>
+    <kd value="1.0"/>
+    <material>Gazebo/gray</material>
+  </gazebo>
+  <link name="fr_swerve_pivot">
+    <visual>
+      <geometry>
+        <cylinder length="0.1" radius="0.05"/>
+      </geometry>
+      <origin xyz="0 0 0"/>
+      <material name="blue"/>
+    </visual>
+    <collision>
+      <geometry>
+        <cylinder length="0.1" radius="0.05"/>
+      </geometry>
+      <origin xyz="0 0 0"/>
+    </collision>
+    <inertial>
+      <mass value="1.0"/>
+      <inertia ixx="0.00145833333333" ixy="0" ixz="0" iyy="0.00145833333333" iyz="0" izz="0.00125"/>
+      <origin xyz="0 0 0"/>
+    </inertial>
+  </link>
+  <joint name="base_link_to_fr_swerve_pivot" type="continuous">
+    <parent link="base_link"/>
+    <child link="fr_swerve_pivot"/>
+    <axis xyz="0 0 1"/>
+    <origin rpy="0 0 0" xyz="0.3048 -0.3048 0.0"/>
+  </joint>
+  <transmission name="fr_swerve_pivot_trans">
+    <type>transmission_interface/SimpleTransmission</type>
+    <actuator name="fr_swerve_pivot_motor">
+      <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+    <joint name="base_link_to_fr_swerve_pivot">
+      <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+    </joint>
+  </transmission>
+  <gazebo reference="fr_swerve_pivot">
+    <mu1 value="100.0"/>
+    <mu2 value="100.0"/>
+    <kp value="10000000.0"/>
+    <kd value="1.0"/>
+    <material>Gazebo/gray</material>
+  </gazebo>
+  <link name="fr_swerve_wheel">
+    <visual>
+      <geometry>
+        <cylinder length="0.0381" radius="0.1016"/>
+      </geometry>
+      <origin xyz="0 0 0"/>
+      <material name="blue"/>
+    </visual>
+    <collision>
+      <geometry>
+        <cylinder length="0.0381" radius="0.1016"/>
+      </geometry>
+      <origin xyz="0 0 0"/>
+    </collision>
+    <inertial>
+      <mass value="1"/>
+      <inertia ixx="0.0027016075" ixy="0" ixz="0" iyy="0.0027016075" iyz="0" izz="0.00516128"/>
+      <origin xyz="0 0 0"/>
+    </inertial>
+  </link>
+  <joint name="fr_swerve_pivot_to_fr_swerve_wheel" type="continuous">
+    <parent link="fr_swerve_pivot"/>
+    <child link="fr_swerve_wheel"/>
+    <axis xyz="0 0 1"/>
+    <origin rpy="-1.57079632679 0 0" xyz="0 0 0"/>
+  </joint>
+  <transmission name="fr_swerve_wheel_trans">
+    <type>transmission_interface/SimpleTransmission</type>
+    <actuator name="fr_swerve_wheel_motor">
+      <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+    <joint name="fr_swerve_pivot_to_fr_swerve_wheel">
+      <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
+    </joint>
+  </transmission>
+  <gazebo reference="fr_swerve_wheel">
+    <mu1 value="100.0"/>
+    <mu2 value="100.0"/>
+    <kp value="10000000.0"/>
+    <kd value="1.0"/>
+    <material>Gazebo/gray</material>
+  </gazebo>
+  <link name="rr_swerve_pivot">
+    <visual>
+      <geometry>
+        <cylinder length="0.1" radius="0.05"/>
+      </geometry>
+      <origin xyz="0 0 0"/>
+      <material name="blue"/>
+    </visual>
+    <collision>
+      <geometry>
+        <cylinder length="0.1" radius="0.05"/>
+      </geometry>
+      <origin xyz="0 0 0"/>
+    </collision>
+    <inertial>
+      <mass value="1.0"/>
+      <inertia ixx="0.00145833333333" ixy="0" ixz="0" iyy="0.00145833333333" iyz="0" izz="0.00125"/>
+      <origin xyz="0 0 0"/>
+    </inertial>
+  </link>
+  <joint name="base_link_to_rr_swerve_pivot" type="continuous">
+    <parent link="base_link"/>
+    <child link="rr_swerve_pivot"/>
+    <axis xyz="0 0 1"/>
+    <origin rpy="0 0 0" xyz="-0.3048 -0.3048 0.0"/>
+  </joint>
+  <transmission name="rr_swerve_pivot_trans">
+    <type>transmission_interface/SimpleTransmission</type>
+    <actuator name="rr_swerve_pivot_motor">
+      <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+    <joint name="base_link_to_rr_swerve_pivot">
+      <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+    </joint>
+  </transmission>
+  <gazebo reference="rr_swerve_pivot">
+    <mu1 value="100.0"/>
+    <mu2 value="100.0"/>
+    <kp value="10000000.0"/>
+    <kd value="1.0"/>
+    <material>Gazebo/gray</material>
+  </gazebo>
+  <link name="rr_swerve_wheel">
+    <visual>
+      <geometry>
+        <cylinder length="0.0381" radius="0.1016"/>
+      </geometry>
+      <origin xyz="0 0 0"/>
+      <material name="blue"/>
+    </visual>
+    <collision>
+      <geometry>
+        <cylinder length="0.0381" radius="0.1016"/>
+      </geometry>
+      <origin xyz="0 0 0"/>
+    </collision>
+    <inertial>
+      <mass value="1"/>
+      <inertia ixx="0.0027016075" ixy="0" ixz="0" iyy="0.0027016075" iyz="0" izz="0.00516128"/>
+      <origin xyz="0 0 0"/>
+    </inertial>
+  </link>
+  <joint name="rr_swerve_pivot_to_rr_swerve_wheel" type="continuous">
+    <parent link="rr_swerve_pivot"/>
+    <child link="rr_swerve_wheel"/>
+    <axis xyz="0 0 1"/>
+    <origin rpy="-1.57079632679 0 0" xyz="0 0 0"/>
+  </joint>
+  <transmission name="rr_swerve_wheel_trans">
+    <type>transmission_interface/SimpleTransmission</type>
+    <actuator name="rr_swerve_wheel_motor">
+      <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+    <joint name="rr_swerve_pivot_to_rr_swerve_wheel">
+      <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
+    </joint>
+  </transmission>
+  <gazebo reference="rr_swerve_wheel">
+    <mu1 value="100.0"/>
+    <mu2 value="100.0"/>
     <kp value="10000000.0"/>
     <kd value="1.0"/>
     <material>Gazebo/gray</material>
@@ -338,13 +433,24 @@
   <joint name="base_link_to_kinect_mount" type="fixed">
     <parent link="base_link"/>
     <child link="kinect_mount"/>
-    <origin rpy="0 0 0" xyz="0.25 0 0.5"/>
+    <origin rpy="0 0 0" xyz="0.25 0 0.2"/>
   </joint>
   <link name="lidar_mount"/>
-  <joint name="base_link_to_lidar_mount" type="fixed">
-    <parent link="base_link"/>
+  <joint name="kinect_mount_to_lidar_mount" type="fixed">
+    <parent link="kinect_mount"/>
     <child link="lidar_mount"/>
-    <origin rpy="0 0 0" xyz="0.25 0 0.3"/>
+    <origin rpy="0 0 0" xyz="0 0 0.1"/>
+  </joint>
+  <joint name="kinect_mount_to_camera_link" type="fixed">
+    <parent link="kinect_mount"/>
+    <child link="camera_link"/>
+    <origin rpy="0 0 0" xyz="0 0 0"/>
+  </joint>
+  <link name="laser"/>
+  <joint name="lidar_mount_to_laser" type="fixed">
+    <parent link="lidar_mount"/>
+    <child link="laser"/>
+    <origin rpy="0 0 3.14159265359" xyz="0 0 0"/>
   </joint>
   <joint name="camera_rgb_joint" type="fixed">
     <origin rpy="0 0 0" xyz="0 0 0"/>
@@ -464,7 +570,7 @@
   <gazebo reference="2D_Laser_laser_link">
     <sensor name="2D_Laser_laser" type="ray">
       <always_on>true</always_on>
-      <update_rate>50</update_rate>
+      <update_rate>10</update_rate>
       <pose>0 0 0 0 0 0</pose>
       <visualize>false</visualize>
       <ray>
@@ -478,15 +584,15 @@
         </scan>
         <range>
           <min>0.02</min>
-          <max>4.0</max>
+          <max>12.0</max>
           <resolution>0.03</resolution>
         </range>
       </ray>
       <plugin filename="libgazebo_ros_laser.so" name="gazebo_ros_2D_Laser_laser_controller">
         <gaussianNoise>0.0</gaussianNoise>
         <alwaysOn>true</alwaysOn>
-        <updateRate>50</updateRate>
-        <topicName>/hokuyo_laser/laser_scan</topicName>
+        <updateRate>10</updateRate>
+        <topicName>/scan</topicName>
         <frameName>2D_Laser_laser_link</frameName>
       </plugin>
     </sensor>
@@ -504,7 +610,7 @@
   <!--                          For Gazebo Simulation                          -->
   <gazebo>
     <plugin filename="libgazebo_ros_control.so" name="gazebo_ros_control">
-      <robotNamespace>/</robotNamespace>
+      <robotNamespace>/drivetrain</robotNamespace>
       <legacyModeNS>true</legacyModeNS>
     </plugin>
   </gazebo>
