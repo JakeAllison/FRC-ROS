@@ -47,10 +47,10 @@ void SwerveController::CmdVelCallback(const geometry_msgs::Twist& msg) {
         rotAxis = rotAxis * fabs(rotAxis);
     }
     
-    const auto xSpeed = _linx * m_swerve.kMaxSpeed;
-    const auto ySpeed = _liny * m_swerve.kMaxSpeed;
-    const auto rotSpeed = _angz * m_swerve.kMaxAngularSpeed;
+    const auto xSpeed = _linx * kMeterPerSecond;
+    const auto ySpeed = _liny * kMeterPerSecond;
+    const auto rotSpeed = _angz * kRadianPerSecond;
     m_swerve.Drive(xSpeed, ySpeed, rotSpeed, false);
     
-    ROS_INFO("Vel Received: [%f], [%f], [%f]", _linx, _liny, _angz);
+    //ROS_INFO("Vel Received: [%f], [%f], [%f]", _linx, _liny, _angz);
 }
