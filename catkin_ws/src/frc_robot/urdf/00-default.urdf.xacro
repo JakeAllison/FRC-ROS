@@ -22,14 +22,14 @@
     chassis_length="0.8128" chassis_width="0.7112"
     chassis_height="0.1524" chassis_mass="50" />
   
-  <!-- <xacro:six_wheel_diff_drive name="tank_drive" parent="base_link"
+  <xacro:six_wheel_diff_drive name="tank_drive" parent="base_link"
     z_offset="0.0" drop_wheel_height="0.003175"
     wheel_separation="0.6096" wheelbase_length="0.6096"
-    wheel_radius="0.1016" wheel_width="0.0381" wheel_mass="1" /> -->
-  
-  <xacro:swerve_drive name="swerve_drive" parent="base_link"
-    z_offset="0.0" wheelbase_width="0.6096" wheelbase_length="0.6096"
     wheel_radius="0.1016" wheel_width="0.0381" wheel_mass="1" />
+  
+  <!-- <xacro:swerve_drive name="swerve_drive" parent="base_link"
+    z_offset="0.0" wheelbase_width="0.6096" wheelbase_length="0.6096"
+    wheel_radius="0.1016" wheel_width="0.0381" wheel_mass="1" /> -->
     
   <!-- <xacro:elevator_attachment name="elevator" parent="base_link"
     ax="0.0" ay="0.0" az="0.0762" rr="0.0" rp="0.0" ry="0.0"/> -->
@@ -85,7 +85,7 @@
   
   <gazebo>
     <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
-      <robotNamespace>/drivetrain</robotNamespace>
+      <robotNamespace>/</robotNamespace>
       <legacyModeNS>true</legacyModeNS>
     </plugin>
   </gazebo>

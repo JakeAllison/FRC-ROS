@@ -2,7 +2,7 @@
   <arg name="auton"             default="false" />
   <arg name="sim" 		        default="true" />
   <arg name="slam"              default="true" />
-  <arg name="swerve_controller" default="true" />
+  <arg name="swerve_controller" default="false" />
   <arg name="teleop"            default="true" />
   <arg name="user_interface"    default="true" />
   <arg name="visualize"         default="true" />
