@@ -20,7 +20,6 @@
   </node>
   
   <node if="$(arg xbox)" pkg="teleop_twist_joy" name="teleop_twist_joy" type="teleop_node">
-    <remap from="cmd_vel" to="/frc_diff_drive_controller/cmd_vel"/>
     <rosparam command="load" file="$(arg config_filepath)" />
   </node>
 </launch>
