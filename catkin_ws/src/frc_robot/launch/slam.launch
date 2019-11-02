@@ -30,6 +30,7 @@
       <param name="odom_frame_id"            type="string" value="map"/>
       <param name="odom_tf_linear_variance"  type="double" value="0.0005"/>
       <param name="odom_tf_angular_variance"	type="double" value="0.0005"/>
+      
     </node>
   </group>
 
