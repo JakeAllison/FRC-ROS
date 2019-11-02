@@ -13,6 +13,9 @@
       <xacro:property name="high_friction" value="200.0" />
       <xacro:property name="medium_friction" value="100.0" />
       <xacro:property name="low_friction" value="1.0" />
+      <xacro:property name="pivot_radius" value="0.025" />
+      <xacro:property name="pivot_height" value="0.025" />
+      <xacro:property name="pivot_mass" value="1.0" />
     
     <xacro:macro name="six_wheel_diff_drive" params="name parent z_offset drop_wheel_height wheel_separation wheelbase_length wheel_radius wheel_width wheel_mass">
         
@@ -141,24 +144,24 @@
         <link name="${prefix}_swerve_pivot">
               <visual>
                 <geometry>
-                  <cylinder length="0.1" radius="0.05"/>
+                  <cylinder length="${pivot_height}" radius="${pivot_radius}"/>
                 </geometry>
-                <origin xyz="0 0 0"/>
+                <origin xyz="0 0 ${pivot_height/2}"/>
                 <material name="blue"/>
               </visual>
               <collision>
                 <geometry>
-                  <cylinder length="0.1" radius="0.05"/>
+                  <cylinder length="${pivot_height}" radius="${pivot_radius}"/>
                 </geometry>
-                <origin xyz="0 0 0"/>
+                <origin xyz="0 0 ${pivot_height/2}"/>
               </collision>
               <inertial>
-                <mass value="1.0"/>
+                <mass value="${pivot_mass}"/>
                 <xacro:cylinder_inertia
-                m="1.0"
-                r="0.05"
-                h="0.1" />
-                <origin xyz="0 0 0"/>
+                m="${pivot_mass}"
+                r="${pivot_radius}"
+                h="${pivot_height}" />
+                <origin xyz="0 0 ${pivot_height/2}"/>
               </inertial>
         </link>
         <joint name="${parent2}_to_${prefix}_swerve_pivot" type="continuous">
