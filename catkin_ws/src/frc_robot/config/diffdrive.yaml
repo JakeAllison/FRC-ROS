@@ -1,49 +1,48 @@
-drivetrain:
-    frc_joint_state_controller:
-        # The joint state controller handles publishing transforms for any moving joints
-        type: "joint_state_controller/JointStateController"
-        publish_rate: 50
+frc_joint_state_controller:
+    # The joint state controller handles publishing transforms for any moving joints
+    type: "joint_state_controller/JointStateController"
+    publish_rate: 50
 
-    frc_diff_drive_controller:
-        type: "diff_drive_controller/DiffDriveController"
-        publish_rate: 50
+frc_diff_drive_controller:
+    type: "diff_drive_controller/DiffDriveController"
+    publish_rate: 50
 
-        left_wheel: ['base_link_to_fl_wheel', 'base_link_to_ml_wheel', 'base_link_to_rl_wheel']
-        right_wheel: ['base_link_to_fr_wheel', 'base_link_to_mr_wheel', 'base_link_to_rr_wheel']
+    left_wheel: ['base_link_to_fl_diff_wheel', 'base_link_to_ml_diff_wheel', 'base_link_to_rl_diff_wheel']
+    right_wheel: ['base_link_to_fr_diff_wheel', 'base_link_to_mr_diff_wheel', 'base_link_to_rr_diff_wheel']
 
-        #wheel_separation: 0.6096
-        #wheel_radius: 0.1016
+    #wheel_separation: 0.6096
+    #wheel_radius: 0.1016
 
-        # Odometry covariances for the encoder output of the robot. These values should
-        # be tuned to your robot's sample odometry data, but these values are a good place
-        # to start
-        pose_covariance_diagonal: [0.000001, 0.000001, 0.000001, 0.000001, 0.000001, 0.000001]
-        twist_covariance_diagonal: [0.1, 0.000001, 0.000001, 0.000001, 0.000001, 0.01]
+    # Odometry covariances for the encoder output of the robot. These values should
+    # be tuned to your robot's sample odometry data, but these values are a good place
+    # to start
+    pose_covariance_diagonal: [0.000001, 0.000001, 0.000001, 0.000001, 0.000001, 0.000001]
+    twist_covariance_diagonal: [0.1, 0.000001, 0.000001, 0.000001, 0.000001, 0.01]
 
-        enable_odom_tf: false
-        odom_frame_id: odom
+    enable_odom_tf: false
+    odom_frame_id: odom
 
-        # Top level frame (link) of the robot description
-        base_frame_id: base_link
+    # Top level frame (link) of the robot description
+    base_frame_id: base_link
 
-        # Velocity and acceleration limits for the robot
-        linear:
-          x:
-            has_velocity_limits    : true
-            max_velocity           : 5.0   # m/s
-            has_acceleration_limits: true
-            max_acceleration       : 5.0   # m/s^2
-        angular:
-          z:
-            has_velocity_limits    : true
-            max_velocity           : 10.0   # rad/s
-            has_acceleration_limits: true
-            max_acceleration       : 10.0   # rad/s^2
+    # Velocity and acceleration limits for the robot
+    linear:
+      x:
+        has_velocity_limits    : true
+        max_velocity           : 5.0   # m/s
+        has_acceleration_limits: true
+        max_acceleration       : 5.0   # m/s^2
+    angular:
+      z:
+        has_velocity_limits    : true
+        max_velocity           : 10.0   # rad/s
+        has_acceleration_limits: true
+        max_acceleration       : 10.0   # rad/s^2
 
-        /gazebo_ros_control/pid_gains:
-            base_link_to_fl_wheel: {p: 1.0, i: 0.0, d: 0.0}
-            base_link_to_ml_wheel: {p: 1.0, i: 0.0, d: 0.0}
-            base_link_to_rl_wheel: {p: 1.0, i: 0.0, d: 0.0}
-            base_link_to_fr_wheel: {p: 1.0, i: 0.0, d: 0.0}
-            base_link_to_mr_wheel: {p: 1.0, i: 0.0, d: 0.0}
-            base_link_to_rr_wheel: {p: 1.0, i: 0.0, d: 0.0}
+/gazebo_ros_control/pid_gains:
+    base_link_to_fl_diff_wheel: {p: 10.0, i: 0.01, d: 0.0}
+    base_link_to_ml_diff_wheel: {p: 10.0, i: 0.01, d: 0.0}
+    base_link_to_rl_diff_wheel: {p: 10.0, i: 0.01, d: 0.0}
+    base_link_to_fr_diff_wheel: {p: 10.0, i: 0.01, d: 0.0}
+    base_link_to_mr_diff_wheel: {p: 10.0, i: 0.01, d: 0.0}
+    base_link_to_rr_diff_wheel: {p: 10.0, i: 0.01, d: 0.0}
