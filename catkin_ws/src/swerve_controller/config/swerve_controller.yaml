@@ -1,0 +1,5 @@
+swerve_controller:
+    fl_drive_conversion_param: 10.0
+    fr_drive_conversion_param: 10.0
+    rl_drive_conversion_param: 10.0
+    rr_drive_conversion_param: 10.0
