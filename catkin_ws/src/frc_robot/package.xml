@@ -54,6 +54,7 @@
   
   <exec_depend>common_sensors</exec_depend>
   <exec_depend>controller_manager</exec_depend>
+  <exec_depend>dwa_local_planner</exec_depend>
   <exec_depend>diff_drive_controller</exec_depend>
   <exec_depend>effort_controllers</exec_depend>
   <exec_depend>gazebo_plugins</exec_depend>

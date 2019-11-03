@@ -5,7 +5,7 @@ Panels:
     Property Tree Widget:
       Expanded: ~
       Splitter Ratio: 0.5
-    Tree Height: 239
+    Tree Height: 396
   - Class: rviz/Selection
     Name: Selection
   - Class: rviz/Tool Properties
@@ -98,12 +98,12 @@ Visualization Manager:
           Show Axes: false
           Show Trail: false
           Value: true
-        fl_wheel:
+        fl_diff_wheel:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        fr_wheel:
+        fr_diff_wheel:
           Alpha: 1
           Show Axes: false
           Show Trail: false
@@ -120,22 +120,22 @@ Visualization Manager:
           Alpha: 1
           Show Axes: false
           Show Trail: false
-        ml_wheel:
+        ml_diff_wheel:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        mr_wheel:
+        mr_diff_wheel:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        rl_wheel:
+        rl_diff_wheel:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        rr_wheel:
+        rr_diff_wheel:
           Alpha: 1
           Show Axes: false
           Show Trail: false
@@ -169,9 +169,9 @@ Visualization Manager:
           Value: true
         chassis:
           Value: true
-        fl_wheel:
+        fl_diff_wheel:
           Value: true
-        fr_wheel:
+        fr_diff_wheel:
           Value: true
         kinect_mount:
           Value: true
@@ -181,13 +181,15 @@ Visualization Manager:
           Value: true
         map:
           Value: true
-        ml_wheel:
+        ml_diff_wheel:
           Value: true
-        mr_wheel:
+        mr_diff_wheel:
           Value: true
-        rl_wheel:
+        odom:
           Value: true
-        rr_wheel:
+        rl_diff_wheel:
+          Value: true
+        rr_diff_wheel:
           Value: true
         scanmatcher_frame:
           Value: true
@@ -198,13 +200,13 @@ Visualization Manager:
       Show Names: true
       Tree:
         map:
-          scanmatcher_frame:
+          odom:
             base_link:
               chassis:
                 {}
-              fl_wheel:
+              fl_diff_wheel:
                 {}
-              fr_wheel:
+              fr_diff_wheel:
                 {}
               kinect_mount:
                 camera_link:
@@ -221,14 +223,16 @@ Visualization Manager:
                       {}
                   laser:
                     {}
-              ml_wheel:
+              ml_diff_wheel:
                 {}
-              mr_wheel:
+              mr_diff_wheel:
                 {}
-              rl_wheel:
+              rl_diff_wheel:
                 {}
-              rr_wheel:
+              rr_diff_wheel:
                 {}
+          scanmatcher_frame:
+            {}
       Update Interval: 0
       Value: true
     - Alpha: 1
@@ -248,7 +252,7 @@ Visualization Manager:
       Max Color: 255; 255; 255
       Max Intensity: 999999
       Min Color: 0; 0; 0
-      Min Intensity: -999999
+      Min Intensity: 0
       Name: LaserScan
       Position Transformer: XYZ
       Queue Size: 10
@@ -339,22 +343,22 @@ Visualization Manager:
       Class: rviz/Map
       Color Scheme: map
       Draw Behind: false
-      Enabled: false
+      Enabled: true
       Name: Global_Costmap
       Topic: /move_base/global_costmap/costmap
       Unreliable: false
       Use Timestamp: false
-      Value: false
+      Value: true
     - Alpha: 0.699999988
       Class: rviz/Map
       Color Scheme: costmap
       Draw Behind: false
-      Enabled: false
+      Enabled: true
       Name: Local_Costmap
       Topic: /move_base/local_costmap/costmap
       Unreliable: false
       Use Timestamp: false
-      Value: false
+      Value: true
     - Alpha: 1
       Buffer Length: 1
       Class: rviz/Path
@@ -382,7 +386,7 @@ Visualization Manager:
       Buffer Length: 1
       Class: rviz/Path
       Color: 255; 255; 0
-      Enabled: false
+      Enabled: true
       Head Diameter: 0.300000012
       Head Length: 0.200000003
       Length: 0.300000012
@@ -398,14 +402,14 @@ Visualization Manager:
       Radius: 0.0299999993
       Shaft Diameter: 0.100000001
       Shaft Length: 0.100000001
-      Topic: ""
+      Topic: /move_base/DWAPlannerROS/global_plan
       Unreliable: false
-      Value: false
+      Value: true
     - Alpha: 1
       Buffer Length: 1
       Class: rviz/Path
       Color: 255; 0; 0
-      Enabled: false
+      Enabled: true
       Head Diameter: 0.300000012
       Head Length: 0.200000003
       Length: 0.300000012
@@ -421,9 +425,9 @@ Visualization Manager:
       Radius: 0.0299999993
       Shaft Diameter: 0.100000001
       Shaft Length: 0.100000001
-      Topic: ""
+      Topic: /move_base/DWAPlannerROS/local_plan
       Unreliable: false
-      Value: false
+      Value: true
     - Alpha: 1
       Axes Length: 1
       Axes Radius: 0.100000001
@@ -444,7 +448,7 @@ Visualization Manager:
       Axes Radius: 0.100000001
       Class: rviz/Pose
       Color: 255; 25; 0
-      Enabled: false
+      Enabled: true
       Head Length: 0.300000012
       Head Radius: 0.100000001
       Name: Move_Base_Goal
@@ -453,7 +457,7 @@ Visualization Manager:
       Shape: Arrow
       Topic: /move_base/current_goal
       Unreliable: false
-      Value: false
+      Value: true
   Enabled: true
   Global Options:
     Background Color: 48; 48; 48
@@ -479,25 +483,25 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz/ThirdPersonFollower
-      Distance: 5.07792664
+      Distance: 6.24410582
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.0599999987
         Stereo Focal Distance: 1
         Swap Stereo Eyes: false
         Value: false
       Focal Point:
-        X: 2.03927159
-        Y: -0.260055542
-        Z: 1.1920929e-07
+        X: 1.57546806
+        Y: 0.223816633
+        Z: 3.57627869e-07
       Focal Shape Fixed Size: false
       Focal Shape Size: 0.0500000007
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.00999999978
-      Pitch: 0.504796684
+      Pitch: 0.859796405
       Target Frame: map
       Value: ThirdPersonFollower (rviz)
-      Yaw: 5.46665049
+      Yaw: 5.06664848
     Saved: ~
 Window Geometry:
   Displays:
@@ -507,7 +511,7 @@ Window Geometry:
   Hide Right Dock: false
   Image:
     collapsed: false
-  QMainWindow State: 000000ff00000000fd00000004000000000000016a000002f9fc0200000012fb0000001200530065006c0065006300740069006f006e00000001e10000009b0000006700fffffffb0000001e0054006f006f006c002000500072006f007000650072007400690065007302000001ed000001df00000185000000a3fb000000120056006900650077007300200054006f006f02000001df000002110000018500000122fb000000200054006f006f006c002000500072006f0070006500720074006900650073003203000002880000011d000002210000017afb000000100044006900730070006c006100790073010000004400000130000000e300fffffffb0000002000730065006c0065006300740069006f006e00200062007500660066006500720200000138000000aa0000023a00000294fb00000014005700690064006500530074006500720065006f02000000e6000000d2000003ee0000030bfb0000000c004b0069006e0065006300740200000186000001060000030c00000261fb0000000a0049006d006100670065010000012d000000530000000000000000fb0000000a0049006d006100670065010000014c0000006b0000000000000000fb0000000c00430061006d00650072006100000002d5000000160000000000000000fb0000000c00430061006d00650072006100000002da000000160000000000000000fb0000000c00430061006d00650072006100000002e6000000d10000000000000000fb0000000a0049006d006100670065010000017a000001390000001600fffffffb0000000a0049006d00610067006501000002b9000000840000001600fffffffb0000000a0049006d0061006700650100000225000001180000000000000000fb0000000a0049006d00610067006500000002ce0000002c0000000000000000fb0000000a0049006d00610067006500000002fc000000410000000000000000000000010000010f000002f9fc0200000003fb0000001e0054006f006f006c002000500072006f00700065007200740069006500730100000041000000780000000000000000fb0000000a005600690065007700730100000044000002f9000000b400fffffffb0000001200530065006c0065006300740069006f006e010000025a000000b200000000000000000000000200000490000000a9fc0100000001fb0000000a00560069006500770073030000004e00000080000002e100000197000000030000078000000044fc0100000002fb0000000800540069006d00650100000000000007800000024300fffffffb0000000800540069006d00650100000000000004500000000000000000000004fb000002f900000004000000040000000800000008fc0000000100000002000000010000000a0054006f006f006c00730100000000ffffffff0000000000000000
+  QMainWindow State: 000000ff00000000fd00000004000000000000016a000002f9fc0200000012fb0000001200530065006c0065006300740069006f006e00000001e10000009b0000006700fffffffb0000001e0054006f006f006c002000500072006f007000650072007400690065007302000001ed000001df00000185000000a3fb000000120056006900650077007300200054006f006f02000001df000002110000018500000122fb000000200054006f006f006c002000500072006f0070006500720074006900650073003203000002880000011d000002210000017afb000000100044006900730070006c0061007900730100000044000001cd000000e300fffffffb0000002000730065006c0065006300740069006f006e00200062007500660066006500720200000138000000aa0000023a00000294fb00000014005700690064006500530074006500720065006f02000000e6000000d2000003ee0000030bfb0000000c004b0069006e0065006300740200000186000001060000030c00000261fb0000000a0049006d00610067006501000002170000007e0000001600fffffffb0000000a0049006d006100670065010000029b000000a20000001600fffffffb0000000c00430061006d00650072006100000002d5000000160000000000000000fb0000000c00430061006d00650072006100000002da000000160000000000000000fb0000000c00430061006d00650072006100000002e6000000d10000000000000000fb0000000a0049006d006100670065010000017a000001390000000000000000fb0000000a0049006d00610067006501000002b9000000840000000000000000fb0000000a0049006d0061006700650100000225000001180000000000000000fb0000000a0049006d00610067006500000002ce0000002c0000000000000000fb0000000a0049006d00610067006500000002fc000000410000000000000000000000010000010f000002f9fc0200000003fb0000001e0054006f006f006c002000500072006f00700065007200740069006500730100000041000000780000000000000000fb0000000a005600690065007700730100000044000002f9000000b400fffffffb0000001200530065006c0065006300740069006f006e010000025a000000b200000000000000000000000200000490000000a9fc0100000001fb0000000a00560069006500770073030000004e00000080000002e100000197000000030000078000000044fc0100000002fb0000000800540069006d00650100000000000007800000024300fffffffb0000000800540069006d00650100000000000004500000000000000000000004fb000002f900000004000000040000000800000008fc0000000100000002000000010000000a0054006f006f006c00730100000000ffffffff0000000000000000
   Selection:
     collapsed: false
   Time:
