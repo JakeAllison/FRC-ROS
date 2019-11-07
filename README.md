@@ -7,6 +7,8 @@ Simulation Demo: https://www.youtube.com/watch?v=qSjgmY7hYsY
 
 Teleop Demo w/ SLAM: https://www.youtube.com/watch?v=1Qe-s1liH5k
 
+Autonomous and Swerve Simulation: https://youtu.be/OrnWRP20IEY
+
 ## Setup
 
 Setup is fairly simple. You will need a computer with Ubuntu 16.04 installed. This package is intended to be used on an NVidia Jetson TX2, however, you should be able to run it on a Raspberry Pi as well, but that won't have the performance of a PC or a Jetson.
