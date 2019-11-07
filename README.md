@@ -1,11 +1,11 @@
 # FRC-ROS
 
+This is the source code for using ROS with an FRC Robot. The steps for installing and running ROS applications are identical for desktop PC's, laptops, Raspberry PI, NVidia Jetson.
+
 ## Youtube Demos
 Simulation Demo: https://www.youtube.com/watch?v=qSjgmY7hYsY
 
 Teleop Demo w/ SLAM: https://www.youtube.com/watch?v=1Qe-s1liH5k
-
-This is the source code for using ROS with an FRC Robot. The steps for installing and running ROS applications are identical for desktop PC's, laptops, Raspberry PI, NVidia Jetson.
 
 ## Setup
 
@@ -18,19 +18,21 @@ Make sure you have Ubuntu 16.04 installed on your computer: https://tutorials.ub
 ### 2. Download FRC-ROS to Your Computer
 
 Enter the following to download FRC-ROS to your Documents:
-
-> cd ~/Documents
-> git clone https://github.com/JakeAllison/FRC-ROS.git
-> cd FRC-ROS
-> ./Setup.sh
+...
+cd ~/Documents
+git clone https://github.com/JakeAllison/FRC-ROS.git
+cd FRC-ROS
+./Setup.sh
+...
 
 ### 3. Install NVidia Jetpack (Skip if you're not using a Jetson)
 
 This part will be performed on your computer with the Jetson hooked up.
-
-> cd ~/Documents/FRC-ROS
-> cp ./JetPack-L4T-3.3-linux-x64_b39.run ~/Downloads
-> ~/Downloads/JetPack-L4T-3.3-linux-x64_b39.run
+...
+cd ~/Documents/FRC-ROS
+cp ./JetPack-L4T-3.3-linux-x64_b39.run ~/Downloads
+~/Downloads/JetPack-L4T-3.3-linux-x64_b39.run
+...
 
 You can follow the guide (NVidia Developer membership required): [https://developer.nvidia.com/embedded/dlc/jetpack-install-guide-3_3. At a minimum, you will want follow directions to install: Target - Jetson TX2/TX2i (or whatever hardware you have).
 
@@ -41,18 +43,18 @@ Follow the steps above to install on your computer. This process is identical to
 ### 5. Make Updates When Needed
 
 If you make changes to the source code, you will need to update the files from the location where you downloaded FRC-ROS to your Catkin workspace. Open a terminal and put the following command to bring up the simulation:
-
-> cd ~/Documents/FRC-ROS
-> ./Update.sh
-
+...
+cd ~/Documents/FRC-ROS
+./Update.sh
+...
 
 ### 6. Run a Simulation
 
 
 You can run a robot simulation in Gazebo simulator. Open a terminal and put the following command to bring up the simulation:
-
-> roslaunch frc_robot main_sim.launch
-
+...
+roslaunch frc_robot main_sim.launch
+...
 1. You can control the virtual robot using the GUI screen that pops up, or an XBox 360 controller.
 2. To control the robot, use the analog sticks on your controller. You need to hold down the **RB** button for normal speed, or **LB** for turbo speed.
 2. You can set navigation goals in RViz using '2D Nav Goal' and placing the arrow anywhere you like. The robot will try to drive autonomously to that location.
