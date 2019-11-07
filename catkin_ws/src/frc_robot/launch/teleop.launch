@@ -6,11 +6,11 @@
   <arg name="config_filepath" default="$(find frc_robot)/config/teleop.yaml" />
   
   <node if="$(arg slider)" name="rqt_robot_steering" pkg="rqt_robot_steering" type="rqt_robot_steering">
-    <param name="default_topic" value="/cmd_vel"/>
+    <param name="default_topic" value="/frc_diff_drive_controller/cmd_vel"/>
   </node>
   
   <node if="$(arg keyboard)" name="teleop_twist_keyboard" pkg="teleop_twist_keyboard" type="teleop_twist_keyboard">
-    <remap from="cmd_vel" to="/cmd_vel"/>
+    <remap from="cmd_vel" to="/frc_diff_drive_controller/cmd_vel"/>
   </node>
   
   <node pkg="joy" type="joy_node" name="joy_node">
