@@ -18,9 +18,6 @@ sudo apt-get install ${ros_install} ${pip_install} ${rsync_install}
 sudo rosdep init
 rosdep update
 
-#install network tables for ntbridge
-python -m pip install --user pynetworktables==2018.2.0
-
 # Check ~/.bashrc for sourcing
 
 mkdir -p ~/catkin_ws/src

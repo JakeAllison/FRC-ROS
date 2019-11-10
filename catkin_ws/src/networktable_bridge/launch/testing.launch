@@ -1,4 +1,0 @@
-<launch>
-    <node pkg="networktable_bridge" name="roborio_bridge" type="testing.py" output="screen"/>
-  
-</launch>
