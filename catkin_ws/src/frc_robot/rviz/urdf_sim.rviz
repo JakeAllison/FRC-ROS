@@ -3,7 +3,8 @@ Panels:
     Help Height: 0
     Name: Displays
     Property Tree Widget:
-      Expanded: ~
+      Expanded:
+        - /Local_Path1
       Splitter Ratio: 0.5
     Tree Height: 339
   - Class: rviz/Selection
@@ -252,7 +253,7 @@ Visualization Manager:
       Max Color: 255; 255; 255
       Max Intensity: 999999
       Min Color: 0; 0; 0
-      Min Intensity: 4.20389539e-45
+      Min Intensity: 0
       Name: LaserScan
       Position Transformer: XYZ
       Queue Size: 10
@@ -456,7 +457,7 @@ Visualization Manager:
       Radius: 0.0299999993
       Shaft Diameter: 0.100000001
       Shaft Length: 0.100000001
-      Topic: ""
+      Topic: /move_base/DWAPlannerROS/global_plan
       Unreliable: false
       Value: true
     - Alpha: 1
@@ -479,7 +480,7 @@ Visualization Manager:
       Radius: 0.0299999993
       Shaft Diameter: 0.100000001
       Shaft Length: 0.100000001
-      Topic: ""
+      Topic: /move_base/DWAPlannerROS/local_plan
       Unreliable: false
       Value: true
     - Alpha: 1
@@ -536,26 +537,26 @@ Visualization Manager:
   Value: true
   Views:
     Current:
-      Class: rviz/ThirdPersonFollower
-      Distance: 6.87405157
+      Class: rviz/Orbit
+      Distance: 5.28434134
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.0599999987
         Stereo Focal Distance: 1
         Swap Stereo Eyes: false
         Value: false
       Focal Point:
-        X: -4.46272993
-        Y: -1.84385383
-        Z: 1.1920929e-07
-      Focal Shape Fixed Size: false
+        X: 0
+        Y: 0
+        Z: 0
+      Focal Shape Fixed Size: true
       Focal Shape Size: 0.0500000007
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.00999999978
-      Pitch: 0.744796753
-      Target Frame: map
-      Value: ThirdPersonFollower (rviz)
-      Yaw: 3.71164942
+      Pitch: 0.724796534
+      Target Frame: base_link
+      Value: Orbit (rviz)
+      Yaw: 0
     Saved: ~
 Window Geometry:
   Depth Image:
