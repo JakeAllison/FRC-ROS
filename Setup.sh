@@ -40,7 +40,7 @@ sudo apt install python-rosinstall python-rosinstall-generator python-wstool bui
 
 # Copy packages
 
-# Copy necessary packages
+cd $cwd/catkin_ws/src
 
 for D in *; do
     if [ -d "${D}" ]; then
@@ -50,6 +50,8 @@ for D in *; do
 done
 
 # Extract supporting packages
+
+cd $cwd
 
 file=$cwd/common-sensors.tar.gz
 if [ ! -f "$file" ]; then
