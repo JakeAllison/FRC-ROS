@@ -10,19 +10,19 @@ frc_diff_drive_controller:
     left_wheel: ['base_link_to_fl_diff_wheel', 'base_link_to_ml_diff_wheel', 'base_link_to_rl_diff_wheel']
     right_wheel: ['base_link_to_fr_diff_wheel', 'base_link_to_mr_diff_wheel', 'base_link_to_rr_diff_wheel']
 
-    #wheel_separation: 0.6096
-    #wheel_radius: 0.1016
+# wheel_separation: 0.6096
+# wheel_radius: 0.1016
 
     # Odometry covariances for the encoder output of the robot. These values should
     # be tuned to your robot's sample odometry data, but these values are a good place
     # to start
-    pose_covariance_diagonal: [0.000001, 0.000001, 0.000001, 0.000001, 0.000001, 0.000001]
-    twist_covariance_diagonal: [0.1, 0.000001, 0.000001, 0.000001, 0.000001, 0.01]
-
+#    pose_covariance_diagonal: [0.000001, 0.000001, 0.000001, 0.000001, 0.000001, 0.000001]
+#    twist_covariance_diagonal: [0.1, 0.000001, 0.000001, 0.000001, 0.000001, 0.01]
+    pose_covariance_diagonal : [0.001, 0.001, 1000000.0, 1000000.0, 1000000.0, 1000.0]
+    twist_covariance_diagonal: [0.001, 0.001, 1000000.0, 1000000.0, 1000000.0, 1000.0]
+    
     enable_odom_tf: false
     odom_frame_id: odom
-
-    # Top level frame (link) of the robot description
     base_frame_id: base_link
 
     # Velocity and acceleration limits for the robot

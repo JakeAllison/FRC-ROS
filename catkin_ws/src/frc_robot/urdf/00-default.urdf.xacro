@@ -69,7 +69,7 @@
   <xacro:hokuyo_04lx_laser name="2D_Laser" parent="lidar_mount" ros_topic="/scan" update_rate="10" min_angle="-2.0" max_angle="2.0">
     <origin/>
   </xacro:hokuyo_04lx_laser>
-  
+<!--
   <gazebo>
     <plugin name="imu_plugin" filename="libgazebo_ros_imu.so">
       <alwaysOn>true</alwaysOn>
@@ -80,7 +80,33 @@
       <updateRate>20.0</updateRate>
     </plugin>
   </gazebo>
-
+-->
+  <link name="imu_link"/>
+  <joint name="base_link_to_imu_link" type="fixed">
+    <parent link="base_link"/>
+    <child link="imu_link"/>
+    <origin rpy="0 0 0" xyz="0 0 0"/>
+  </joint>
+  
+  <gazebo reference="imu_link">
+    <gravity>true</gravity>
+    <sensor name="imu_sensor" type="imu">
+      <always_on>true</always_on>
+      <update_rate>100</update_rate>
+      <visualize>true</visualize>
+      <topic>imu</topic>
+      <plugin filename="libgazebo_ros_imu_sensor.so" name="imu_plugin">
+        <topicName>imu</topicName>
+        <bodyName>imu_link</bodyName>
+        <updateRateHZ>50.0</updateRateHZ>
+        <gaussianNoise>0.0</gaussianNoise>
+        <xyzOffset>0 0 0</xyzOffset>
+        <rpyOffset>0 0 0</rpyOffset>
+        <frameName>imu_link</frameName>
+      </plugin>
+      <pose>0 0 0 0 0 0</pose>
+    </sensor>
+  </gazebo>
 <!--                          For Gazebo Simulation                          -->
   
   <gazebo>

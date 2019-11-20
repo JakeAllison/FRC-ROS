@@ -1,0 +1,24 @@
+rtabmap:
+    rtabmap:
+        frame_id: base_link
+        map_frame_id: map
+        odom_frame_id: odom
+      
+        subscribe_depth: false
+        subscribe_rgb: false
+        subscribe_rgbd: true
+        subscribe_scan: true
+      
+        publish_tf: false
+      
+        Reg/Strategy: 2
+        Reg/Force3DoF: true
+        RGBD/ProximityBySpace: false
+      
+        RGBD/ProximityPathMaxNeighbors: 10
+        Grid/Scan2dUnknownSpaceFilled: true
+      
+        Grid/FromDepth: false
+        Grid/MaxGroundHeight: 0.2
+        Grid/MaxObstacleHeight: 2.0
+        Grid/NormalsSegmentation: false
