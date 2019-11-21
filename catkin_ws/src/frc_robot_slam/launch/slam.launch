@@ -2,11 +2,12 @@
     <rosparam command="load" file="$(find frc_robot_slam)/config/slam.yaml"/>
     
     <!--  odom_type. Available types are:
-        1) drivetrain - Uses Robot_Localization to combine drivetrain and IMU data.
-        2) icp - ICP Odometry using laser scans
-        3) icp_rgbd - ICP Odometry using RGBD data.
-        4) rgbd - Visual Odometry using RGBD data.
-        5) none - Creates static odom->base_link TF.
+        1) fused - Fuses all data from multiple sources.
+        2) drivetrain - Uses drivetrain and IMU data.
+        3) icp - ICP Odometry using laser scans
+        4) icp_rgbd - ICP Odometry using RGBD data.
+        5) rgbd - Visual Odometry using RGBD data.
+        6) none - Creates static odom->base_link TF.
     -->
     <!--  slam_type. Available types are:
         1) gmapping - Uses odometry and laser scans to create 2D map.
