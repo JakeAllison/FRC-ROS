@@ -18,9 +18,6 @@ sudo apt-get install ${ros_install} ${pip_install} ${rsync_install}
 sudo rosdep init
 rosdep update
 
-#install network tables for ntbridge
-python -m pip install --user pynetworktables==2018.2.0
-
 # Check ~/.bashrc for sourcing
 
 mkdir -p ~/catkin_ws/src
@@ -43,7 +40,7 @@ sudo apt install python-rosinstall python-rosinstall-generator python-wstool bui
 
 # Copy packages
 
-# Copy necessary packages
+cd $cwd/catkin_ws/src
 
 for D in *; do
     if [ -d "${D}" ]; then
@@ -53,6 +50,8 @@ for D in *; do
 done
 
 # Extract supporting packages
+
+cd $cwd
 
 file=$cwd/common-sensors.tar.gz
 if [ ! -f "$file" ]; then

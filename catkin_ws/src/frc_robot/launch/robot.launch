@@ -6,6 +6,8 @@
   
   <!-- Roborio communication -->
   
-  <include if="$(arg networktable)"	file="$(find networktable_bridge)/launch/networktable_bridge.launch"/>
+  <include file="$(find rosbridge_server)/launch/rosbridge_websocket.launch" > 
+      <arg name="port" value="5800"/>
+  </include>
   
 </launch>

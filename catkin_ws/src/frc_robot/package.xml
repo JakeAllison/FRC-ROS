@@ -52,6 +52,9 @@
   
   <build_depend>roslaunch</build_depend>
   
+  <exec_depend>rosbridge_library</exec_depend>
+  <exec_depend>rosapi</exec_depend>
+  <exec_depend>rosbridge_server</exec_depend>
   <exec_depend>common_sensors</exec_depend>
   <exec_depend>controller_manager</exec_depend>
   <exec_depend>dwa_local_planner</exec_depend>
