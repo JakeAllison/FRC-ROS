@@ -1,6 +1,5 @@
 <launch>
   <arg name="perspective" default="$(find frc_robot)/rqt_gui/frc-robot.perspective" />
   
-  
   <node name="rqt_gui_node" pkg="rqt_gui" type="rqt_gui" args="--clear-config --perspective-file $(arg perspective)"/>
 </launch>

@@ -1,5 +1,5 @@
 <launch>
-  <rosparam command="load" file="$(find frc_robot)/config/auton.yaml"/>
+  <rosparam command="load" file="$(find frc_robot_auton)/config/auton.yaml"/>
   
   <arg name="odom_frame_id"	default="/odom"/>
   <arg name="base_frame_id"	default="/base_link"/>
@@ -7,15 +7,15 @@
   <arg name="odom_topic"	default="/odom" />
   <arg name="laser_topic"	default="/scan" />
   <arg name="cmd_vel_topic"	default="/frc_diff_drive_controller/cmd_vel" />
-
-  <node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen">
-    <rosparam file="$(find frc_robot)/config/Nav/move_base_params.yaml"			command="load" />
-    <rosparam file="$(find frc_robot)/config/Nav/costmap_common_params.yaml"		command="load" ns="global_costmap" />
-    <rosparam file="$(find frc_robot)/config/Nav/costmap_common_params.yaml"		command="load" ns="local_costmap" />   
-    <rosparam file="$(find frc_robot)/config/Nav/local_costmap_params.yaml"		command="load" />   
-    <rosparam file="$(find frc_robot)/config/Nav/global_costmap_params.yaml"		command="load" />
-    <rosparam file="$(find frc_robot)/config/Nav/dwa_local_planner_params.yaml"		command="load" />
-    <rosparam file="$(find frc_robot)/config/Nav/navfn_global_planner_params.yaml"	command="load" />
+  
+  <node pkg="move_base" type="move_base" respawn="false" name="move_base">
+    <rosparam file="$(find frc_robot_auton)/config/move_base_params.yaml"			command="load" />
+    <rosparam file="$(find frc_robot_auton)/config/costmap_common_params.yaml"		command="load" ns="global_costmap" />
+    <rosparam file="$(find frc_robot_auton)/config/costmap_common_params.yaml"		command="load" ns="local_costmap" />   
+    <rosparam file="$(find frc_robot_auton)/config/local_costmap_params.yaml"		command="load" />   
+    <rosparam file="$(find frc_robot_auton)/config/global_costmap_params.yaml"		command="load" />
+    <rosparam file="$(find frc_robot_auton)/config/dwa_local_planner_params.yaml"		command="load" />
+    <rosparam file="$(find frc_robot_auton)/config/navfn_global_planner_params.yaml"	command="load" />
     
     
     <!-- reset frame_id parameters using user input data -->
@@ -29,6 +29,6 @@
     <remap from="cmd_vel"	to="$(arg cmd_vel_topic)"/>
     <remap from="odom"		to="$(arg odom_topic)"/>
     <remap from="scan"		to="$(arg laser_topic)"/>
-</node>
+  </node>
 
 </launch>

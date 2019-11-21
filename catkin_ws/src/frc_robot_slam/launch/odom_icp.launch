@@ -1,0 +1,14 @@
+<launch>
+    <rosparam command="load" file="$(find frc_robot_slam)/config/odom_icp.yaml"/>
+    
+    <node pkg="robot_localization" type="ukf_localization_node" name="robot_odom" clear_params="true">
+        <remap from="odometry/filtered" to="odom"/>
+    </node>
+  
+    <!-- Using LaserScan ICP -->
+    <node pkg="rtabmap_ros" type="icp_odometry" name="icp_odometry" output="screen" >
+        <remap from="scan"      to="/scan"/>
+        <remap from="odom"      to="/icp_odometry/odom"/>
+        <remap from="odom_info"      to="/rtabmap/odom_info"/>
+    </node>
+</launch>

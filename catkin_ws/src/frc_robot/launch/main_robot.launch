@@ -13,13 +13,14 @@
 
   <param name="use_sim_time" type="bool" value="false"/>
   
-  <include if="$(arg auton)" 		file="$(find frc_robot)/launch/auton.launch"/>
+  <include if="$(arg auton)" 		file="$(find frc_robot_auton)/launch/auton.launch"/>
   <include if="$(arg kinectlidar)"      file="$(find frc_robot)/launch/kinectlidar.launch"/>
   <include if="$(arg robot)"            file="$(find frc_robot)/launch/robot.launch"/>
   <!-- <include if="$(arg sim)"		file="$(find frc_robot)/launch/sim.launch"/> -->
-  <include if="$(arg slam)" 		file="$(find frc_robot)/launch/slam.launch">
+  <include if="$(arg slam)" 		file="$(find frc_robot_slam)/launch/slam.launch">
     <!-- <arg name="camera_frame"    value="camera1"/> -->
-    <arg name="odom"    value="true"/>
+    <arg name="odom_type"       value="none"/>
+    <arg name="slam_type"       value="none"/>
   </include>
   <include if="$(arg state_publishers)" file="$(find frc_robot)/launch/state_publishers.launch"/>
   <!-- <include if="$(arg swerve_controller)"    file="$(find swerve_controller)/launch/swerve_controller.launch"/> -->

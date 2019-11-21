@@ -5,6 +5,10 @@ robot_odom:
   transform_time_offset: 0.0
   transform_timeout: 0.0
   print_diagnostics: true
+  smooth_lagged_data: true
+  history_length: 0.25
+  dynamic_process_noise_covariance: true
+  predict_to_current_time: true
 #  debug: true
 #  debug_out_file: /home/jake/Documents/robot_debug/ukf_odom.txt
   
@@ -35,3 +39,29 @@ robot_odom:
                 false, false, false,
                 false, false, true,
                 false, false, false]
+  
+  odom1: /icp_odometry/odom
+  odom1_config: [false, false, false,
+                 false, false, false,
+                 true, true, false,
+                 false, false, true,
+                 false, false, false]
+                
+                
+icp_odometry:
+    frame_id: base_link
+    odom_frame_id: odom
+    publish_tf: false
+    publish_null_when_lost: false
+#Icp/PointToPlane: false
+#Icp/VoxelSize: 0.05
+#Icp/Epsilon: 0.001
+#Icp/PointToPlaneK: 5
+#Icp/PointToPlaneRadius: 0.3
+#Icp/MaxCorrespondenceDistance: 0.1
+#Icp/PM: true      # Use libpointmatcher to handle PointToPlane with 2d scans
+#Icp/PMOutlierRatio: 0.95
+    Odom/Strategy: 1
+    Odom/GuessMotion: true
+    Odom/ResetCountdown: 1
+#Odom/ScanKeyFrameThr: 0.9

@@ -1,5 +1,5 @@
 <launch>
-    <rosparam command="load" file="$(find frc_robot)/config/slam.yaml"/>
+    <rosparam command="load" file="$(find frc_robot_slam)/config/slam.yaml"/>
 
     <!-- Choose Hector Slam, GMapping, or ICP Odometry -->
     <arg name="gmapping" default="false" />
