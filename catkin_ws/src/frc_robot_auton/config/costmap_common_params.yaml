@@ -37,7 +37,7 @@ obstacle_layer:
     clearing: true
   obstaclePoints:
     data_type: PointCloud2
-    topic: /rtabmap/obstacles
+    topic: /rtabmap/proj_obstacles
     marking: true
     clearing: false
     

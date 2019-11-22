@@ -18,9 +18,9 @@
   <!-- <include if="$(arg robot)"            file="$(find frc_robot)/launch/robot.launch"/> -->
   <!-- <include if="$(arg sim)"		file="$(find frc_robot)/launch/sim.launch"/> -->
   <include if="$(arg slam)" 		file="$(find frc_robot_slam)/launch/slam.launch">
-    <!-- <arg name="camera_frame"    value="camera1"/> -->
-    <arg name="odom_type"       value="none"/>
-    <arg name="slam_type"       value="none"/>
+    <arg name="camera_frame"    value="camera"/>
+    <arg name="odom_type"       value="fused"/>
+    <arg name="slam_type"       value="gmapping"/>
   </include>
   <include if="$(arg state_publishers)" file="$(find frc_robot)/launch/state_publishers.launch"/>
   <!-- <include if="$(arg swerve_controller)"    file="$(find swerve_controller)/launch/swerve_controller.launch"/> -->

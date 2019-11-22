@@ -6,9 +6,12 @@
     </node>
   
     <!-- Using LaserScan ICP -->
-    <node pkg="rtabmap_ros" type="icp_odometry" name="icp_odometry" output="screen" >
+    <node pkg="rtabmap_ros" type="icp_odometry" name="icp_odometry">
+        <!-- Input -->
         <remap from="scan"      to="/scan"/>
+        
+        <!-- Output -->
         <remap from="odom"      to="/icp_odometry/odom"/>
-        <remap from="odom_info"      to="/rtabmap/odom_info"/>
+        <remap from="odom_info"      to="/icp_odometry/odom_info"/>
     </node>
 </launch>

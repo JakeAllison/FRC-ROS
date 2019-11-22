@@ -15,8 +15,8 @@
         3) rtabmap - Uses laser scans and rgbd for 2D and 3D mapping.
         4) none - Creates static map->odom TF.
     -->
-    <arg name="odom_type" default="" />
-    <arg name="slam_type" default="" />
+    <arg name="odom_type" default="fused" />
+    <arg name="slam_type" default="gmapping"/>
     <arg name="camera_frame" default="camera"/>
     
     
@@ -33,8 +33,8 @@
             <remap from="rgb/camera_info"	to="/$(arg camera_frame)/rgb/camera_info"/>
             
             <!-- Outputs -->
-            <remap from="rgbd_image"		        to="rgbd_image"/>
-            <remap from="rgbd_image/compressed"		to="rgbd_image/compressed"/>
+            <remap from="rgbd_image"		        to="/rtabmap/rgbd_image"/>
+            <remap from="rgbd_image/compressed"		to="/rtabmap/rgbd_image/compressed"/>
         </node>
         
         <!-- Nodelet to convert Kinect Depth Image and Image data into sensor_msgs/PointCloud2 -->
@@ -45,12 +45,13 @@
             <remap from="rgb/camera_info"	to="/$(arg camera_frame)/rgb/camera_info"/>
             
             <!-- Outputs -->
-            <remap from="cloud"		        to="cloud"/>
+            <remap from="cloud"		        to="/rtabmap/cloud"/>
         </node>
         
         <!-- Nodelet to differentiate obstacles from ground in an RGBD image -->
         <node pkg="nodelet" type="nodelet" name="obstacle_detection" args="standalone rtabmap_ros/obstacles_detection">
-            <remap from="cloud"		to="cloud"/>
+            <!-- Input -->
+            <remap from="cloud"		to="/rtabmap/cloud"/>
         </node>
 
     </group>
@@ -81,9 +82,10 @@
                 
                 <!-- Use RGBD ICP Odometry from RTABMap -->
                 <group if="$(eval arg('odom_type')=='icp_rgbd')">
-                    <include file="$(find frc_robot_slam)/launch/odom_icp_rgbd.launch"/>
+                    <include file="$(find frc_robot_slam)/launch/odom_icp_rgbd.launch">
+                        <arg name="camera_frame"    value="$(arg camera_frame)"/>
+                    </include>
                 </group>
-                
                 
                 <group unless="$(eval arg('odom_type')=='icp_rgbd')">
                 
