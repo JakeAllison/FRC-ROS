@@ -1,0 +1,19 @@
+<launch>
+    <rosparam command="load" file="$(find frc_robot_slam)/config/odom_fused.yaml"/>
+
+    <arg name="camera_frame" default="camera"/>
+    
+    <node pkg="robot_localization" type="ukf_localization_node" name="robot_odom" clear_params="true">
+        <remap from="odometry/filtered" to="odom"/>
+    </node>
+  
+    <!-- Using LaserScan ICP -->
+    <node pkg="rtabmap_ros" type="icp_odometry" name="icp_odometry">
+        <!-- Input -->
+        <remap from="scan"      to="/scan"/>
+        
+        <!-- Output -->
+        <remap from="odom"      to="/icp_odometry/odom"/>
+        <remap from="odom_info"      to="/icp_odometry/odom_info"/>
+    </node>
+</launch>

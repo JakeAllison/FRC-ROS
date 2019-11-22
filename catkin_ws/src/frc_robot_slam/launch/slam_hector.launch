@@ -1,0 +1,6 @@
+<launch>
+    <rosparam command="load" file="$(find frc_robot_slam)/config/slam_hector.yaml"/>
+    
+    <node pkg="hector_mapping" type="hector_mapping" name="hector_mapping"/>
+
+</launch>

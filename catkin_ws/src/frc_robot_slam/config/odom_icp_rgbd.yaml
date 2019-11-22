@@ -1,0 +1,54 @@
+robot_odom:
+  frequency: 100
+  sensor_timeout: 0.2
+  two_d_mode: true
+  transform_time_offset: 0.0
+  transform_timeout: 0.0
+  print_diagnostics: true
+  smooth_lagged_data: true
+  history_length: 0.25
+  dynamic_process_noise_covariance: true
+  predict_to_current_time: true
+#  debug: true
+#  debug_out_file: /home/jake/Documents/robot_debug/ukf_odom.txt
+  
+  map_frame: map
+  odom_frame: odom
+  base_link_frame: base_link
+  world_frame: odom
+  
+  publish_tf: true
+  
+  initial_state: [0.0, 0.0, 0.0,
+                  0.0, 0.0, 0.0,
+                  0.0, 0.0, 0.0,
+                  0.0, 0.0, 0.0,
+                  0.0, 0.0, 0.0]
+  
+  odom0: /icp_rgbd_odometry/odom
+  odom0_config: [true, true, false,
+                 false, false, true,
+                 true, true, false,
+                 false, false, true,
+                 false, false, false]
+                
+                
+icp_rgbd_odometry:
+    frame_id: base_link
+    odom_frame_id: odom
+    publish_tf: false
+    publish_null_when_lost: false
+    subscribe_scan_cloud: true
+    scan_normal_k: 10
+    Icp/PointToPlane: true
+    Icp/VoxelSize: 0
+#Icp/Epsilon: 0.001
+#Icp/PointToPlaneK: 5
+#Icp/PointToPlaneRadius: 0.3
+    Icp/MaxCorrespondenceDistance: 0.1
+    Icp/PM: false      # Use libpointmatcher to handle PointToPlane with 2d scans
+    Icp/PMOutlierRatio: 0.65
+#Odom/Strategy: 1
+    Odom/GuessMotion: true
+    Odom/ResetCountdown: 1
+#Odom/ScanKeyFrameThr: 0.9
