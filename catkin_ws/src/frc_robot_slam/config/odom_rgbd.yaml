@@ -4,7 +4,7 @@ hector_mapping:
   odom_frame: odom
   
   pub_map_odom_transform: true
-  pub_map_scanmatch_transform: true
+  pub_map_scanmatch_transform: false
   
   map_resolution: 0.100
   map_size: 2048
@@ -12,8 +12,29 @@ hector_mapping:
   map_update_angle_thresh: 0.06
   
   scan_topic: /scan
-  
+
+icp_odometry:
+    frame_id: base_link
+    publish_tf: true
+    Icp/PointToPlane: true
+    Icp/VoxelSize: 0.05
+    Icp/Epsilon: 0.001
+    Icp/PointToPlaneK: 5
+    Icp/PointToPlaneRadius: 0.3
+    Icp/MaxCorrespondenceDistance: 0.1
+    Icp/PM: true      # Use libpointmatcher to handle PointToPlane with 2d scans
+    Icp/PMOutlierRatio: 0.95
+    Odom/Strategy: 0
+    Odom/GuessMotion: true
+    Odom/ResetCountdown: 0
+    Odom/ScanKeyFrameThr: 0.9
+
 rtabmap:
+    points_xyz:
+      voxel_size: 0.05
+      decimation: 8
+      Odom/AlignWithGround: true
+      
     rtabmap:
         frame_id: base_link
         map_frame_id: map

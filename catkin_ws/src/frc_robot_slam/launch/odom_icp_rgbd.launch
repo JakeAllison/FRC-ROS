@@ -1,0 +1,23 @@
+<launch>
+    <rosparam command="load" file="$(find frc_robot_slam)/config/odom_icp_rgbd.yaml"/>
+
+    <arg name="camera_frame" default="camera"/>
+    
+    <node pkg="robot_localization" type="ukf_localization_node" name="robot_odom" clear_params="true">
+        <remap from="odometry/filtered" to="odom"/>
+    </node>
+  
+    <!-- Using RGBD ICP -->
+    <node pkg="rtabmap_ros" type="rgbdicp_odometry" name="icp_rgbd_odometry">
+        <!-- Input -->
+        <remap from="scan_cloud"        to="/rtabmap/cloud"/>
+
+        <remap from="depth/image"		to="/$(arg camera_frame)/depth/image_raw"/>
+        <remap from="rgb/image"		    to="/$(arg camera_frame)/rgb/image_raw"/>
+        <remap from="rgb/camera_info"	to="/$(arg camera_frame)/rgb/camera_info"/>
+
+        <!-- Output -->
+        <remap from="odom"           to="/icp_rgbd_odometry/odom"/>
+        <remap from="odom_info"      to="/icp_rgbd_odometry/odom_info"/>
+    </node>
+</launch>

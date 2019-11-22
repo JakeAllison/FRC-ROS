@@ -1,0 +1,36 @@
+rtabmap:
+
+    rgbd_sync:
+        approx_sync: true        # default
+        queue_size: 10           # default
+#compressed_rate: 0       # default
+#depth_scale: 1.0         # default, missing from wiki
+
+    rgbd_cloud:
+        approx_sync: true        # default
+        queue_size: 10           # default
+#max_depth: 0.0           # default
+#min_depth: 0.0           # default
+#decimation: 1            # default
+#noise_filter_radius: 0.0          # default
+#noise_filter_min_neighbors: 5     # default
+#normal_k: 0                       # default, missing from wiki
+#normal_raduis: 0.0                # default, missing from wiki
+#filter_nans: false                # default, missing from wiki
+#roi_ratios:                       # default, missing from wiki
+#voxel_size: 0.05         # default, missing from wiki
+
+    obstacle_detection:
+        queue_size: 10           # default
+        frame_id: base_link      # default
+#Grid/MaxGroundAngle: PI/4    # default
+#Grid/MinClusterSize: 20      # default
+#Grid/ClusterRadius: 0.05     # default
+#Grid/MaxObstacleHeight: 0.0  # default
+#map_frame_id:            # missing from wiki
+#wait_for_transform:      # missing from wiki
+#proj_voxel_size:         # missing from wiki
+#cluster_radius:                   # missing from wiki
+#detect_flat_obstacles:            # missing from wiki
+#normal_k:                         # missing from wiki
+#ground_normal_radius: 0.05        # default, missing from source code

@@ -1,0 +1,8 @@
+<launch>
+    <rosparam command="load" file="$(find frc_robot_slam)/config/slam_gmapping.yaml"/>
+    
+    <node pkg="gmapping" type="slam_gmapping" name="gmapping_node">
+        <remap from="scan" to="/scan" />
+    </node>
+    
+</launch>

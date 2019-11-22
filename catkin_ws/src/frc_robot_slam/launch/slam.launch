@@ -1,0 +1,139 @@
+<launch>
+    <rosparam command="load" file="$(find frc_robot_slam)/config/slam.yaml"/>
+    
+    <!--  odom_type. Available types are:
+        1) fused - Fuses all data from multiple sources.
+        2) drivetrain - Uses drivetrain and IMU data.
+        3) icp - ICP Odometry using laser scans
+        4) icp_rgbd - ICP Odometry using RGBD data.
+        5) rgbd - Visual Odometry using RGBD data.
+        6) none - Creates static odom->base_link TF.
+    -->
+    <!--  slam_type. Available types are:
+        1) gmapping - Uses odometry and laser scans to create 2D map.
+        2) hector - Uses only laser scans. Lacks loop closure.
+        3) rtabmap - Uses laser scans and rgbd for 2D and 3D mapping.
+        4) none - Creates static map->odom TF.
+    -->
+    <arg name="odom_type" default="fused" />
+    <arg name="slam_type" default="gmapping"/>
+    <arg name="camera_frame" default="camera"/>
+    
+    
+    
+    <!-- Nodelets for RTABMap -->
+    
+    <group ns="rtabmap">
+    
+        <!-- Nodelet to sync Depth Image and RGB Image into rtabmap_ros/RGBDImage -->
+        <node pkg="nodelet" type="nodelet" name="rgbd_sync" args="standalone rtabmap_ros/rgbd_sync">
+            <!-- Inputs -->
+            <remap from="depth/image"		to="/$(arg camera_frame)/depth/image_raw"/>
+            <remap from="rgb/image"		    to="/$(arg camera_frame)/rgb/image_raw"/>
+            <remap from="rgb/camera_info"	to="/$(arg camera_frame)/rgb/camera_info"/>
+            
+            <!-- Outputs -->
+            <remap from="rgbd_image"		        to="/rtabmap/rgbd_image"/>
+            <remap from="rgbd_image/compressed"		to="/rtabmap/rgbd_image/compressed"/>
+        </node>
+        
+        <!-- Nodelet to convert Kinect Depth Image and Image data into sensor_msgs/PointCloud2 -->
+        <node pkg="nodelet" type="nodelet" name="rgbd_cloud" args="standalone rtabmap_ros/point_cloud_xyzrgb">
+            <!-- Inputs -->
+            <remap from="depth/image"		to="/$(arg camera_frame)/depth/image_raw"/>
+            <remap from="rgb/image"		    to="/$(arg camera_frame)/rgb/image_raw"/>
+            <remap from="rgb/camera_info"	to="/$(arg camera_frame)/rgb/camera_info"/>
+            
+            <!-- Outputs -->
+            <remap from="cloud"		        to="/rtabmap/cloud"/>
+        </node>
+        
+        <!-- Nodelet to differentiate obstacles from ground in an RGBD image -->
+        <node pkg="nodelet" type="nodelet" name="obstacle_detection" args="standalone rtabmap_ros/obstacles_detection">
+            <!-- Input -->
+            <remap from="cloud"		to="/rtabmap/cloud"/>
+        </node>
+
+    </group>
+    
+    
+    <!-- Choose Odometry to publish odom->base_link TF and odom -->
+    
+    <!-- Fuse Odometry from all sources -->
+    <group if="$(eval arg('odom_type')=='fused')">
+        <include file="$(find frc_robot_slam)/launch/odom_fused.launch"/>
+    </group>
+    
+    <group unless="$(eval arg('odom_type')=='fused')">
+    
+        <!-- Use Odometry from Drivetrain -->
+        <group if="$(eval arg('odom_type')=='drivetrain')">
+            <include file="$(find frc_robot_slam)/launch/odom_drivetrain.launch"/>
+        </group>
+        
+        <group unless="$(eval arg('odom_type')=='drivetrain')">
+            
+            <!-- Use ICP Odometry from RTABMap -->
+            <group if="$(eval arg('odom_type')=='icp')">
+                <include file="$(find frc_robot_slam)/launch/odom_icp.launch"/>
+            </group>
+            
+            <group unless="$(eval arg('odom_type')=='icp')">
+                
+                <!-- Use RGBD ICP Odometry from RTABMap -->
+                <group if="$(eval arg('odom_type')=='icp_rgbd')">
+                    <include file="$(find frc_robot_slam)/launch/odom_icp_rgbd.launch">
+                        <arg name="camera_frame"    value="$(arg camera_frame)"/>
+                    </include>
+                </group>
+                
+                <group unless="$(eval arg('odom_type')=='icp_rgbd')">
+                
+                    <!-- Use RGBD Visual Odometry from RTABMap -->
+                    <group if="$(eval arg('odom_type')=='rgbd')">
+                        <include file="$(find frc_robot_slam)/launch/odom_rgbd.launch"/>
+                    </group>
+                    
+                    <!-- Default to static TF for odom->base_link -->
+                    <group unless="$(eval arg('odom_type')=='rgbd')">
+                        <node pkg="tf" type="static_transform_publisher" name="odom_to_base_link" 
+        args="0.0 0.0 0.0 0.0 0.0 0.0 /odom /base_link 100" />
+                    </group>
+                </group>
+            </group>
+        </group>
+        
+    </group>
+    
+    
+    
+    <!-- Choose SLAM to publish map->odom TF and map occupancy grid -->
+    
+    <!-- Use GMapping SLAM -->
+    <group if="$(eval arg('slam_type')=='gmapping')">
+        <include file="$(find frc_robot_slam)/launch/slam_gmapping.launch"/>
+    </group>
+    
+    <group unless="$(eval arg('slam_type')=='gmapping')">
+        
+        <!-- Use Hector SLAM -->
+        <group if="$(eval arg('slam_type')=='hector')">
+            <include file="$(find frc_robot_slam)/launch/slam_hector.launch"/>
+        </group>
+        
+        <group unless="$(eval arg('slam_type')=='hector')">
+        
+            <!-- Use RTABMap -->
+            <group if="$(eval arg('slam_type')=='rtabmap')">
+                <include file="$(find frc_robot_slam)/launch/slam_rtabmap.launch"/>
+            </group>
+            
+            <!-- Default to static TF for map->odom -->
+            <group unless="$(eval arg('slam_type')=='rtabmap')">
+                    <node pkg="tf" type="static_transform_publisher" name="map_to_odom" 
+    args="0.0 0.0 0.0 0.0 0.0 0.0 /map /odom 100" />
+            </group>
+        </group>
+    </group>
+    
+</launch>
