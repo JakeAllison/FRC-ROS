@@ -2,6 +2,7 @@
 
   <arg name="auton"             default="true" />
   <arg name="kinectlidar"       default="true" />
+  <arg name="localize_only"     default="false" />
   <arg name="robot"             default="true" />
   <!-- <arg name="sim" 		        default="true" /> -->
   <arg name="slam"              default="true" />
@@ -20,7 +21,7 @@
   <include if="$(arg slam)" 		file="$(find frc_robot_slam)/launch/slam.launch">
     <arg name="camera_frame"    value="camera"/>
     <arg name="odom_type"       value="fused"/>
-    <arg name="slam_type"       value="gmapping"/>
+    <arg unless="$(arg localize_only)"    name="slam_type"       value="gmapping"/>
   </include>
   <include if="$(arg state_publishers)" file="$(find frc_robot)/launch/state_publishers.launch"/>
   <!-- <include if="$(arg swerve_controller)"    file="$(find swerve_controller)/launch/swerve_controller.launch"/> -->

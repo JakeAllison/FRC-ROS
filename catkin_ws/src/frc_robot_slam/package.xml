@@ -50,9 +50,11 @@
   <!--   <doc_depend>doxygen</doc_depend> -->
   <buildtool_depend>catkin</buildtool_depend>
   
+  <exec_depend>amcl</exec_depend>
   <exec_depend>gmapping</exec_depend>
   <exec_depend>hector_mapping</exec_depend>
   <exec_depend>hector_slam_launch</exec_depend>
+  <exec_depend>map_server</exec_depend>
   <exec_depend>robot_localization</exec_depend>
   <exec_depend>rtabmap</exec_depend>
   <exec_depend>rtabmap_ros</exec_depend>

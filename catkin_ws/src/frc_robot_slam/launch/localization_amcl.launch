@@ -1,0 +1,15 @@
+<launch>
+    
+    <arg name="map_file"     default="$(find frc_robot_slam)/saved_maps/default_map.yaml" />
+    <arg name="odom_type"    default="diff-corrected"/>
+    
+    <rosparam command="load" file="$(find frc_robot_slam)/config/localization_amcl.yaml"/>
+    
+    <!--- Load map -->
+    <node name="map_server" pkg="map_server" type="map_server" args="$(arg map_file)"/>
+    
+    <node name="amcl_localization" pkg="amcl" type="amcl">
+        <param name="odom_model_type"    type="string"    value="$(arg odom_type)"/>
+    </node>
+
+</launch>
