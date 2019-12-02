@@ -1,9 +1,9 @@
 <launch>
 
   <arg name="auton"             default="true" />
-  <arg name="explore"           default="false" />
+  <arg name="explore"           default="true" />
   <!-- <arg name="kinectlidar"       default="true" /> -->
-  <arg name="localize_only"     default="true" />
+  <arg name="localize_only"     default="false" />
   <!-- <arg name="robot"             default="true" /> -->
   <arg name="sim" 		        default="true" />
   <arg name="slam"              default="true" />

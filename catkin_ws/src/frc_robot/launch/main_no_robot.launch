@@ -1,6 +1,7 @@
 <launch>
 
   <arg name="auton"             default="true" />
+  <arg name="explore"           default="false" />
   <arg name="kinectlidar"       default="true" />
   <arg name="localize_only"     default="false" />
   <!-- <arg name="robot"             default="true" /> -->
@@ -15,6 +16,7 @@
   <param name="use_sim_time" type="bool" value="false"/>
   
   <include if="$(arg auton)" 		file="$(find frc_robot_auton)/launch/auton.launch"/>
+  <include if="$(arg explore)" 		file="$(find frc_robot)/launch/explore.launch"/>
   <include if="$(arg kinectlidar)"      file="$(find frc_robot)/launch/kinectlidar.launch"/>
   <!-- <include if="$(arg robot)"            file="$(find frc_robot)/launch/robot.launch"/> -->
   <!-- <include if="$(arg sim)"		file="$(find frc_robot)/launch/sim.launch"/> -->

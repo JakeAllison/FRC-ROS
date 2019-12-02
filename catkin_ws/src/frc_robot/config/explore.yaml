@@ -1,0 +1,5 @@
+explore_node:
+    robot_base_frame: base_link
+    costmap_topic: /move_base/global_costmap/costmap
+    costmap_updates_topic: /move_base/global_costmap/costmap_updates
+    visualize: true
