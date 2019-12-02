@@ -1,0 +1,7 @@
+<launch>
+  <rosparam command="load" file="$(find frc_robot_slam)/config/odom_drivetrain.yaml"/>
+  
+  <node pkg="robot_localization" type="ukf_localization_node" name="robot_odom" clear_params="true">
+    <remap from="odometry/filtered" to="odom"/>
+  </node>
+</launch>

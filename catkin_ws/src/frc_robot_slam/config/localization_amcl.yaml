@@ -1,0 +1,7 @@
+localization_amcl:
+    use_map_topic: true
+    odom_alpha_1: 0.005
+    odom_alpha_2: 0.005
+    odom_alpha_3: 0.010
+    odom_alpha_4: 0.005
+    odom_alpha_5: 0.003

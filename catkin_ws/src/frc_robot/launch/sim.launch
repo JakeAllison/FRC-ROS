@@ -1,8 +1,10 @@
 <launch>
-  <arg name="swerve" default="true"/>
+  <arg name="gui" default="true"/>
   <arg name="model" default="$(find frc_robot)/urdf/00-default.urdf.xacro"/>
+  <arg name="swerve" default="false"/>
 
   <include file="$(find frc_robot)/launch/gazebo.launch">
+    <arg name="gui" value="$(arg gui)" />
     <arg name="model" value="$(arg model)" />
   </include>
   
@@ -10,21 +12,18 @@
             file="$(find frc_robot)/config/diffdrive.yaml">
   </rosparam>
   
-  <rosparam if="$(arg swerve)" command="load"
-            file="$(find frc_robot)/config/swervedrive.yaml">
-  </rosparam>
   
   <node unless="$(arg swerve)" name="robot_drivetrain_publisher" pkg="robot_state_publisher" type="state_publisher"/>
   <node if="$(arg swerve)" name="robot_drivetrain_publisher" pkg="robot_state_publisher" type="state_publisher" ns="drivetrain"/>
   
-  <node unless="$(arg swerve)" name="diff_drive_controller" pkg="controller_manager" type="controller_manager" output="screen" respawn="false"
+  <node unless="$(arg swerve)" name="diff_drive_controller" pkg="controller_manager" type="controller_manager" respawn="false"
     args="spawn
     frc_joint_state_controller
     frc_diff_drive_controller">
     <remap from="cmd_vel" to="/cmd_vel"/>
   </node>
   
-  <node if="$(arg swerve)" name="swerve_drive_controller" pkg="controller_manager" type="controller_manager" ns="drivetrain" output="screen" respawn="false"
+  <node if="$(arg swerve)" name="swerve_drive_controller" pkg="controller_manager" type="controller_manager" ns="drivetrain" respawn="false"
     args="spawn
     frc_joint_state_controller
     fl_pivot_controller
