@@ -23,7 +23,7 @@ rtabmap:
     obstacle_detection:
         queue_size: 10           # default
         frame_id: base_link      # default
-#Grid/MaxGroundAngle: PI/4    # default
+        Grid/MaxGroundAngle: 5.0    # default
 #Grid/MinClusterSize: 20      # default
 #Grid/ClusterRadius: 0.05     # default
 #Grid/MaxObstacleHeight: 0.0  # default

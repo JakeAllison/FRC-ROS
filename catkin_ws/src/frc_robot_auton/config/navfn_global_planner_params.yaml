@@ -1,4 +1,3 @@
-
 NavfnROS:
   visualize_potential: false    #Publish potential for rviz as pointcloud2, not really helpful, default false
   allow_unknown: true          #Specifies whether or not to allow navfn to create plans that traverse unknown space, default true

@@ -1,0 +1,9 @@
+<launch>
+  <rosparam command="load" file="$(find frc_robot)/config/explore.yaml"/>
+  
+  
+  <node name="explore_node" pkg="explore_lite" type="explore">
+    
+  </node>
+  
+</launch>

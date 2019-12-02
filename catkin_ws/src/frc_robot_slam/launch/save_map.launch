@@ -1,0 +1,10 @@
+<launch>
+    <arg name="map_topic" default="/map" />
+    <arg name="file_base_name" default="$(find frc_robot_slam)/saved_maps/default_map" />
+    
+    <!-- Nodelet to sync Depth Image and RGB Image into rtabmap_ros/RGBDImage -->
+    <node pkg="map_server" type="map_saver" name="map_saver" args="-f $(arg file_base_name)">
+        <remap from="map"     to="$(arg map_topic)"/>
+    </node>
+
+</launch>

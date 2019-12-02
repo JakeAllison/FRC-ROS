@@ -57,6 +57,7 @@
   <exec_depend>controller_manager</exec_depend>
   <exec_depend>diff_drive_controller</exec_depend>
   <exec_depend>effort_controllers</exec_depend>
+  <exec_depend>explore_lite</exec_depend>
   <exec_depend>frc_robot_auton</exec_depend>
   <exec_depend>frc_robot_slam</exec_depend>
   <exec_depend>gazebo_plugins</exec_depend>

@@ -13,11 +13,15 @@
         1) gmapping - Uses odometry and laser scans to create 2D map.
         2) hector - Uses only laser scans. Lacks loop closure.
         3) rtabmap - Uses laser scans and rgbd for 2D and 3D mapping.
-        4) none - Creates static map->odom TF.
+        4) amcl - Uses a known map for localization. Does not create map.
+        5) none - Creates static map->odom TF.
     -->
-    <arg name="odom_type" default="fused" />
-    <arg name="slam_type" default="gmapping"/>
+    <arg name="odom_type" default="drivetrain" />
+    <arg name="slam_type" default="amcl"/>
     <arg name="camera_frame" default="camera"/>
+    
+    <!-- Only used for AMCL Localization which only works off a premade map -->
+    <arg name="map_file" default="$(find frc_robot_slam)/saved_maps/default_map.yaml" />
     
     
     
@@ -130,8 +134,20 @@
             
             <!-- Default to static TF for map->odom -->
             <group unless="$(eval arg('slam_type')=='rtabmap')">
-                    <node pkg="tf" type="static_transform_publisher" name="map_to_odom" 
-    args="0.0 0.0 0.0 0.0 0.0 0.0 /map /odom 100" />
+            
+                <!-- Use AMCL Localization -->
+                <group if="$(eval arg('slam_type')=='amcl')">
+                    <include file="$(find frc_robot_slam)/launch/localization_amcl.launch">
+                        <arg name="map_file"    value="$(arg map_file)"/>
+                    </include>
+                </group>
+                
+                <!-- Default to static TF for map->odom -->
+                <group unless="$(eval arg('slam_type')=='amcl')">
+                        <node pkg="tf" type="static_transform_publisher" name="map_to_odom" 
+        args="0.0 0.0 0.0 0.0 0.0 0.0 /map /odom 100" />
+                </group>
+            
             </group>
         </group>
     </group>
