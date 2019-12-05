@@ -43,7 +43,7 @@ CANSparkMax::CANSparkMax(int deviceID, MotorType type)
     , _max(0.0)
 {
     std::string temp1 = PARAMETER_PREFIXES[_deviceID] + "_command_param";
-    std::string temp2 = "/drivetrain/" + PARAMETER_PREFIXES[_deviceID] + "_controller/command";
+    std::string temp2 = PARAMETER_PREFIXES[_deviceID] + "_controller/command";
     
     std::string temp3 = PARAMETER_PREFIXES[_deviceID] + "_conversion_param";
     double temp4 = 1.0;

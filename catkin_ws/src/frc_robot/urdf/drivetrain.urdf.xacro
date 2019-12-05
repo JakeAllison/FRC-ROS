@@ -22,7 +22,7 @@
             
     <!--                          Diff Wheels                           -->
 
-      <xacro:macro name="diff_wheel" params=" parent2 prefix side fntctrbck drop friction">
+      <xacro:macro name="diff_wheel" params=" parent2 prefix side fntctrbck drop friction mimic mimic_parent">
         <link name="${prefix}_diff_wheel">
           <visual>
             <geometry>
@@ -51,6 +51,11 @@
           <child link="${prefix}_diff_wheel"/>
           <axis xyz="0 0 ${-1*side}"/>
           <origin rpy="${side*pi/2} 0 0" xyz="${fntctrbck*(wheelbase_length/2)} ${side*(wheel_separation/2)} ${z_offset+drop*drop_wheel_height}"/>
+          
+          <xacro:if value="${mimic != 'NONE'}">
+            <mimic joint="${mimic_parent}_to_${mimic}_diff_wheel"/>
+          </xacro:if>
+          
         </joint>
         
         <transmission name="${prefix}_diff_wheel_trans">
@@ -72,16 +77,16 @@
         </gazebo>
       </xacro:macro>
       
-      <xacro:diff_wheel parent2="${parent}" prefix="fl" side="${left}" fntctrbck="${front}" drop="${no_drop}" friction="${low_friction}" />
-      <xacro:diff_wheel parent2="${parent}" prefix="ml" side="${left}" fntctrbck="${middle}" drop="${drop}" friction="${high_friction}" />
-      <xacro:diff_wheel parent2="${parent}" prefix="rl" side="${left}" fntctrbck="${rear}" drop="${no_drop}" friction="${low_friction}" />
-      <xacro:diff_wheel parent2="${parent}" prefix="fr" side="${right}" fntctrbck="${front}" drop="${no_drop}" friction="${low_friction}" />
-      <xacro:diff_wheel parent2="${parent}" prefix="mr" side="${right}" fntctrbck="${middle}" drop="${drop}" friction="${high_friction}" />
-      <xacro:diff_wheel parent2="${parent}" prefix="rr" side="${right}" fntctrbck="${rear}" drop="${no_drop}" friction="${low_friction}" />
+      <xacro:diff_wheel parent2="${parent}" prefix="fl" side="${left}" fntctrbck="${front}" drop="${no_drop}" friction="${low_friction}" mimic="ml" mimic_parent="base_link"/>
+      <xacro:diff_wheel parent2="${parent}" prefix="ml" side="${left}" fntctrbck="${middle}" drop="${drop}" friction="${high_friction}" mimic="NONE" mimic_parent="base_link"/>
+      <xacro:diff_wheel parent2="${parent}" prefix="rl" side="${left}" fntctrbck="${rear}" drop="${no_drop}" friction="${low_friction}"  mimic="ml" mimic_parent="base_link"/>
+      <xacro:diff_wheel parent2="${parent}" prefix="fr" side="${right}" fntctrbck="${front}" drop="${no_drop}" friction="${low_friction}"  mimic="mr" mimic_parent="base_link"/>
+      <xacro:diff_wheel parent2="${parent}" prefix="mr" side="${right}" fntctrbck="${middle}" drop="${drop}" friction="${high_friction}"  mimic="NONE" mimic_parent="base_link"/>
+      <xacro:diff_wheel parent2="${parent}" prefix="rr" side="${right}" fntctrbck="${rear}" drop="${no_drop}" friction="${low_friction}"  mimic="mr" mimic_parent="base_link"/>
             
     </xacro:macro>
-  
-  
+    
+    
     
     <xacro:macro name="swerve_drive" params="name parent z_offset wheelbase_width wheelbase_length wheel_radius wheel_width wheel_mass">
       
@@ -169,6 +174,7 @@
             <child link="${prefix}_swerve_pivot"/>
             <axis xyz="0 0 1"/>
             <origin rpy="0 0 0" xyz="${fntbck*(wheelbase_length/2)} ${side*(wheelbase_width/2)} ${z_offset}"/>
+            <dynamics friction="0.5" damping="0.5"/>
         </joint>
         
         <transmission name="${prefix}_swerve_pivot_trans">

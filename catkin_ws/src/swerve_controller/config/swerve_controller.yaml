@@ -1,0 +1,16 @@
+drive_controller:
+    fl_drive_conversion_param: 100.0
+    fr_drive_conversion_param: 100.0
+    rl_drive_conversion_param: 100.0
+    rr_drive_conversion_param: 100.0
+    
+    cmd_vel_param: /drive_controller/cmd_vel
+    
+    fl_pivot_command_param: /fl_pivot_controller/cmd_vel
+    fl_drive_command_param: /fl_drive_controller/cmd_vel
+    fr_pivot_command_param: /fr_pivot_controller/cmd_vel
+    fr_drive_command_param: /fr_drive_controller/cmd_vel
+    rl_pivot_command_param: /rl_pivot_controller/cmd_vel
+    rl_drive_command_param: /rl_drive_controller/cmd_vel
+    rr_pivot_command_param: /rr_pivot_controller/cmd_vel
+    rr_drive_command_param: /rr_drive_controller/cmd_vel

@@ -1,40 +1,45 @@
 <launch>
   <arg name="gui" default="true"/>
   <arg name="model" default="$(find frc_robot)/urdf/00-default.urdf.xacro"/>
+  <arg name="model_swerve" default="$(find frc_robot)/urdf/00-default-swerve.urdf.xacro"/>
   <arg name="swerve" default="false"/>
-
-  <include file="$(find frc_robot)/launch/gazebo.launch">
-    <arg name="gui" value="$(arg gui)" />
-    <arg name="model" value="$(arg model)" />
-  </include>
   
-  <rosparam unless="$(arg swerve)" command="load"
-            file="$(find frc_robot)/config/diffdrive.yaml">
-  </rosparam>
+  <group unless="$(arg swerve)">
+      <rosparam command="load" file="$(find frc_robot)/config/diffdrive.yaml"/>
+      
+      <include file="$(find frc_robot)/launch/gazebo.launch">
+        <arg name="gui" value="$(arg gui)" />
+        <arg name="model" value="$(arg model)" />
+      </include>
   
+      <node name="controller_manager" pkg="controller_manager" type="controller_manager" respawn="false"
+        args="spawn
+        drivetrain_joint_state_controller
+        drive_controller">
+      </node>
+  </group>
   
-  <node unless="$(arg swerve)" name="robot_drivetrain_publisher" pkg="robot_state_publisher" type="state_publisher"/>
-  <node if="$(arg swerve)" name="robot_drivetrain_publisher" pkg="robot_state_publisher" type="state_publisher" ns="drivetrain"/>
-  
-  <node unless="$(arg swerve)" name="diff_drive_controller" pkg="controller_manager" type="controller_manager" respawn="false"
-    args="spawn
-    frc_joint_state_controller
-    frc_diff_drive_controller">
-    <remap from="cmd_vel" to="/cmd_vel"/>
-  </node>
-  
-  <node if="$(arg swerve)" name="swerve_drive_controller" pkg="controller_manager" type="controller_manager" ns="drivetrain" respawn="false"
-    args="spawn
-    frc_joint_state_controller
-    fl_pivot_controller
-    fl_drive_controller
-    fr_pivot_controller
-    fr_drive_controller
-    rl_pivot_controller
-    rl_drive_controller
-    rr_pivot_controller
-    rr_drive_controller">
-  </node>
+  <group if="$(arg swerve)">
+      <rosparam command="load" file="$(find frc_robot)/config/swervedrive.yaml"/>
+      
+      <include file="$(find frc_robot)/launch/gazebo.launch">
+        <arg name="gui" value="$(arg gui)" />
+        <arg name="model" value="$(arg model_swerve)" />
+      </include>
+      
+      <node name="controller_manager" pkg="controller_manager" type="controller_manager" respawn="false"
+        args="spawn
+        drivetrain_joint_state_controller
+        fl_pivot_controller
+        fl_drive_controller
+        fr_pivot_controller
+        fr_drive_controller
+        rl_pivot_controller
+        rl_drive_controller
+        rr_pivot_controller
+        rr_drive_controller">
+      </node>
+  </group>
   
   
 </launch>
