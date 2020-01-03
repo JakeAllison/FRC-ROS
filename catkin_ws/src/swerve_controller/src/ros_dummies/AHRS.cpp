@@ -15,7 +15,7 @@ AHRS::AHRS(frc::SPI::Port port)
    , _quaternionZ(0.0) {
    
     std::string temp1 = "imu_topic";
-    std::string temp2 = "/imu";
+    std::string temp2 = "imu";
     _nh.param<std::string>(temp1, _imuTopic, temp2);
     _sub = _nh.subscribe(_imuTopic, 1, &AHRS::imuCallback, this);
 }
