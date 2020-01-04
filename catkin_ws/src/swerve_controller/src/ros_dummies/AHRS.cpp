@@ -35,7 +35,7 @@ void AHRS::imuCallback(const sensor_msgs::Imu::ConstPtr& msg)
     _pitchRate  = msg->angular_velocity.y;
     _yawRate    = msg->angular_velocity.z;
     
-    // ROS_INFO("IMU Received: [%f]", _yaw);
+    ROS_DEBUG("IMU Received: [%f]", _yaw);
 }
 
 void AHRS::Reset() {

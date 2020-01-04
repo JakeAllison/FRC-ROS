@@ -42,20 +42,72 @@ CANSparkMax::CANSparkMax(int deviceID, MotorType type)
     , _min(0.0)
     , _max(0.0)
 {
-    std::string temp1 = PARAMETER_PREFIXES[_deviceID] + "_command_param";
+    std::string temp1 = PARAMETER_PREFIXES[_deviceID] + "_command_topic";
     std::string temp2 = PARAMETER_PREFIXES[_deviceID] + "_controller/command";
+    _nh.param<std::string>(temp1, _command_topic, temp2);
     
     std::string temp3 = PARAMETER_PREFIXES[_deviceID] + "_conversion_param";
     double temp4 = 1.0;
-    
-    _nh.param<std::string>(temp1, _command_topic, temp2);
     _nh.param<double>(temp3, _drive_conversion, temp4);
     
     if (_drive_conversion == 0.0) {
         _nh.setParam(temp3, temp4);
     }
     
+    
+    std::string temp5 = PARAMETER_PREFIXES[_deviceID] + "_joint_states_topic";
+    std::string temp6 = PARAMETER_PREFIXES[_deviceID] + "_controller/joint_states";
+    _nh.param<std::string>(temp5, _joint_state_topic, temp6);
+    
+    
+    std::string temp7 = PARAMETER_PREFIXES[_deviceID] + "_joint_name";
+    std::string temp8 = PARAMETER_PREFIXES[_deviceID] + "_joint";
+    _nh.param<std::string>(temp7, _joint_name, temp8);
+    
     _command_publisher = _nh.advertise<std_msgs::Float64>(_command_topic, 2, true);
+    _joint_state_subscriber = _nh.subscribe(_joint_state_topic, 1, &CANSparkMax::JointStateCallback, this);
+}
+
+void CANSparkMax::JointStateCallback(const sensor_msgs::JointState& msg) {
+    
+    int i = 0;
+    for (auto name: msg.name) {
+        std::string temp1 = name.c_str();
+        if (temp1.compare(_joint_name) == 0) {
+            _encoder_raw_position = 0.0;
+            _encoder_raw_velocity = 0.0;
+            _motor_effort = 0.0;
+            
+            if (i < msg.position.size()) {
+                _encoder_raw_position = msg.position[i];
+            }
+            if (i < msg.velocity.size()) {
+                _encoder_raw_velocity = msg.velocity[i];
+            }
+            if (i < msg.effort.size()) {
+                _motor_effort = msg.effort[i];
+            }
+            
+            ROS_DEBUG("[%i] %s: [%f], [%f], [%f]", i, temp1.c_str(), _encoder_raw_position, _encoder_raw_velocity, _motor_effort);
+            
+            break;
+        }
+        i++;
+    }
+    
+    /*
+    for (auto position: msg.position) {    
+        ROS_DEBUG("[%s] Position: [%f]", _joint_name.c_str(), position);
+    }
+    
+    for (auto velocity: msg.velocity) {    
+        ROS_DEBUG("[%s] Velocity: [%f]", _joint_name.c_str(), velocity);
+    }
+    
+    for (auto effort: msg.effort) {    
+        ROS_DEBUG("[%s] Effort: [%f]", _joint_name.c_str(), effort);
+    }
+    */
 }
 
 

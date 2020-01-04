@@ -54,5 +54,5 @@ void SwerveController::CmdVelCallback(const geometry_msgs::Twist& msg) {
     const auto rotSpeed = _angz * kRadianPerSecond;
     m_swerve.Drive(xSpeed, ySpeed, rotSpeed, false);
     
-    // ROS_INFO("Vel Received: [%f], [%f], [%f]", _linx, _liny, _angz);
+    ROS_DEBUG("Vel Received: [%f], [%f], [%f]", _linx, _liny, _angz);
 }
