@@ -36,7 +36,7 @@ public:
      */
     frc_new::Rotation2d GetAngle() {
         // Negating the angle because WPILib Gyros are CW positive.
-        return frc_new::Rotation2d(units::degree_t(-m_imu.GetYaw()));
+        return frc_new::Rotation2d(units::radian_t(-m_imu.GetYaw()));
     }
 
     void Drive(units::meters_per_second_t xSpeed,

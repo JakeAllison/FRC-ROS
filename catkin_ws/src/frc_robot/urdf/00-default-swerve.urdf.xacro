@@ -1,0 +1,119 @@
+<?xml version="1.0"?>
+<robot name="myfirst" xmlns:xacro="http://ros.org/wiki/xacro">
+  
+  <xacro:include filename="$(find common_sensors)/urdf/sensors/kinect.urdf.xacro" />
+  <xacro:include filename="$(find common_sensors)/urdf/sensors/hokuyo_04lx_laser.urdf.xacro" />
+  <xacro:include filename="$(find frc_robot)/urdf/elevator.urdf.xacro" />
+  <xacro:include filename="$(find frc_robot)/urdf/inertia.urdf.xacro" />
+  <xacro:include filename="$(find frc_robot)/urdf/drivetrain.urdf.xacro" />
+  <xacro:include filename="$(find frc_robot)/urdf/chassis.urdf.xacro" />
+  
+
+  <material name="blue">
+    <color rgba="0 0 0.8 1"/>
+  </material>
+  
+
+<!--                          Frame                           -->
+  
+  <link name="base_link"/>
+  
+  <xacro:robot_chassis name="chassis" parent="base_link" z_offset="0.0"
+    chassis_length="0.8128" chassis_width="0.7112"
+    chassis_height="0.1524" chassis_mass="50" />
+  
+  <!-- <xacro:six_wheel_diff_drive name="tank_drive" parent="base_link"
+    z_offset="0.0" drop_wheel_height="0.003175"
+    wheel_separation="0.6096" wheelbase_length="0.6096"
+    wheel_radius="0.1016" wheel_width="0.0381" wheel_mass="1" /> -->
+  
+  <xacro:swerve_drive name="swerve_drive" parent="base_link"
+    z_offset="0.0" wheelbase_width="0.6096" wheelbase_length="0.6096"
+    wheel_radius="0.1016" wheel_width="0.0381" wheel_mass="1" />
+    
+  <!-- <xacro:elevator_attachment name="elevator" parent="base_link"
+    ax="0.0" ay="0.0" az="0.0762" rr="0.0" rp="0.0" ry="0.0"/> -->
+
+  
+  
+<!--                               Sensors                                -->
+  
+  <link name="kinect_mount"/>
+  <joint name="base_link_to_kinect_mount" type="fixed">
+    <parent link="base_link"/>
+    <child link="kinect_mount"/>
+    <origin rpy="0 0 0" xyz="0.25 0 0.2"/>
+  </joint>
+  
+  <link name="lidar_mount"/>
+  <joint name="kinect_mount_to_lidar_mount" type="fixed">
+    <parent link="kinect_mount"/>
+    <child link="lidar_mount"/>
+    <origin rpy="0 0 0" xyz="0 0 0.1"/>
+  </joint>
+
+  <joint name="kinect_mount_to_camera_link" type="fixed">
+    <parent link="kinect_mount"/>
+    <child link="camera_link"/>
+    <origin rpy="0 0 0" xyz="0 0 0"/>
+  </joint>
+  
+  <link name="laser"/>
+  <joint name="lidar_mount_to_laser" type="fixed">
+    <parent link="lidar_mount"/>
+    <child link="laser"/>
+    <origin rpy="0 0 ${pi}" xyz="0 0 0"/>
+  </joint>
+  
+  <xacro:sensor_kinect parent="kinect_mount"/>
+  <xacro:hokuyo_04lx_laser name="2D_Laser" parent="lidar_mount" ros_topic="/scan" update_rate="10" min_angle="-3.0" max_angle="3.0">
+    <origin/>
+  </xacro:hokuyo_04lx_laser>
+<!--
+  <gazebo>
+    <plugin name="imu_plugin" filename="libgazebo_ros_imu.so">
+      <alwaysOn>true</alwaysOn>
+      <bodyName>base_link</bodyName>
+      <topicName>imu</topicName>
+      <serviceName>imu_service</serviceName>
+      <gaussianNoise>0.0</gaussianNoise>
+      <updateRate>20.0</updateRate>
+    </plugin>
+  </gazebo>
+-->
+  <link name="imu_link"/>
+  <joint name="base_link_to_imu_link" type="fixed">
+    <parent link="base_link"/>
+    <child link="imu_link"/>
+    <origin rpy="0 0 0" xyz="0 0 0"/>
+  </joint>
+  
+  <gazebo reference="imu_link">
+    <gravity>true</gravity>
+    <sensor name="imu_sensor" type="imu">
+      <always_on>true</always_on>
+      <update_rate>100</update_rate>
+      <visualize>true</visualize>
+      <topic>imu</topic>
+      <plugin filename="libgazebo_ros_imu_sensor.so" name="imu_plugin">
+        <topicName>imu</topicName>
+        <bodyName>imu_link</bodyName>
+        <updateRateHZ>100.0</updateRateHZ>
+        <gaussianNoise>0.0001</gaussianNoise>
+        <xyzOffset>0 0 0</xyzOffset>
+        <rpyOffset>0 0 0</rpyOffset>
+        <frameName>imu_link</frameName>
+      </plugin>
+      <pose>0 0 0 0 0 0</pose>
+    </sensor>
+  </gazebo>
+<!--                          For Gazebo Simulation                          -->
+  
+  <gazebo>
+    <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
+      <robotNamespace>/</robotNamespace>
+      <legacyModeNS>true</legacyModeNS>
+    </plugin>
+  </gazebo>
+  
+</robot>

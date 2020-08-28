@@ -25,7 +25,7 @@ robot_odom:
                   0.0, 0.0, 0.0,
                   0.0, 0.0, 0.0]
   
-  odom0: /frc_diff_drive_controller/odom
+  odom0: /drive_controller/odom
   odom0_config: [false, false, false,
                  false, false, false,
                  true,  true, false,

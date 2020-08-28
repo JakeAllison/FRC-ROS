@@ -1,8 +1,31 @@
 <launch>
-  <arg name="model" 		default="$(find frc_robot)/urdf/00-default.urdf.xacro"/>
-  <arg name="networktable"	default="true" />
+  <arg name="gui" default="true"/>
+  <arg name="joint_publisher" default="true"/>
+  <arg name="model" default="$(find frc_robot)/urdf/00-default.urdf.xacro"/>
+  <arg name="model_swerve" default="$(find frc_robot)/urdf/00-default-swerve.urdf.xacro"/>
+  <arg name="swerve" default="false"/>
 
-  <param name="robot_description"	command="xacro --inorder $(arg model)" />
+  <group unless="$(arg swerve)">
+      <param name="robot_description" command="xacro --inorder $(arg model)" />
+      <param name="use_gui" value="$(arg gui)"/>
+
+      <!-- Publish TF's from robot_description using a URDF -->
+      <node name="robot_state_publisher"	pkg="robot_state_publisher"	type="state_publisher" />
+      
+      <!-- Publish Joint States -->
+      <node if="$(arg joint_publisher)" name="joint_state_publisher"	pkg="joint_state_publisher"	type="joint_state_publisher" />
+  </group>
+  
+  <group if="$(arg swerve)">
+      <param name="robot_description" command="xacro --inorder $(arg model_swerve)" />
+      <param name="use_gui" value="$(arg gui)"/>
+
+      <!-- Publish TF's from robot_description using a URDF -->
+      <node name="robot_state_publisher"	pkg="robot_state_publisher"	type="state_publisher" />
+      
+      <!-- Publish Joint States -->
+      <node if="$(arg joint_publisher)" name="joint_state_publisher"	pkg="joint_state_publisher"	type="joint_state_publisher" />
+  </group>
   
   <!-- Roborio communication -->
   

@@ -7,7 +7,7 @@
   <!-- <arg name="robot"             default="true" /> -->
   <arg name="sim" 		        default="true" />
   <arg name="slam"              default="true" />
-  <!-- <arg name="state_publishers"  default="true" /> -->
+  <arg name="swerve"            default="false" />
   <arg name="swerve_controller" default="false" />
   <arg name="teleop"            default="true" />
   <arg name="user_interface"    default="true" />
@@ -18,19 +18,22 @@
   <include if="$(arg auton)" 		file="$(find frc_robot_auton)/launch/auton.launch"/>
   <include if="$(arg explore)" 		file="$(find frc_robot)/launch/explore.launch"/>
   <!-- <include if="$(arg kinectlidar)"      file="$(find frc_robot)/launch/kinectlidar.launch"/> -->
-  <!-- <include if="$(arg robot)"            file="$(find frc_robot)/launch/robot.launch"/> -->
-  <include if="$(arg sim)"		file="$(find frc_robot)/launch/sim.launch"/>
+  <!-- <include if="$(arg robot)"            file="$(find frc_robot)/launch/robot.launch">
+    <arg name="swerve"    value="$(arg swerve)"/>
+  </include> -->
+  <include if="$(arg sim)"		file="$(find frc_robot)/launch/sim.launch">
+    <arg name="swerve"    value="$(arg swerve)"/>
+  </include>
   <include if="$(arg slam)" 		file="$(find frc_robot_slam)/launch/slam.launch">
     <arg name="camera_frame"    value="camera1"/>
     <arg name="odom_type"       value="drivetrain"/>
     <arg unless="$(arg localize_only)"    name="slam_type"       value="gmapping"/>
   </include>
-  <!-- <include if="$(arg state_publishers)" file="$(find frc_robot)/launch/state_publishers.launch"/> -->
   <include if="$(arg swerve_controller)"    file="$(find swerve_controller)/launch/swerve_controller.launch"/>
   <include if="$(arg teleop)"		file="$(find frc_robot)/launch/teleop.launch"/>
   <include if="$(arg user_interface)"   file="$(find frc_robot)/launch/user_interface.launch"/>
   <include if="$(arg visualize)"	file="$(find frc_robot)/launch/visualize.launch">
-    <arg name="rvizconfig"    value="$(find frc_robot)/rviz/urdf_sim.rviz" />
+    <arg name="rvizconfig"    value="$(find frc_robot)/rviz/urdf.rviz" />
   </include>
   
 </launch>
