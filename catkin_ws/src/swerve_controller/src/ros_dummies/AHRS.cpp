@@ -15,7 +15,7 @@ AHRS::AHRS(frc::SPI::Port port)
    , _quaternionZ(0.0) {
    
     std::string temp1 = "imu_topic";
-    std::string temp2 = "/imu";
+    std::string temp2 = "imu";
     _nh.param<std::string>(temp1, _imuTopic, temp2);
     _sub = _nh.subscribe(_imuTopic, 1, &AHRS::imuCallback, this);
 }
@@ -35,7 +35,7 @@ void AHRS::imuCallback(const sensor_msgs::Imu::ConstPtr& msg)
     _pitchRate  = msg->angular_velocity.y;
     _yawRate    = msg->angular_velocity.z;
     
-    // ROS_INFO("IMU Received: [%f]", _yaw);
+    ROS_DEBUG("IMU Received: [%f]", _yaw);
 }
 
 void AHRS::Reset() {

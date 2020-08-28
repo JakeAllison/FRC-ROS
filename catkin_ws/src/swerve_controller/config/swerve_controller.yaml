@@ -1,0 +1,37 @@
+drive_controller:
+    fl_drive_conversion_param: 15.0
+    fr_drive_conversion_param: 15.0
+    rl_drive_conversion_param: 15.0
+    rr_drive_conversion_param: 15.0
+    
+    
+    fl_pivot_command_topic: /fl_pivot_controller/command
+    fl_drive_command_topic: /fl_drive_controller/command
+    fr_pivot_command_topic: /fr_pivot_controller/command
+    fr_drive_command_topic: /fr_drive_controller/command
+    rl_pivot_command_topic: /rl_pivot_controller/command
+    rl_drive_command_topic: /rl_drive_controller/command
+    rr_pivot_command_topic: /rr_pivot_controller/command
+    rr_drive_command_topic: /rr_drive_controller/command
+    
+    fl_pivot_joint_states_topic: /joint_states
+    fl_drive_joint_states_topic: /joint_states
+    fr_pivot_joint_states_topic: /joint_states
+    fr_drive_joint_states_topic: /joint_states
+    rl_pivot_joint_states_topic: /joint_states
+    rl_drive_joint_states_topic: /joint_states
+    rr_pivot_joint_states_topic: /joint_states
+    rr_drive_joint_states_topic: /joint_states
+    
+    fl_pivot_joint_name: base_link_to_fl_swerve_pivot
+    fl_drive_joint_name: fl_swerve_pivot_to_fl_swerve_wheel
+    fr_pivot_joint_name: base_link_to_fr_swerve_pivot
+    fr_drive_joint_name: fr_swerve_pivot_to_fr_swerve_wheel
+    rl_pivot_joint_name: base_link_to_rl_swerve_pivot
+    rl_drive_joint_name: rl_swerve_pivot_to_rl_swerve_wheel
+    rr_pivot_joint_name: base_link_to_rr_swerve_pivot
+    rr_drive_joint_name: rr_swerve_pivot_to_rr_swerve_wheel
+    
+    cmd_vel_param: /drive_controller/cmd_vel
+    
+    imu_topic: /imu
