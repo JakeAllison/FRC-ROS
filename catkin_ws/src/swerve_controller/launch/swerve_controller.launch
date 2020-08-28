@@ -2,5 +2,5 @@
     <arg name="config_file"	default="$(find swerve_controller)/config/swerve_controller.yaml" />
     
     <rosparam command="load" file="$(arg config_file)"/>
-    <node pkg="swerve_controller" name="swerve_controller" type="swerve_controller"/>
+    <node pkg="swerve_controller" name="drive_controller" type="swerve_controller" ns="drive_controller"/>
 </launch>

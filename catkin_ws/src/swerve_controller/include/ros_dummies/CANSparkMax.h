@@ -7,7 +7,9 @@
 
 #include <ros/ros.h>
 #include <std_msgs/Float64.h>
+#include <sensor_msgs/JointState.h>
 #include <string>
+#include <vector>
 #include <unordered_map>
 
 
@@ -20,6 +22,8 @@ class CANSparkMax {
 public:
     
     explicit CANSparkMax(int deviceID, CANSparkMaxLowLevel::MotorType type = CANSparkMaxLowLevel::MotorType::kBrushless);
+    
+    void JointStateCallback(const sensor_msgs::JointState& msg);
 
     CANPIDController GetPIDController();
     CANEncoder GetEncoder(CANEncoder::EncoderType sensorType = CANEncoder::EncoderType::kHallSensor, int cpr = 0);
@@ -57,14 +61,21 @@ private:
     
     bool _encoder_inverted;
     double _encoder_raw_position, _encoder_raw_velocity, _encoder_raw_offset;
+    double _motor_effort;
     
     double _kf, _kp, _ki, _kd;
     double _min, _max;
     
     ros::NodeHandle _nh;
     ros::Publisher _command_publisher;
+    ros::Subscriber _joint_state_subscriber;
+    
     std_msgs::Float64 _command_value;
     std::string _command_topic;
+    
+    sensor_msgs::JointState _joint_states;
+    std::string _joint_state_topic;
+    std::string _joint_name;
     double _drive_conversion;
 };
 
