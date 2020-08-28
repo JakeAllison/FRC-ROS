@@ -34,13 +34,13 @@ obstacle_layer:
     data_type: PointCloud2
     topic: /rtabmap/proj_obstacles
     marking: true
-    clearing: false
+    clearing: true
     
 
 #cost_scaling_factor and inflation_radius were now moved to the inflation_layer ns
 inflation_layer:
   enabled:              true
-  cost_scaling_factor:  10.0 # exponential rate at which the obstacle cost drops off (default: 10)
+  cost_scaling_factor:  1.0 # exponential rate at which the obstacle cost drops off (default: 10)
   inflation_radius:     1.0  # max. distance from an obstacle at which costs are incurred for planning paths.
 
 static_layer:

@@ -1,0 +1,9 @@
+[Unit]
+Description=Tigertronics ROS server
+After=sshd.service
+
+[Service]
+ExecStart=/usr/local/bin/run_ros_server.sh
+
+[Install]
+WantedBy=default.target

@@ -114,7 +114,7 @@ void publisherThread(RosbridgeWsClient& rbc, const std::future<void>& futureObj)
         }
         */
         
-		rbc.Publish("/frc_diff_drive_controller/odom", odom);
+		rbc.Publish("/drive_controller/odom", odom);
 		// rbc.Publish("/frc_diff_drive_controller/cmd_vel", j);
 		
 		seq++;
@@ -134,8 +134,8 @@ int main() {
 	//ros_client.AdvertiseService("service_advertiser", "/zservice", "std_srvs/SetBool", advertiseServiceCallback);
 	//ros_client.CallService("/zService", callServiceCallback);
 	//ros_client.Advertise("/teleop_twist_joy", "/frc_diff_drive_controller/cmd_vel", "geometry_msgs/Twist");
-	ros_client.Subscribe("/rosbridge_websocket", "/frc_diff_drive_controller/cmd_vel", subscriberCallback, "", "geometry_msgs/Twist");
-	ros_client.Advertise("/rosbridge_websocket", "/frc_diff_drive_controller/odom", "nav_msgs/Odometry");
+	ros_client.Subscribe("/rosbridge_websocket", "/drive_controller/cmd_vel", subscriberCallback, "", "geometry_msgs/Twist");
+	ros_client.Advertise("/rosbridge_websocket", "/drive_controller/odom", "nav_msgs/Odometry");
 	//std::this_thread::sleep_for(std::chrono::seconds(100));
 
 	{

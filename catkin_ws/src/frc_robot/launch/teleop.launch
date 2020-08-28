@@ -4,13 +4,14 @@
   <arg name="xbox" default="true" />
   <arg name="joy_dev" default="/dev/input/js0" />
   <arg name="config_filepath" default="$(find frc_robot)/config/teleop.yaml" />
+  <arg name="drive_topic" default="/drive_controller/cmd_vel" />
   
   <node if="$(arg slider)" name="rqt_robot_steering" pkg="rqt_robot_steering" type="rqt_robot_steering">
-    <param name="default_topic" value="/frc_diff_drive_controller/cmd_vel"/>
+    <param name="default_topic" value="$(arg drive_topic)"/>
   </node>
   
   <node if="$(arg keyboard)" name="teleop_twist_keyboard" pkg="teleop_twist_keyboard" type="teleop_twist_keyboard">
-    <remap from="cmd_vel" to="/frc_diff_drive_controller/cmd_vel"/>
+    <remap from="cmd_vel" to="$(arg drive_topic)"/>
   </node>
   
   <node pkg="joy" type="joy_node" name="joy_node">
@@ -20,7 +21,7 @@
   </node>
   
   <node if="$(arg xbox)" pkg="teleop_twist_joy" name="teleop_twist_joy" type="teleop_node">
-    <remap from="cmd_vel" to="/frc_diff_drive_controller/cmd_vel"/>
+    <remap from="cmd_vel" to="$(arg drive_topic)"/>
     <rosparam command="load" file="$(arg config_filepath)" />
   </node>
 </launch>

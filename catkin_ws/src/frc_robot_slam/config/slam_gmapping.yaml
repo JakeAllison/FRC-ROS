@@ -5,5 +5,5 @@ gmapping_node:
     linearUpdate: 0.1
     angularUpdate: 0.1
     temporalUpdate: 0.25
-    maxUrange: 10.0
-    maxRange: 15.0
+    maxUrange: 11.0
+    maxRange: 13.0

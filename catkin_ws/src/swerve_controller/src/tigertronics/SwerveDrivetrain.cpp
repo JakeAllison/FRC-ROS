@@ -34,10 +34,8 @@ void SwerveDrivetrain::Drive(units::meters_per_second_t xSpeed,
                           xSpeed, ySpeed, rot, GetAngle())
                     : frc_new::ChassisSpeeds{xSpeed, ySpeed, rot});
 
+  // ROS_INFO("Drive Angle: [%f]", GetAngle().Degrees().value());
   m_kinematics.NormalizeWheelSpeeds(&states, kMaxSpeed);
-#ifndef ROS
-  m_kinematics.NormalizeWheelSpeeds(&states, kMaxSpeed);
-#endif
 
   frc_new::SwerveModuleState fl = states.at(0);
   frc_new::SwerveModuleState fr = states.at(1);
