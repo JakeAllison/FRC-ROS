@@ -49,34 +49,6 @@ sudo apt install python-rosinstall python-rosinstall-generator python-wstool bui
 
 
 
-
-# Install RealSense SDK
-# sudo apt-key adv --keyserver keys.gnupg.net --recv-key F6E65AC044F831AC80A06380C8B3A55A6F3EFCDE || sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-key F6E65AC044F831AC80A06380C8B3A55A6F3EFCDE
-# sudo add-apt-repository "deb http://realsense-hw-public.s3.amazonaws.com/Debian/apt-repo xenial main" -u
-# sudo apt install librealsense2
-# sudo apt install librealsense2-dkms
-# sudo apt install librealsense2-utils
-# sudo apt install librealsense2-dev
-# sudo apt install librealsense2-dbg
-# sudo apt install librealsense2-udev-rules
-
-# Enable kernel sources for Intel Realsense installation.
-# file=$cwd/enable_kernel_sources.sh
-# if [ ! -f "$file" ]; then
-#     echo -e "\e[31m$file is missing in current working directory\e[39m"
-#     exit 1
-# else
-#     echo "Found '$file'"
-#     bash "$file"
-# fi
-
-# Copy udev rules for Realsense devices
-#sudo cp ./99-realsense-libusb.rules /etc/udev/rules.d/
-#sudo udevadm control --reload-rules && udevadm trigger
-
-
-
-
 # Install Realsense SDK and dependencits from source.
 sudo apt install git libssl-dev libusb-1.0-0-dev pkg-config libgtk-3-dev
 sudo apt install libglfw3-dev
@@ -98,10 +70,10 @@ mkdir build && cd build
 cmake ../ -DCMAKE_BUILD_TYPE=Release -DBUILD_EXAMPLES=true
 sudo make uninstall && make clean && make -j$(nproc) && sudo make install
 
+
+
 # Copy packages
-
 cd $cwd/catkin_ws/src
-
 for D in *; do
     if [ -d "${D}" ]; then
         echo "${D}"   # your processing here
@@ -109,10 +81,10 @@ for D in *; do
     fi
 done
 
+
+
 # Extract supporting packages
-
 cd $cwd
-
 file=$cwd/common-sensors.tar.gz
 if [ ! -f "$file" ]; then
     echo -e "\e[31m$file is missing in current working directory\e[39m"
@@ -144,6 +116,7 @@ else
 fi
 
 
+
 # Gazebo models for the Kinect
 mkdir -p ~/.gazebo/models
 file=$cwd/kinect_ros.tar.gz
@@ -155,6 +128,7 @@ else
     echo "Extracting to ~/.gazebo/models"
     tar -xf "$file" -C ~/.gazebo/models
 fi
+
 
 
 # Modification to the lidar to extend the range to that of the RPLidar (12 meters).
@@ -169,6 +143,7 @@ else
 fi
 
 
+
 # Kinect IR Calibration
 file=$cwd/depth_B00364725109104B.yaml
 if [ ! -f "$file" ]; then
@@ -179,6 +154,7 @@ else
     echo "Extracting to ~/.ros/camera_info/"
     cp "$file" ~/.ros/camera_info/
 fi
+
 
 
 # Kinect Camera Calibration
@@ -193,8 +169,10 @@ else
 fi
 
 
+
 # Auto Install Dependencies
 rosdep install --from-paths ~/catkin_ws/src --ignore-src --rosdistro=kinetic -y
+
 
 
 # Build everything
@@ -207,7 +185,6 @@ source ~/catkin_ws/devel/setup.bash
 
 # Check dependencies
 cd ~/catkin_ws/src/
-
 for D in *; do
     if [ -d "${D}" ]; then
         cd ~/catkin_ws/src/${D}
