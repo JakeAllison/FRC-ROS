@@ -36,7 +36,67 @@ else
     echo 'source ~/catkin_ws/devel/setup.bash' >> ~/.bashrc
 fi
 
+
+if grep -q 'hid_sensor_custom' /etc/modules; then
+    echo "hid_sensor_custom found"
+else
+    echo -e "\e[93mhid_sensor_custom NOT found. Adding line to EOF.\e[39m"
+    echo 'hid_sensor_custom' | sudo tee -a /etc/modules
+fi
+
+# Install some stuff needed.
 sudo apt install python-rosinstall python-rosinstall-generator python-wstool build-essential
+
+
+
+
+# Install RealSense SDK
+# sudo apt-key adv --keyserver keys.gnupg.net --recv-key F6E65AC044F831AC80A06380C8B3A55A6F3EFCDE || sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-key F6E65AC044F831AC80A06380C8B3A55A6F3EFCDE
+# sudo add-apt-repository "deb http://realsense-hw-public.s3.amazonaws.com/Debian/apt-repo xenial main" -u
+# sudo apt install librealsense2
+# sudo apt install librealsense2-dkms
+# sudo apt install librealsense2-utils
+# sudo apt install librealsense2-dev
+# sudo apt install librealsense2-dbg
+# sudo apt install librealsense2-udev-rules
+
+# Enable kernel sources for Intel Realsense installation.
+# file=$cwd/enable_kernel_sources.sh
+# if [ ! -f "$file" ]; then
+#     echo -e "\e[31m$file is missing in current working directory\e[39m"
+#     exit 1
+# else
+#     echo "Found '$file'"
+#     bash "$file"
+# fi
+
+# Copy udev rules for Realsense devices
+#sudo cp ./99-realsense-libusb.rules /etc/udev/rules.d/
+#sudo udevadm control --reload-rules && udevadm trigger
+
+
+
+
+# Install Realsense SDK and dependencits from source.
+sudo apt install git libssl-dev libusb-1.0-0-dev pkg-config libgtk-3-dev
+sudo apt install libglfw3-dev
+
+file=$cwd/librealsense-2.37.0.tar.gz
+if [ ! -f "$file" ]; then
+    echo -e "\e[31m$file is missing in current working directory\e[39m"
+    exit 1
+else
+    echo "Found '$file'"
+    echo "Extracting..."
+    tar -xf "$file" -C ~/Downloads
+fi
+
+cd ~/Downloads/librealsense-2.37.0
+./scripts/setup_udev_rules.sh
+./scripts/patch-realsense-ubuntu-lts.sh
+mkdir build && cd build
+cmake ../ -DCMAKE_BUILD_TYPE=Release -DBUILD_EXAMPLES=true
+sudo make uninstall && make clean && make -j$(nproc) && sudo make install
 
 # Copy packages
 
@@ -73,7 +133,18 @@ else
     tar -xf "$file" -C ~/catkin_ws/src
 fi
 
+file=$cwd/realsense-ros-2.2.16.tar.gz
+if [ ! -f "$file" ]; then
+    echo -e "\e[31m$file is missing in current working directory\e[39m"
+    exit 1
+else
+    echo "Found '$file'"
+    echo "Extracting to ~/catkin_ws/src"
+    tar -xf "$file" -C ~/catkin_ws/src
+fi
 
+
+# Gazebo models for the Kinect
 mkdir -p ~/.gazebo/models
 file=$cwd/kinect_ros.tar.gz
 if [ ! -f "$file" ]; then
@@ -84,6 +155,7 @@ else
     echo "Extracting to ~/.gazebo/models"
     tar -xf "$file" -C ~/.gazebo/models
 fi
+
 
 # Modification to the lidar to extend the range to that of the RPLidar (12 meters).
 file=$cwd/hokuyo_04lx_laser.gazebo.xacro
@@ -96,6 +168,7 @@ else
     cp "$file" ~/catkin_ws/src/common-sensors/common_sensors/urdf/sensors/
 fi
 
+
 # Kinect IR Calibration
 file=$cwd/depth_B00364725109104B.yaml
 if [ ! -f "$file" ]; then
@@ -106,6 +179,7 @@ else
     echo "Extracting to ~/.ros/camera_info/"
     cp "$file" ~/.ros/camera_info/
 fi
+
 
 # Kinect Camera Calibration
 file=$cwd/rgb_B00364725109104B.yaml
@@ -118,22 +192,20 @@ else
     cp "$file" ~/.ros/camera_info/
 fi
 
-# Auto Install Dependencies
 
+# Auto Install Dependencies
 rosdep install --from-paths ~/catkin_ws/src --ignore-src --rosdistro=kinetic -y
 
 
 # Build everything
-
 source /opt/ros/kinetic/setup.bash
 cd ~/catkin_ws
-catkin_make
+catkin_make -j$(nproc)
 source ~/catkin_ws/devel/setup.bash
 
 
 
 # Check dependencies
-
 cd ~/catkin_ws/src/
 
 for D in *; do
