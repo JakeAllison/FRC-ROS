@@ -5,8 +5,8 @@ cwd=$PWD
 echo "Currernt working directory:" $cwd
 
 
-# Auto Install ROS
 
+# Auto Install ROS
 ros_install=ros-kinetic-desktop-full
 pip_install=python-pip
 rsync_install=rsync
@@ -18,8 +18,9 @@ sudo apt-get install ${ros_install} ${pip_install} ${rsync_install}
 sudo rosdep init
 rosdep update
 
-# Check ~/.bashrc for sourcing
 
+
+# Check ~/.bashrc for sourcing
 mkdir -p ~/catkin_ws/src
 
 if grep -q 'source /opt/ros/kinetic/setup.bash' ~/.bashrc; then
@@ -44,12 +45,14 @@ else
     echo 'hid_sensor_custom' | sudo tee -a /etc/modules
 fi
 
+
+
 # Install some stuff needed.
 sudo apt install python-rosinstall python-rosinstall-generator python-wstool build-essential
 
 
 
-# Install Realsense SDK and dependencits from source.
+# Install Realsense SDK and dependencies from source.
 sudo apt install git libssl-dev libusb-1.0-0-dev pkg-config libgtk-3-dev
 sudo apt install libglfw3-dev
 
@@ -58,8 +61,7 @@ if [ ! -f "$file" ]; then
     echo -e "\e[31m$file is missing in current working directory\e[39m"
     exit 1
 else
-    echo "Found '$file'"
-    echo "Extracting..."
+    echo "librealsense: '$file'"
     tar -xf "$file" -C ~/Downloads
 fi
 
@@ -73,47 +75,24 @@ sudo make uninstall && make clean && make -j$(nproc) && sudo make install
 
 
 # Copy packages
-cd $cwd/catkin_ws/src
+cd $cwd/catkin_ws/src/
 for D in *; do
     if [ -d "${D}" ]; then
-        echo "${D}"   # your processing here
+        echo "Package: ${D}"
         rsync -r -t -v --progress --delete -u -c -s $cwd/catkin_ws/src/${D}/ ~/catkin_ws/src/${D}
     fi
 done
 
 
 
-# Extract supporting packages
-cd $cwd
-file=$cwd/common-sensors.tar.gz
-if [ ! -f "$file" ]; then
-    echo -e "\e[31m$file is missing in current working directory\e[39m"
-    exit 1
-else
-    echo "Found '$file'"
-    echo "Extracting to ~/catkin_ws/src"
-    tar -xf "$file" -C ~/catkin_ws/src
-fi
-
-file=$cwd/rplidar_ros.tar.gz
-if [ ! -f "$file" ]; then
-    echo -e "\e[31m$file is missing in current working directory\e[39m"
-    exit 1
-else
-    echo "Found '$file'"
-    echo "Extracting to ~/catkin_ws/src"
-    tar -xf "$file" -C ~/catkin_ws/src
-fi
-
-file=$cwd/realsense-ros-2.2.16.tar.gz
-if [ ! -f "$file" ]; then
-    echo -e "\e[31m$file is missing in current working directory\e[39m"
-    exit 1
-else
-    echo "Found '$file'"
-    echo "Extracting to ~/catkin_ws/src"
-    tar -xf "$file" -C ~/catkin_ws/src
-fi
+# Copy supporting packages
+cd $cwd/supporting_packages/
+for F in *.tar.gz; do
+    if [ -f "${F}" ]; then
+	echo "Supporting Package: ${F}"
+	tar -xf "${F}" -C ~/catkin_ws/src
+    fi
+done
 
 
 
