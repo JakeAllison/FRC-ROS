@@ -69,7 +69,7 @@ cd ~/Downloads/librealsense-2.37.0
 ./scripts/setup_udev_rules.sh
 ./scripts/patch-realsense-ubuntu-lts.sh
 mkdir build && cd build
-cmake ../ -DCMAKE_BUILD_TYPE=Release -DBUILD_EXAMPLES=true -BUILD_WITH_TM2=ON
+cmake ../ -DCMAKE_BUILD_TYPE=Release -DBUILD_EXAMPLES=true -DBUILD_WITH_TM2=ON
 sudo make uninstall && make clean && make -j$(nproc) && sudo make install
 
 
