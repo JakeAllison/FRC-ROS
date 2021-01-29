@@ -1,6 +1,24 @@
 cwd=$PWD
 echo "Currernt working directory:" $cwd
 
+release=$(lsb_release -cs)  # Get codename
+ros_version="none"
+
+
+if [ $release == "focal" ]; then    # Ubuntu 20.04 and variants
+       echo "OS is Ubuntu 20.04. Using ROS Noetic."
+       ros_version="noetic"
+elif [ $release == "bionic" ]; then
+       echo "OS is Ubuntu 18.04. Using ROS Melodic."
+       ros_version="melodic"
+elif [ $release == "xenial" ]; then
+       echo "OS is Ubuntu 16.04. Using ROS Kinetic."
+       ros_version="kinetic"
+else
+       echo "OS is not a compatible version. Exiting."
+       exit 1
+fi
+
 
 # Copy necessary packages
 
@@ -17,7 +35,7 @@ done
 
 # Build everything
 
-source /opt/ros/kinetic/setup.bash
+source /opt/ros/$ros_version/setup.bash
 cd ~/catkin_ws
 catkin_make
 source ~/catkin_ws/devel/setup.bash

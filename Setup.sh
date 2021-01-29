@@ -5,9 +5,28 @@ cwd=$PWD
 echo "Currernt working directory:" $cwd
 
 
+release=$(lsb_release -cs)  # Get codename
+ros_version="none"
+
+
+if [ $release == "focal" ]; then    # Ubuntu 20.04 and variants
+       echo "OS is Ubuntu 20.04. Using ROS Noetic."
+       ros_version="noetic"
+elif [ $release == "bionic" ]; then
+       echo "OS is Ubuntu 18.04. Using ROS Melodic."
+       ros_version="melodic"
+elif [ $release == "xenial" ]; then
+       echo "OS is Ubuntu 16.04. Using ROS Kinetic."
+       ros_version="kinetic"
+else
+       echo "OS is not a compatible version. Exiting."
+       exit 1
+fi
+
+
 # Auto Install ROS
 
-ros_install=ros-kinetic-desktop-full
+ros_install=ros-$ros_version-desktop-full
 pip_install=python-pip
 rsync_install=rsync
 
@@ -22,11 +41,11 @@ rosdep update
 
 mkdir -p ~/catkin_ws/src
 
-if grep -q 'source /opt/ros/kinetic/setup.bash' ~/.bashrc; then
+if grep -q 'source /opt/ros/$ros_version/setup.bash' ~/.bashrc; then
     echo "~/.bashrc line 1 found"
 else
     echo -e "\e[93m~/.bashrc line NOT found. Adding line to EOF.\e[39m"
-    echo 'source /opt/ros/kinetic/setup.bash' >> ~/.bashrc
+    echo 'source /opt/ros/$ros_version/setup.bash' >> ~/.bashrc
 fi
 
 if grep -q 'source ~/catkin_ws/devel/setup.bash' ~/.bashrc; then
@@ -120,12 +139,12 @@ fi
 
 # Auto Install Dependencies
 
-rosdep install --from-paths ~/catkin_ws/src --ignore-src --rosdistro=kinetic -y
+rosdep install --from-paths ~/catkin_ws/src --ignore-src --rosdistro=$ros_version -y
 
 
 # Build everything
 
-source /opt/ros/kinetic/setup.bash
+source /opt/ros/$ros_version/setup.bash
 cd ~/catkin_ws
 catkin_make
 source ~/catkin_ws/devel/setup.bash
