@@ -37,5 +37,5 @@ done
 
 source /opt/ros/$ros_version/setup.bash
 cd ~/catkin_ws
-catkin_make
+catkin_make -j$(nproc)
 source ~/catkin_ws/devel/setup.bash
