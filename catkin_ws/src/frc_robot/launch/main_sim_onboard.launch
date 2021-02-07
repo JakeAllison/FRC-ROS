@@ -5,14 +5,14 @@
   <!-- <arg name="kinectlidar"       default="true" /> -->
   <arg name="localize_only"     default="true" />
   <!-- <arg name="robot"             default="true" /> -->
-  <arg name="sim" 		        default="true" />
-  <arg name="sim_gui" 		        default="true" />
+  <!-- <arg name="sim" 		        default="false" /> -->
+  <!-- <arg name="sim_gui" 		        default="false" /> -->
   <arg name="slam"              default="true" />
   <arg name="swerve"            default="false" />
   <arg name="swerve_controller" default="false" />
-  <arg name="teleop"            default="true" />
-  <arg name="user_interface"    default="true" />
-  <arg name="visualize"         default="true" />
+  <arg name="teleop"            default="false" />
+  <!-- <arg name="user_interface"    default="false" /> -->
+  <!-- <arg name="visualize"         default="false" /> -->
 
   <param name="use_sim_time" type="bool" value="true"/>
   
@@ -22,10 +22,10 @@
   <!-- <include if="$(arg robot)"            file="$(find frc_robot)/launch/robot.launch">
     <arg name="swerve"    value="$(arg swerve)"/>
   </include> -->
-  <include if="$(arg sim)"		file="$(find frc_robot)/launch/sim.launch">
+  <!-- <include if="$(arg sim)"		file="$(find frc_robot)/launch/sim.launch">
     <arg name="swerve"    value="$(arg swerve)"/>
     <arg name="gui"    value="$(arg sim_gui)"/>
-  </include>
+  </include> -->
   <include if="$(arg slam)" 		file="$(find frc_robot_slam)/launch/slam.launch">
     <arg name="camera_frame"    value="camera1"/>
     <arg name="odom_type"       value="drivetrain"/>
@@ -33,9 +33,9 @@
   </include>
   <include if="$(arg swerve_controller)"    file="$(find swerve_controller)/launch/swerve_controller.launch"/>
   <include if="$(arg teleop)"		file="$(find frc_robot)/launch/teleop.launch"/>
-  <include if="$(arg user_interface)"   file="$(find frc_robot)/launch/user_interface.launch"/>
-  <include if="$(arg visualize)"	file="$(find frc_robot)/launch/visualize.launch">
+  <!-- <include if="$(arg user_interface)"   file="$(find frc_robot)/launch/user_interface.launch"/> -->
+  <!-- <include if="$(arg visualize)"	file="$(find frc_robot)/launch/visualize.launch">
     <arg name="rvizconfig"    value="$(find frc_robot)/rviz/urdf.rviz" />
-  </include>
+  </include> -->
   
 </launch>
