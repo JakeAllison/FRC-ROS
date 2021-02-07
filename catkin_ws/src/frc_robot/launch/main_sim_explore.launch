@@ -6,6 +6,7 @@
   <arg name="localize_only"     default="false" />
   <!-- <arg name="robot"             default="true" /> -->
   <arg name="sim" 		        default="true" />
+  <arg name="sim_gui" 		        default="true" />
   <arg name="slam"              default="true" />
   <arg name="swerve"            default="false" />
   <arg name="swerve_controller" default="false" />
@@ -23,6 +24,7 @@
   </include> -->
   <include if="$(arg sim)"		file="$(find frc_robot)/launch/sim.launch">
     <arg name="swerve"    value="$(arg swerve)"/>
+    <arg name="gui"    value="$(arg sim_gui)"/>
   </include>
   <include if="$(arg slam)" 		file="$(find frc_robot_slam)/launch/slam.launch">
     <arg name="camera_frame"    value="camera1"/>
