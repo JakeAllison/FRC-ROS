@@ -27,7 +27,7 @@
   <include if="$(arg slam)" 		file="$(find frc_robot_slam)/launch/slam.launch">
     <arg name="camera_frame"    value="camera"/>
     <arg name="odom_type"       value="fused"/>
-    <arg unless="$(arg localize_only)"    name="slam_type"       value="gmapping"/>
+    <arg unless="$(arg localize_only)"    name="slam_type"       value="rtabmap"/>
   </include>
   <!-- <include if="$(arg swerve_controller)"    file="$(find swerve_controller)/launch/swerve_controller.launch"/> -->
   <include if="$(arg teleop)"		file="$(find frc_robot)/launch/teleop.launch"/>
