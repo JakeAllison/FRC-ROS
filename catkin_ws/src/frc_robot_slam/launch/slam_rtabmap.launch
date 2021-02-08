@@ -1,22 +1,16 @@
 <launch>
-    <rosparam command="load" file="$(find frc_robot)/config/slam_hector.yaml"/>
-    
-    <node pkg="gmapping" type="slam_gmapping" name="gmapping_node" output="screen" >
-        <remap from="scan" to="/scan" />
-    </node>
+    <rosparam command="load" file="$(find frc_robot_slam)/config/slam_rtabmap.yaml"/>
     
     <group ns="rtabmap">
         
         <!-- SLAM -->
         <!-- args: "delete_db_on_start" and "udebug" -->
-        <node name="rtabmap" pkg="rtabmap_ros" type="rtabmap" output="screen" args="--delete_db_on_start">
+        <!--<node name="rtabmap" pkg="rtabmap_ros" type="rtabmap" output="screen" args="-xx-delete_db_on_start"> -->
+        <node name="rtabmap" pkg="rtabmap_ros" type="rtabmap" output="screen">
             <remap from="scan" to="/scan"/>
-
-            <!-- As hector doesn't provide compatible covariance in the odometry topic, don't use the topic and fix the covariance -->
-            <param name="odom_frame_id"            type="string" value="map"/>
-            <param name="odom_tf_linear_variance"  type="double" value="0.0005"/>
-            <param name="odom_tf_angular_variance"	type="double" value="0.0005"/>
+            <remap from="odom" to="/odom"/>
+            <remap from="rgbd_image" to="/rtabmap/rgbd_image"/>
+            <remap from="grid_map" to="/map"/>
         </node>
     </group>
-
 </launch>
