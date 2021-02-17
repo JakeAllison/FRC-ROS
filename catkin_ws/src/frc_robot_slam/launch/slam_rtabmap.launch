@@ -5,8 +5,8 @@
         
         <!-- SLAM -->
         <!-- args: "delete_db_on_start" and "udebug" -->
-        <!--<node name="rtabmap" pkg="rtabmap_ros" type="rtabmap" output="screen" args="-xx-delete_db_on_start"> -->
-        <node name="rtabmap" pkg="rtabmap_ros" type="rtabmap" output="screen">
+        <node name="rtabmap" pkg="rtabmap_ros" type="rtabmap" output="screen" args="--delete_db_on_start">
+        <!--<node name="rtabmap" pkg="rtabmap_ros" type="rtabmap" output="screen"> -->
             <remap from="scan" to="/scan"/>
             <remap from="odom" to="/odom"/>
             <remap from="rgbd_image" to="/rtabmap/rgbd_image"/>
