@@ -46,7 +46,7 @@ if grep -q 'source /opt/ros/$ros_version/setup.bash' ~/.bashrc; then
     echo "~/.bashrc line 1 found"
 else
     echo -e "\e[93m~/.bashrc line NOT found. Adding line to EOF.\e[39m"
-    echo 'source /opt/ros/$ros_version/setup.bash' >> ~/.bashrc
+    echo "source /opt/ros/${ros_version}/setup.bash" >> ~/.bashrc
 fi
 
 if grep -q 'source ~/catkin_ws/devel/setup.bash' ~/.bashrc; then
